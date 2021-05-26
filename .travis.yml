@@ -8,6 +8,7 @@ node_js:
 
 before_install:
   - git clone https://github.com/theme-next/hexo-theme-next.git themes/next
+  - git clone https://github.com/theme-next/theme-next-pjax themes/next/source/lib/pjax
   - cp _config.next.yml themes/next/_config.yml
 
 install:
