@@ -15,7 +15,7 @@ install:
 
 branches:
   only:
-    - main # build master branch only
+    - master # build master branch only
 
 script:
   - hexo generate
@@ -27,4 +27,4 @@ deploy:
   keep_history: true
   local_dir: public
   on:
-    branch: main
+    branch: master
