@@ -1,0 +1,30 @@
+arch: amd64 # optional, this is default, routes to a full VM
+os: linux # optional, this is default
+dist: focal # or bionic | xenial | trusty | precise with xenial as default
+
+language: node_js
+node_js:
+  - 14
+
+before_install:
+  - git clone https://github.com/theme-next/hexo-theme-next.git themes/next
+  - cp _config.next.yml themes/next/_config.yml
+
+install:
+  - yarn install
+
+branches:
+  only:
+    - main # build master branch only
+
+script:
+  - hexo generate
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  token: $GH_TOKEN
+  keep_history: true
+  local_dir: public
+  on:
+    branch: main
