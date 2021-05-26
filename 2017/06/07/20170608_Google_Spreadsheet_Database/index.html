@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Google_Spreadsheet_Database/11.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Google_Spreadsheet_Database/12.png">
 <meta property="article:published_time" content="2017-06-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-26T07:46:13.342Z">
+<meta property="article:modified_time" content="2021-05-26T14:55:08.680Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="Google">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-26 15:46:13" itemprop="dateModified" datetime="2021-05-26T15:46:13+08:00">2021-05-26</time>
+                <time title="Modified: 2021-05-26 22:55:08" itemprop="dateModified" datetime="2021-05-26T22:55:08+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -353,6 +353,11 @@
           </div>
 
         
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
 
 
         
@@ -377,13 +382,7 @@
 
           </div>
           
-    
-  <div class="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-    </div>
-  </div>
-  
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -601,6 +600,26 @@ window.addEventListener('pjax:success', () => {
 
 
 
+  <script data-pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 30696,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
 
 
 
@@ -618,25 +637,24 @@ window.addEventListener('pjax:success', () => {
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
 <script>
-  var disqus_config = function() {
-    this.page.url = "http://natlee.github.io/Blog/2017/06/07/20170608_Google_Spreadsheet_Database/";
-    this.page.identifier = "2017/06/07/20170608_Google_Spreadsheet_Database/";
-    this.page.title = "以 Google 表單做資料庫使用方法";
-    };
-  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
-    if (window.DISQUS) {
-      DISQUS.reset({
-        reload: true,
-        config: disqus_config
-      });
-    } else {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://disqus_NatLee.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', '' + +new Date());
-      (d.head || d.body).appendChild(s);
-    }
-  });
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'afee937b22f0617227f6',
+      clientSecret: '8e699a19a6f56f46c11c4c38619b75667267cdba',
+      repo        : 'Blog',
+      owner       : 'natlee',
+      admin       : ['natlee'],
+      id          : '2d2ae9382c418099dd32a50a6cc3537e',
+        language: 'zh-TW,en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
 </script>
 
     </div>
