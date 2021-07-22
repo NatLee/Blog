@@ -144,11 +144,6 @@
     <a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
   </ul>
 </nav>
 
@@ -179,7 +174,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2019/08/04/20190805_Python_Multithread_And_Multiprocessing/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2021/07/22/20210722-blog-upgraded/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -193,7 +188,97 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2019/08/04/20190805_Python_Multithread_And_Multiprocessing/" class="post-title-link" itemprop="url">Python中的多執行緒(multithread)及多程序(multiprocessing)</a>
+            <a href="/Blog/2021/07/22/20210722-blog-upgraded/" class="post-title-link" itemprop="url">20210722_blog_upgraded</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-07-22 12:20:05 / Modified: 13:24:19" itemprop="dateCreated datePublished" datetime="2021-07-22T12:20:05+08:00">2021-07-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>412</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>上一次更新竟然是兩年前<br>來說說最近的修改好了</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Blog/2021/07/22/20210722-blog-upgraded/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2019/08/04/20190805-python-multithread-and-multiprocessing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2019/08/04/20190805-python-multithread-and-multiprocessing/" class="post-title-link" itemprop="url">Python中的多執行緒(multithread)及多程序(multiprocessing)</a>
         </h2>
 
         <div class="post-meta">
@@ -210,7 +295,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,7 +303,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a>
                 </span>
             </span>
 
@@ -256,7 +341,7 @@
 <p>但是，多執行緒(multithread)與多程序(multiprocessing)還是有所不同</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2019/08/04/20190805_Python_Multithread_And_Multiprocessing/#more" rel="contents">
+              <a class="btn" href="/Blog/2019/08/04/20190805-python-multithread-and-multiprocessing/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -280,7 +365,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2019/01/03/20190104_Python_List_Copy/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2019/01/03/20190104-python-list-copy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -294,7 +379,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2019/01/03/20190104_Python_List_Copy/" class="post-title-link" itemprop="url">Python中List的Copy反直覺踩坑</a>
+            <a href="/Blog/2019/01/03/20190104-python-list-copy/" class="post-title-link" itemprop="url">Python中List的Copy反直覺踩坑</a>
         </h2>
 
         <div class="post-meta">
@@ -311,7 +396,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -319,7 +404,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                  <a href="/Blog/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a>
                 </span>
             </span>
 
@@ -355,7 +440,7 @@
 <p>你以為的以為，跟我以為的以為<br>坑！都是坑！滿滿的坑！</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2019/01/03/20190104_Python_List_Copy/#more" rel="contents">
+              <a class="btn" href="/Blog/2019/01/03/20190104-python-list-copy/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -379,7 +464,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2018/08/29/20180830_Solve_Synology_NAS_Gitlab_502/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2018/08/29/20180830-solve-synology-nas-gitlab-502/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -393,7 +478,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2018/08/29/20180830_Solve_Synology_NAS_Gitlab_502/" class="post-title-link" itemprop="url">解決SynologyNAS上Gitlab發生的502錯誤</a>
+            <a href="/Blog/2018/08/29/20180830-solve-synology-nas-gitlab-502/" class="post-title-link" itemprop="url">解決SynologyNAS上Gitlab發生的502錯誤</a>
         </h2>
 
         <div class="post-meta">
@@ -410,7 +495,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -418,7 +503,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/gitlab/" itemprop="url" rel="index"><span itemprop="name">gitlab</span></a>
                 </span>
             </span>
 
@@ -454,7 +539,7 @@
 <p>今天我家跳電了<br>於是NAS就重啟了</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2018/08/29/20180830_Solve_Synology_NAS_Gitlab_502/#more" rel="contents">
+              <a class="btn" href="/Blog/2018/08/29/20180830-solve-synology-nas-gitlab-502/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -478,7 +563,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2018/06/19/20180620_Django_Upload_and_Show_Image/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2018/06/19/20180620-django-upload-and-show-image/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -492,7 +577,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2018/06/19/20180620_Django_Upload_and_Show_Image/" class="post-title-link" itemprop="url">使用Django框架建置圖片上傳與展示的平台</a>
+            <a href="/Blog/2018/06/19/20180620-django-upload-and-show-image/" class="post-title-link" itemprop="url">使用Django框架建置圖片上傳與展示的平台</a>
         </h2>
 
         <div class="post-meta">
@@ -509,7 +594,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -517,7 +602,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a>
                 </span>
             </span>
 
@@ -553,7 +638,7 @@
 <p>今天一張UR都沒抽到<br>所以在這邊整理了一個如何製作Django建置圖片上傳平台教學</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2018/06/19/20180620_Django_Upload_and_Show_Image/#more" rel="contents">
+              <a class="btn" href="/Blog/2018/06/19/20180620-django-upload-and-show-image/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -577,7 +662,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2017/06/07/20170608_Google_Spreadsheet_Database/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2017/06/07/20170608-google-spreadsheet-database/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -591,7 +676,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2017/06/07/20170608_Google_Spreadsheet_Database/" class="post-title-link" itemprop="url">以 Google 表單做資料庫使用方法</a>
+            <a href="/Blog/2017/06/07/20170608-google-spreadsheet-database/" class="post-title-link" itemprop="url">以 Google 表單做資料庫使用方法</a>
         </h2>
 
         <div class="post-meta">
@@ -608,7 +693,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -616,7 +701,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
                 </span>
             </span>
 
@@ -654,7 +739,7 @@
 <p>內容大概是用 Google 表單來當資料庫就可以做點事。（<em>這句不是跟標題一樣嗎？</em>）</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2017/06/07/20170608_Google_Spreadsheet_Database/#more" rel="contents">
+              <a class="btn" href="/Blog/2017/06/07/20170608-google-spreadsheet-database/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -678,7 +763,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/04/17/20160418_OpenCV_Learning_RGB2HSV/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/04/17/20160418-opencv-learning-rgb2hsv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -692,7 +777,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2016/04/17/20160418_OpenCV_Learning_RGB2HSV/" class="post-title-link" itemprop="url">OpenCV學習筆記－RGB轉HSV</a>
+            <a href="/Blog/2016/04/17/20160418-opencv-learning-rgb2hsv/" class="post-title-link" itemprop="url">OpenCV學習筆記－RGB轉HSV</a>
         </h2>
 
         <div class="post-meta">
@@ -709,7 +794,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -717,7 +802,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                  <a href="/Blog/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a>
                 </span>
             </span>
 
@@ -753,7 +838,7 @@
 <p>RGB轉HSV，並分離成單通道R/G/B與H/S/V</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2016/04/17/20160418_OpenCV_Learning_RGB2HSV/#more" rel="contents">
+              <a class="btn" href="/Blog/2016/04/17/20160418-opencv-learning-rgb2hsv/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -777,7 +862,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/04/16/20160417_OpenCV_Learning_Install_and_Open_Image/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/04/16/20160417-opencv-learning-install-and-open-image/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -791,7 +876,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2016/04/16/20160417_OpenCV_Learning_Install_and_Open_Image/" class="post-title-link" itemprop="url">OpenCV學習筆記－安裝與開圖</a>
+            <a href="/Blog/2016/04/16/20160417-opencv-learning-install-and-open-image/" class="post-title-link" itemprop="url">OpenCV學習筆記－安裝與開圖</a>
         </h2>
 
         <div class="post-meta">
@@ -808,7 +893,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -816,7 +901,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                  <a href="/Blog/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a>
                 </span>
             </span>
 
@@ -852,7 +937,7 @@
 <p>OpenCV的安裝與環境設置</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2016/04/16/20160417_OpenCV_Learning_Install_and_Open_Image/#more" rel="contents">
+              <a class="btn" href="/Blog/2016/04/16/20160417-opencv-learning-install-and-open-image/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -876,7 +961,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/01/30/20160131_Crack_Windows_Password/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/01/30/20160131-crack-windows-password/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -890,7 +975,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2016/01/30/20160131_Crack_Windows_Password/" class="post-title-link" itemprop="url">修改Windows的登入密碼</a>
+            <a href="/Blog/2016/01/30/20160131-crack-windows-password/" class="post-title-link" itemprop="url">修改Windows的登入密碼</a>
         </h2>
 
         <div class="post-meta">
@@ -907,7 +992,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -915,7 +1000,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/windows/" itemprop="url" rel="index"><span itemprop="name">windows</span></a>
                 </span>
             </span>
 
@@ -952,7 +1037,7 @@
 <p>常常有人忘記密碼或電腦被鎖(?)，然後就會上網找攻略。<br>不過大部份攻略又是外文，這邊就做個小整理。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2016/01/30/20160131_Crack_Windows_Password/#more" rel="contents">
+              <a class="btn" href="/Blog/2016/01/30/20160131-crack-windows-password/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -976,7 +1061,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/01/27/20160128_Blog_Upgraded/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2016/01/27/20160128-blog-upgraded/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -990,7 +1075,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2016/01/27/20160128_Blog_Upgraded/" class="post-title-link" itemprop="url">Blog近代化改修</a>
+            <a href="/Blog/2016/01/27/20160128-blog-upgraded/" class="post-title-link" itemprop="url">Blog近代化改修</a>
         </h2>
 
         <div class="post-meta">
@@ -1007,7 +1092,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1015,7 +1100,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                  <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
                 </span>
             </span>
 
@@ -1052,7 +1137,7 @@
 <p>趁還有一點點時間來清裡長滿蜘蛛網的Blog。<br>然後加一些功能，順便記錄一下以免以後忘記。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2016/01/27/20160128_Blog_Upgraded/#more" rel="contents">
+              <a class="btn" href="/Blog/2016/01/27/20160128-blog-upgraded/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1076,7 +1161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/12/22/20151223_Matlab_Replace_Method/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/12/22/20151223-matlab-replace-method/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -1090,7 +1175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2015/12/22/20151223_Matlab_Replace_Method/" class="post-title-link" itemprop="url">Matlab取代語法</a>
+            <a href="/Blog/2015/12/22/20151223-matlab-replace-method/" class="post-title-link" itemprop="url">Matlab 取代語法</a>
         </h2>
 
         <div class="post-meta">
@@ -1107,7 +1192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1115,7 +1200,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Matlab/" itemprop="url" rel="index"><span itemprop="name">Matlab</span></a>
+                  <a href="/Blog/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a>
                 </span>
             </span>
 
@@ -1148,7 +1233,7 @@
 <p>一直忘記，記錄一下。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2015/12/22/20151223_Matlab_Replace_Method/#more" rel="contents">
+              <a class="btn" href="/Blog/2015/12/22/20151223-matlab-replace-method/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1172,7 +1257,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/12/19/20151220_MIUI7_WSM_FIXED/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/12/19/20151220-miui7-wsm-fixed/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -1186,7 +1271,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2015/12/19/20151220_MIUI7_WSM_FIXED/" class="post-title-link" itemprop="url">MIUI7中WSM/XPOSED Framwork無法使用問題</a>
+            <a href="/Blog/2015/12/19/20151220-miui7-wsm-fixed/" class="post-title-link" itemprop="url">MIUI7中WSM/XPOSED Framwork無法使用問題</a>
         </h2>
 
         <div class="post-meta">
@@ -1203,7 +1288,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1211,7 +1296,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -1221,7 +1306,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>621</span>
+              <span>623</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -1240,11 +1325,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><font color="red">※功能於最新版已修復</font></p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p><font color="red">※功能於最新版已修復</font></p>
 <p>相信很多人把MIUI系統從6更新到7時，發現WSM不能使用了。 這個問題跟系統檔案的<strong>app_process</strong>和<strong>libandroid_runtime.so</strong>有關。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2015/12/19/20151220_MIUI7_WSM_FIXED/#more" rel="contents">
+              <a class="btn" href="/Blog/2015/12/19/20151220-miui7-wsm-fixed/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1268,7 +1354,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/08/17/20150818_Using_Disqus_in_Jackman_Theme/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/08/17/20150818-using-disqus-in-jackman-theme/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -1282,7 +1368,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2015/08/17/20150818_Using_Disqus_in_Jackman_Theme/" class="post-title-link" itemprop="url">在Hexo的主題jacman中使用Disqus</a>
+            <a href="/Blog/2015/08/17/20150818-using-disqus-in-jackman-theme/" class="post-title-link" itemprop="url">在Hexo的主題jacman中使用Disqus</a>
         </h2>
 
         <div class="post-meta">
@@ -1299,7 +1385,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1307,7 +1393,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
                 </span>
             </span>
 
@@ -1340,7 +1426,7 @@
 <p>之前裝hexo的時候，留言一直弄不好，還是先記錄一下步驟，以免之後忘記XD</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2015/08/17/20150818_Using_Disqus_in_Jackman_Theme/#more" rel="contents">
+              <a class="btn" href="/Blog/2015/08/17/20150818-using-disqus-in-jackman-theme/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1364,7 +1450,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw,en,default">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/08/10/20150811_Install_Hexo_in_Windows/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2015/08/10/20150811-install-hexo-in-windows/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -1378,7 +1464,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Blog/2015/08/10/20150811_Install_Hexo_in_Windows/" class="post-title-link" itemprop="url">Hexo在Windows上的安裝心得</a>
+            <a href="/Blog/2015/08/10/20150811-install-hexo-in-windows/" class="post-title-link" itemprop="url">Hexo在Windows上的安裝心得</a>
         </h2>
 
         <div class="post-meta">
@@ -1395,7 +1481,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-22 11:54:41" itemprop="dateModified" datetime="2021-07-22T11:54:41+08:00">2021-07-22</time>
+                <time title="Modified: 2021-07-22 13:24:19" itemprop="dateModified" datetime="2021-07-22T13:24:19+08:00">2021-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1403,7 +1489,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+                  <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
                 </span>
             </span>
 
@@ -1436,7 +1522,7 @@
 <p>其實在幾年之前就有想過建立Blog記錄一些瑣事<br>但之前對於GitHub還不是很熟悉（現在也還在努力中），所以一直弄失敗。<br>現在好不容易弄成功了，我想把我的步驟記錄下來，或許能幫助到一些人XD</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2015/08/10/20150811_Install_Hexo_in_Windows/#more" rel="contents">
+              <a class="btn" href="/Blog/2015/08/10/20150811-install-hexo-in-windows/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1524,7 +1610,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1537,7 +1623,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/Blog/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1583,7 +1669,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">47 mins.</span>
+    <span title="Reading time total">48 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
