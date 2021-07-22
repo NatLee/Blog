@@ -1,20 +1,21 @@
+---
 title: OpenCV學習筆記－安裝與開圖
 date: 2016-04-17
-categories: OpenCV
-tags: [OpenCV]
+categories: code
+tags: [opencv, code, c++]
 ---
 
 ![](http://i.imgur.com/aEGYK6p.jpg)
 <center>*少年女僕*</center>
 
-## 前言 ##
+## 前言
 ----------
 
 OpenCV的安裝與環境設置
 
 <!--more-->
 
- ## 方法 ##
+## 方法
 ----------
 
 一開始先到OpenCV官網下載安裝
@@ -75,7 +76,7 @@ OpenCV的安裝與環境設置
 ```
 
 
- ## Reference ##
+## Reference
 ----------
 [OpenCV学习笔记（一）——安装配置、第一个程序](http://blog.csdn.net/yang_xian521/article/details/6894228)
 [OpenCV学习笔记（三）——Mat，图像的新容器](http://blog.csdn.net/yang_xian521/article/details/6894716)

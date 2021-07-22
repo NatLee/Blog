@@ -1,13 +1,14 @@
+---
 title: 以 Google 表單做資料庫使用方法
 date: 2017-06-08
-categories: Tech
-tags: [Google]
+categories: blog
+tags: [google, database, googlesheet, blog]
 ---
 
 ![我很感動](http://i.imgur.com/CHxfjRG.jpg)
 <center>*劍風傳奇*</center>
 
-## 前言 ##
+## 前言
 ----------
 
 之前研究了一陣子，做出了點東西。
@@ -18,7 +19,7 @@ tags: [Google]
 
 <!--more-->
 
-## 新增表單與 EntryID ##
+## 新增表單與 EntryID
 ----------
 ![01](https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Google_Spreadsheet_Database/01.png)
 
@@ -151,7 +152,5 @@ tags: [Google]
 ## 參考資料
 
 ------
-
-
 
 [[Retrieve Google Spreadsheet Worksheet JSON](https://stackoverflow.com/questions/24531351/retrieve-google-spreadsheet-worksheet-json)]

@@ -1,19 +1,20 @@
+---
 title: OpenCV學習筆記－RGB轉HSV
 date: 2016-04-18
-categories: OpenCV
-tags: [OpenCV]
+categories: code
+tags: [opencv, code]
 ---
 
 ![](http://i.imgur.com/HdGGqIw.jpg)
 <center>*最弱無敗機龍*</center>
 
-## 前言 ##
+## 前言
 ----------
 RGB轉HSV，並分離成單通道R/G/B與H/S/V
 
 <!--more-->
 
- ## 方法 ##
+## 方法
 ----------
 
 首先，先回憶上次開圖的方法
@@ -212,7 +213,7 @@ RGB轉HSV，並分離成單通道R/G/B與H/S/V
 
 
 
- ## Reference ##
+## Reference
 ----------
 [[OpenCV] 轉換色彩空間 (Transform Color Space)](https://cg2010studio.com/2012/10/09/opencv-%E8%BD%89%E6%8F%9B%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%96%93-transform-color-space/)
 [基於Opencv下RGB圖像轉HSV，並分離成單通道R/G/B與H/S/V](http://fanli7.net/a/bianchengyuyan/C__/20140502/498266.html)

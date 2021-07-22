@@ -1,7 +1,8 @@
+---
 title: 修改Windows的登入密碼
 date: 2016-01-31
-categories: Tech
-tags: [Windows]
+categories: windows
+tags: [windows]
 ---
 
 ![更重要的是努力的話總會有回報的](http://i.imgur.com/S6qH6xo.jpg)
@@ -9,21 +10,20 @@ tags: [Windows]
 
 努力的話，真的就有回報嗎？
 
-前言
---
- ----------
+## 前言
+----------
 常常有人忘記密碼或電腦被鎖(?)，然後就會上網找攻略。
 不過大部份攻略又是外文，這邊就做個小整理。
 
 
 <!--more-->
 
-## 方法 ##
+## 方法
 ----------
 
 <font color="red">**※點擊圖片可以放大**</font>
 
-### Windows 7 ###
+### Windows 7
 ----------
 
 <font color="blue">**圖形化界面的置換修改法**</font>
@@ -69,7 +69,7 @@ tags: [Windows]
 ![當時我們不知道未來有多殘酷的試煉](http://i.imgur.com/jDFxVac.jpg)
 <center>*房東妹子青春期*</center>
 
-### Windows 8/8.1/10 ###
+### Windows 8/8.1/10
 ----------
 
 Windows8/8.1/10的方法都一樣，所以直接放在一起。
@@ -104,7 +104,7 @@ Windows8/8.1/10的方法都一樣，所以直接放在一起。
 請在**第七步**時把指令改成`net user 你要新增的帳戶 /add`
 這樣就可以進到有管理權限的帳戶來改掉原本進不去的帳戶密碼了
 
-# 後記 #
+## 後記
 ----------
 ![我從來都沒想過這點](http://i.imgur.com/dfSNJi6.jpg)
 <center>*房東妹子青春期*</center>
@@ -115,6 +115,6 @@ Win10換完檔案後，其實可以用輸入`wpeutil reboot`重啟
 不過改密碼的方法一樣都是**置換法**，總之能開cmd的話萬事都OK。
 感謝收看
 
-# Reference #
+## Reference
 ----------
 [Reset a Windows 10 password](https://4sysops.com/archives/reset-a-windows-10-password/)

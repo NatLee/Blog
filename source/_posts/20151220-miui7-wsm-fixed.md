@@ -1,10 +1,11 @@
+---
 title: MIUI7中WSM/XPOSED Framwork無法使用問題
 date: 2015-12-20
-categories: Tech
+categories: android
+tags: [android, miui, wsm, xiaomi]
+---
 
-# tags: [Android, MIUI, WSM]
-
- ## 前言 ##
+## 前言
 ----------
 
 <font color="red">※功能於最新版已修復</font>
@@ -13,7 +14,7 @@ categories: Tech
 
 <!-- more -->
 
-## 步驟說明 ##
+## 步驟說明
 
 --------------------------------------------------------------------------------
 
@@ -52,7 +53,7 @@ SDK對應的版本為： SDK22 = 5.1 SDK21 = 5.0 SDK19 = 4.4 (KitKat)
 
 6. 重啟並安裝**Xposed/WSM**
 
-## Reference ##
+## Reference
 
 --------------------------------------------------------------------------------
 

@@ -1,30 +1,28 @@
+---
 title: Hexo在Windows上的安裝心得
 date: 2015-08-11
-categories: Tech
-tags: [Hexo, Windows, Github, Blog, Nodejs]
+categories: blog
+tags: [hexo, windows, github, blog, nodejs]
 ---
 
-前言
---
- ---------- 
+## 前言
+----------
 其實在幾年之前就有想過建立Blog記錄一些瑣事
 但之前對於GitHub還不是很熟悉（現在也還在努力中），所以一直弄失敗。
 現在好不容易弄成功了，我想把我的步驟記錄下來，或許能幫助到一些人XD
 
 <!--more-->
 
-步驟說明
-----
- 
----------- 
+## 步驟說明
+----------
 
- 1. <font color="purple">**確認電腦有是否有node.js與Git**</font>
+ 1. 確認電腦有是否有node.js與Git
 
 	想安裝Hexo需要git與node.js，而Github的桌面版程式已有附Git shell
 	所以只需要到[Node.js官網](https://nodejs.org/)下載安裝環境即可
 	> **Note:** 建議安裝完後重新啟動，確保環境變數已更新
 
- 2. <font color="purple">**開始安裝Hexo**</font>
+ 2. 開始安裝Hexo
 
 	打開Github的Git shell，然後輸入以下code
 
@@ -34,7 +32,7 @@ tags: [Hexo, Windows, Github, Blog, Nodejs]
 
 	直接輸入hexo，測試是否安裝成功，若成功再繼續往下
 
- 3. <font color="purple">**以Hexo建置自己的Blog**</font>
+ 3. 以Hexo建置自己的Blog
 
 	首先，你必須到GitHub上面建立一個新的Repository
 
@@ -68,18 +66,18 @@ tags: [Hexo, Windows, Github, Blog, Nodejs]
     
    此時，只要在[localhost:4000](http://127.0.0.1:4000)，就可以看到自己的Blog了
 
- 4. <font color="purple">**試著建立文章吧！**</font>
+ 4. 試著建立文章吧！
 
 	先來建立個文章看看吧！
 
 	    hexo n "title" # n 為 new 的縮寫，此指令可以建立一個標題為「title」的文章
 
-	至於內容則要到<font color="red">/source/_posts/</font>中找到**.md檔**以**markdown**的格式編輯
+	至於內容則要到`/source/_posts/`中找到**.md檔**以**markdown**的格式編輯
 
 	編輯方法可以參考 http://markdown.tw/
 	而網路上也有一些線上編輯器，像是 https://stackedit.io/
 
- 5. <font color="purple">**上傳到GitHub**</font>
+ 5. 上傳到GitHub
 
 	上傳到GitHub有兩種方法
  
@@ -118,12 +116,9 @@ tags: [Hexo, Windows, Github, Blog, Nodejs]
     這樣也就完成大部份的建置了！
 
 
-參考資料
-----
-
+## 參考資料
 ----------
 
- 
 [佈署 | Hexo](https://hexo.io/zh-tw/docs/deployment.html)
 
 [使用hexo以及github-page建立自己的部落格](http://eva0919.github.io/2013/04/21/%E4%BD%BF%E7%94%A8hexo%E4%BB%A5%E5%8F%8Agithub-page%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E9%83%A8%E8%90%BD%E6%A0%BC/)
@@ -131,3 +126,4 @@ tags: [Hexo, Windows, Github, Blog, Nodejs]
 [Hexo安裝教學、心得筆記](https://wwssllabcd.github.io/blog/2014/12/22/how-to-install-hexo-on-window/)
 
 [使用GitHub和Hexo搭建免费静态Blog](http://wsgzao.github.io/post/hexo-guide/)
+

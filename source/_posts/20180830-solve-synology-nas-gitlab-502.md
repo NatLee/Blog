@@ -1,13 +1,14 @@
+---
 title: 解決SynologyNAS上Gitlab發生的502錯誤
 date: 2018-08-30
-categories: Tech
-tags: [Tech, NAS, Gitlab]
+categories: gitlab
+tags: [synology, nas, gitlab]
 ---
 
 ![](https://i.imgur.com/F87nc59.jpg)
 <center>*OVERLORD*</center>
 
- ## 前言 ##
+## 前言
 ----------
 
 今天我家跳電了
@@ -15,7 +16,7 @@ tags: [Tech, NAS, Gitlab]
 
 <!--more-->
 
- ## 似乎出了點問題 ##
+## 似乎出了點問題
 ----------
 
 回家後，我打開NAS檢查有沒有錯誤
@@ -61,7 +62,7 @@ Oh!
 此時，重啟Gitlab服務，等個幾分鐘
 天空又如同以往一樣清澈
 
-## 後記 ##
+## 後記
 ----------
 
 我後來去看Gitlab的container日誌發現一句話
@@ -70,7 +71,7 @@ Oh!
 
 我想大概是停電造成關閉不完全以致殘留檔案造成後來復電重啟時開檔錯誤吧 :'(
 
-## Reference ##
+## Reference
 ----------
 
 [Synology GitLab error 502](https://blog.stead.id.au/2017/03/synology-gitlab-error-502.html)

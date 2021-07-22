@@ -1,13 +1,14 @@
+---
 title: 使用Django框架建置圖片上傳與展示的平台
 date: 2018-06-20
-categories: Tech
-tags: [Django, Python, Web]
+categories: code
+tags: [django, python, web, platform]
 ---
 
 ![](https://i.imgur.com/PECvJrh.jpg)
 <center>*ネトゲの嫁は女の子じゃないと思った？*</center>
 
- ## 前言 ##
+## 前言
 ----------
 
 今天一張UR都沒抽到
@@ -15,7 +16,7 @@ tags: [Django, Python, Web]
 
 <!--more-->
 
-## 準備材料 ##
+## 準備材料
 ----------
 
 我使用的Python版本是3.6.5，以及Django版本是2.0.6
@@ -57,7 +58,7 @@ tags: [Django, Python, Web]
         └─  __init__.py
 
 
-## 使用Django建立專案 ##
+## 使用Django建立專案
 ----------
 
 1.  首先，先在命令列中創建一個Django的專案，名為testsite。
@@ -208,7 +209,7 @@ TEMPLATES = [
 ```
 
 
-## 實際展示 ##
+## 實際展示
 ----------
 
 * 上傳圖片
@@ -241,7 +242,7 @@ TEMPLATES = [
 ```
 在命令列可以看到返回200代表載入頁面並下載圖片成功。
 
-## 結語 ##
+## 結語
 ----------
 
 因為網路上Django跟Python的版本不一
@@ -251,7 +252,7 @@ Django版本也有很大的影響
 希望在這邊做成一篇完整且能執行的版本後能夠幫助到大家
 順便記錄一下，以後自己忘記也能提醒自己如何操作
 
-## 參考資料 ##
+## 參考資料
 ----------
 
 [[django 实现图片上传和显示操作](https://blog.csdn.net/c_beautiful/article/details/79755368)]

@@ -1,13 +1,14 @@
+---
 title: Python中List的Copy反直覺踩坑
 date: 2019-01-04
-categories: python
-tags: [python, tech]
+categories: code
+tags: [python, code]
 ---
 
 ![](https://i.imgur.com/7mrHp3H.jpg)
 <center>*佐賀偶像是傳奇*</center>
 
- ## 前言 ##
+## 前言
 ----------
 
 你以為的以為，跟我以為的以為
@@ -15,12 +16,12 @@ tags: [python, tech]
 
 <!--more-->
 
- ## 掰個例子 ##
+## 掰個例子
 ----------
 
 身為一個肥宅在Python中處理資料是常見的事
 
-舉個簡單土砲的 .csv 檔讀取例子（本文皆使用Python3.6， .csv 檔為逗號分隔）
+舉個簡單土砲的 `.csv` 檔讀取例子（本文皆使用Python3.6， `.csv` 檔為逗號分隔）
 
 ```python
 def csvLoader(csvPath:str) -> list:
@@ -42,7 +43,7 @@ def csvLoader(csvPath:str) -> list:
 
 各位觀眾看看上面的 code，看起來似乎.....沒有問題？
 
-## 夜路走多踩到坑 ##
+## 夜路走多踩到坑
 ----------
 
 如何分辯程式執行是否有問題
@@ -73,7 +74,7 @@ def csvLoader(csvPath:str) -> list:
 所以問題到底出在哪...?
 
 
-## 以為的以為 ##
+## 以為的以為
 ----------
 
 假設這世界上只有兩個人，一個是 a ，另一個是它的複製人
@@ -208,7 +209,7 @@ def csvLoader(csvPath:str) -> list:
 parseList append的 rowData id 都不一樣
 最後也就不會大家都長一樣了
 
-## 總結 ##
+## 總結
 ----------
 
 感恩讚嘆God Alice <(_ _)>

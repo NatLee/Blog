@@ -1,17 +1,18 @@
+---
 title: 在Hexo的主題jacman中使用Disqus
 date: 2015-08-18
-categories: Tech
-tags: [Hexo, Disqus, Github, Comment]
+categories: blog
+tags: [hexo, disqus, github, comment]
 ---
 
-## 前言 ##
+## 前言
 ----------
 
 之前裝hexo的時候，留言一直弄不好，還是先記錄一下步驟，以免之後忘記XD
 
 <!--more-->
 
-## 步驟 ##
+## 步驟
 ----------
 先註冊[Disqus](https://disqus.com/ "Disqus")帳號並登入到主頁面
 
@@ -68,7 +69,7 @@ tags: [Hexo, Disqus, Github, Comment]
 
 8. 按下**Save Changes**後，重新啟用Blog即可以啟用Disqus
 
-## 追記 ##
+## 追記
 ----------
 安裝時，注意一下站點與theme本身需求的**_config.yml**的配置
 似乎可以省一些麻煩XD

@@ -1,5 +1,5 @@
 ---
-title: achives
-type: "achives"
+title: Archives
+type: "archives"
 comments: false
 ---

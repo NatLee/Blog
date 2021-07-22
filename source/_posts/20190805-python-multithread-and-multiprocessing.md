@@ -1,13 +1,14 @@
+---
 title: Python中的多執行緒(multithread)及多程序(multiprocessing)
 date: 2019-08-05
-categories: Tech
-tags: [Python, Tech, Multithread, Multiprocessing]
+categories: code
+tags: [python, multithread, multiprocessing]
 ---
 
 ![](http://i.imgur.com/7w9laRD.jpg)
 <center>*ソードアート・オンライン*</center>
 
- ## 前言 ##
+## 前言
 ----------
 
 在很多時候，我們想要加快程式的速度時，除了花錢買更好的硬體外，也會考慮將手邊重複的工作進行平行處理
@@ -18,7 +19,7 @@ tags: [Python, Tech, Multithread, Multiprocessing]
 
 <!--more-->
 
- ## 內容 ##
+## 內容
 ----------
 
 理論上，以前學過的作業系統中對於執行緒(thread)與程序(process)各有解釋
@@ -162,10 +163,8 @@ Multiprocessing using pool took 15.129114151000977 seconds
 但令人意外的是使用pool來分配的多程序執行相比一般多程序卻會花較多時間
 
 
-## Reference ##
+## Reference
 ----------
 
 [Using Multiprocessing to Make Python Code Faster](https://medium.com/@urban_institute/using-multiprocessing-to-make-python-code-faster-23ea5ef996ba)
-
-
 
