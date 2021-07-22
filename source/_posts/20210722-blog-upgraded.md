@@ -1,5 +1,5 @@
 ---
-title: 20210722_blog_upgraded
+title: Blog Upgraded
 date: 2021-07-22 12:20:05
 categories: blog
 tags: [blog]
