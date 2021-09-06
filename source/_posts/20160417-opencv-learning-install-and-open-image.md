@@ -1,7 +1,7 @@
 ---
 title: OpenCV學習筆記－安裝與開圖
 date: 2016-04-17
-categories: code
+categories: develop
 tags: [opencv, code, c++]
 ---
 

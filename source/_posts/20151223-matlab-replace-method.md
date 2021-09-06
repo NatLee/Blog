@@ -1,7 +1,7 @@
 ---
 title: Matlab 取代語法
 date: 2015-12-23
-categories: code
+categories: develop
 tags: [matlab, code]
 ---
 

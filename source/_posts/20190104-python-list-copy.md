@@ -1,7 +1,7 @@
 ---
 title: Python中List的Copy反直覺踩坑
 date: 2019-01-04
-categories: code
+categories: develop
 tags: [python, code]
 ---
 
@@ -133,7 +133,7 @@ Wow！ c 成為全新的個體了！
 4339725448 不等於 4340014344
 果然是不同的東西了！
 
-## 真相大白 ##
+## 真相大白
 ----------
 
 我說那個...

@@ -1,7 +1,7 @@
 ---
 title: Python中的多執行緒(multithread)及多程序(multiprocessing)
 date: 2019-08-05
-categories: code
+categories: develop
 tags: [python, multithread, multiprocessing]
 ---
 

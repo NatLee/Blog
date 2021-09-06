@@ -1,7 +1,7 @@
 ---
 title: 使用Django框架建置圖片上傳與展示的平台
 date: 2018-06-20
-categories: code
+categories: develop
 tags: [django, python, web, platform]
 ---
 
