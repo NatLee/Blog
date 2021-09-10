@@ -20,16 +20,21 @@
     var CONFIG = {"hostname":"natlee.github.io","root":"/Blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Nat&#39;s blog">
-<meta property="og:url" content="http://natlee.github.io/Blog/tags/python/index.html">
+  <meta name="description" content="前言 Git 常用指令 123git statusgit branch -avvgit remote show origin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 筆記">
+<meta property="og:url" content="http://natlee.github.io/Blog/2021/09/06/20210907-git-cheat-table/index.html">
 <meta property="og:site_name" content="Nat&#39;s blog">
+<meta property="og:description" content="前言 Git 常用指令 123git statusgit branch -avvgit remote show origin">
 <meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-09-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-10T02:18:06.927Z">
 <meta property="article:author" content="Nat Lee">
-<meta property="article:tag" content="Google,Hexo,Blog">
+<meta property="article:tag" content="develop">
+<meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://natlee.github.io/Blog/tags/python/">
+<link rel="canonical" href="http://natlee.github.io/Blog/2021/09/06/20210907-git-cheat-table/">
 
 
 <script id="page-configurations">
@@ -37,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-tw'
   };
 </script>
 
-  <title>Tag: python | Nat's blog</title>
+  <title>Git 筆記 | Nat's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
     <script data-pjax>
@@ -168,123 +173,152 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">python
-          <small>Tag</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2021/09/06/20210907-git-cheat-table/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 筆記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-07 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-07T00:00:00+08:00">2021-09-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-10 10:18:06" itemprop="dateModified" datetime="2021-09-10T10:18:06+08:00">2021-09-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/develop/" itemprop="url" rel="index"><span itemprop="name">develop</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>Git 常用指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">git branch -avv</span><br><span class="line">git remote show origin</span><br></pre></td></tr></table></figure>
+
+
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<h3 id="Pull-fetch-and-push"><a href="#Pull-fetch-and-push" class="headerlink" title="Pull, fetch and push"></a>Pull, fetch and push</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line">git add .</span><br><span class="line">git commit -m &lt;COMMIT_MESSAGE&gt;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h3 id="Show-current-repository-status"><a href="#Show-current-repository-status" class="headerlink" title="Show current repository status"></a>Show current repository status</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<p>Sample Result (No changed files):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">On branch master</span><br><span class="line">Your branch is up to date with &#x27;origin/master&#x27;.</span><br><span class="line"></span><br><span class="line">nothing to commit, working tree clean </span><br></pre></td></tr></table></figure>
+
+<p>Sample Result (With uncommitted changes)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">On branch master</span><br><span class="line">Your branch is up to date with &#x27;origin/master&#x27;.</span><br><span class="line"></span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   source/.obsidian/workspace</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">        source/_posts/20210907-git-cheat-table.md</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Show-all-branch-with-upstream"><a href="#Show-all-branch-with-upstream" class="headerlink" title="Show all branch with upstream"></a>Show all branch with upstream</h3><p>Using command with following.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git branch -avv</span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">Sample Result</span><br></pre></td></tr></table></figure>
+<ul>
+<li>master                                                            944c6b6 [origin/master] Update<br>remotes/origin/HEAD                                               -&gt; origin/master<br>remotes/origin/dependabot/npm_and_yarn/hexo-renderer-marked-4.1.0 33e72a0 Bump hexo-renderer-marked from 4.0.0 to 4.1.0<br>remotes/origin/gh-pages                                           a0c1163 Deploy NatLee/Blog to github.com/NatLee/Blog.git:gh-pages<br>remotes/origin/master                                             944c6b6 Update<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>master            944c6b6    [origin/master]   Update<br>  ↑                  ↑             ↑             ↑<br>Current branch      Revision      Upstream       Commit message</li>
+</ul>
+<p>‘Upstream branches’ are local branches that have a direct relationship to a remote branch.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Show remote informations</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>git remote show origin</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Sample result:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>remote origin<br>Fetch URL: <a target="_blank" rel="noopener" href="https://github.com/NatLee/Blog.git">https://github.com/NatLee/Blog.git</a><br>Push  URL: <a target="_blank" rel="noopener" href="https://github.com/NatLee/Blog.git">https://github.com/NatLee/Blog.git</a><br>HEAD branch: master<br>Remote branches:<br>  dependabot/npm_and_yarn/hexo-renderer-marked-4.1.0 tracked<br>  gh-pages                                           tracked<br>  master                                             tracked<br>Local branch configured for ‘git pull’:<br>  master merges with remote master<br>Local ref configured for ‘git push’:<br>  master pushes to master (up to date)<br>```</li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-09-06T00:00:00+08:00"
-              content="2021-09-06">
-          09-06
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/Blog/tags/develop/" rel="tag"># develop</a>
+              <a href="/Blog/tags/git/" rel="tag"># git</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/Blog/2021/09/05/20210906-python-container-environment/" itemprop="url">
-            <span itemprop="name">使用Container來快速建立開發環境(以python為例)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-08-05T00:00:00+08:00"
-              content="2019-08-05">
-          08-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/Blog/2019/08/04/20190805-python-multithread-and-multiprocessing/" itemprop="url">
-            <span itemprop="name">Python中的多執行緒(multithread)及多程序(multiprocessing)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-01-04T00:00:00+08:00"
-              content="2019-01-04">
-          01-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/Blog/2019/01/03/20190104-python-list-copy/" itemprop="url">
-            <span itemprop="name">Python中List的Copy反直覺踩坑</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2018</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2018-06-20T00:00:00+08:00"
-              content="2018-06-20">
-          06-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/Blog/2018/06/19/20180620-django-upload-and-show-image/" itemprop="url">
-            <span itemprop="name">使用Django框架建置圖片上傳與展示的平台</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
     </div>
   </div>
-  
-  
-  
 
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Blog/2021/09/05/20210906-python-container-environment/" rel="prev" title="使用Container來快速建立開發環境(以python為例)">
+      <i class="fa fa-chevron-left"></i> 使用Container來快速建立開發環境(以python為例)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -331,6 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pull-fetch-and-push"><span class="nav-number">2.1.</span> <span class="nav-text">Pull, fetch and push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-current-repository-status"><span class="nav-number">2.2.</span> <span class="nav-text">Show current repository status</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-all-branch-with-upstream"><span class="nav-number">2.3.</span> <span class="nav-text">Show all branch with upstream</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -542,6 +577,25 @@ window.addEventListener('pjax:success', () => {
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'afee937b22f0617227f6',
+      clientSecret: '8e699a19a6f56f46c11c4c38619b75667267cdba',
+      repo        : 'Blog',
+      owner       : 'natlee',
+      admin       : ['natlee'],
+      id          : '0cb829b6f5b947729db081f61c7da7fc',
+        language: 'zh-TW,en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
     </div>
 </body>
