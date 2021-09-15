@@ -63,6 +63,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 ### Show all branch with upstream
 Using command with following.
+
 ```bash
 git branch -avv
 ```   
@@ -76,14 +77,16 @@ Sample Result
   remotes/origin/master                                             944c6b6 Update
 ```
 
+The branch of result
 
 ```cmd
 * master            944c6b6    [origin/master]   Update
     ↑                  ↑             ↑             ↑
 Current branch      Revision      Upstream       Commit message
-
-'Upstream branches' are local branches that have a direct relationship to a remote branch.
 ```
+
+`Upstream branches` are local branches that have a direct relationship to a remote branch.
+
 
 ### Show remote informations
 
