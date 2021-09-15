@@ -24,7 +24,7 @@ git remote show origin
 
 ### Pull, fetch and push 
 
-```
+```bash
 git pull
 git add .
 git commit -m <COMMIT_MESSAGE>
@@ -32,12 +32,12 @@ git push
 ```
 
 ### Show current repository status
-```
+```bash
 git status
 ```
 
 Sample Result (No changed files):
-```
+```cmd
 On branch master
 Your branch is up to date with 'origin/master'.
 
@@ -45,7 +45,7 @@ nothing to commit, working tree clean
 ```
 
 Sample Result (With uncommitted changes)
-```
+```cmd
 On branch master
 Your branch is up to date with 'origin/master'.
 
@@ -63,12 +63,12 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 ### Show all branch with upstream
 Using command with following.
-```
+```bash
 git branch -avv
 ```   
 
 Sample Result
-```
+```cmd
 * master                                                            944c6b6 [origin/master] Update
   remotes/origin/HEAD                                               -> origin/master
   remotes/origin/dependabot/npm_and_yarn/hexo-renderer-marked-4.1.0 33e72a0 Bump hexo-renderer-marked from 4.0.0 to 4.1.0
@@ -77,7 +77,7 @@ Sample Result
 ```
 
 
-```
+```cmd
 * master            944c6b6    [origin/master]   Update
     ↑                  ↑             ↑             ↑
 Current branch      Revision      Upstream       Commit message
@@ -87,12 +87,12 @@ Current branch      Revision      Upstream       Commit message
 
 ### Show remote informations
 
-```
+```bash
 git remote show origin
 ```
 
 Sample result:
-```
+```cmd
 * remote origin
   Fetch URL: https://github.com/NatLee/Blog.git
   Push  URL: https://github.com/NatLee/Blog.git
