@@ -1,0 +1,126 @@
+{
+  "main": {
+    "id": "e3de41e55fe343e5",
+    "type": "split",
+    "children": [
+      {
+        "id": "f6056e94ba60b1e4",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "_posts/20210917-security-pki-concept.md",
+            "mode": "source"
+          }
+        },
+        "group": "a117f9548e328b75"
+      },
+      {
+        "id": "34350fba99cd3eb6",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "_posts/20210917-security-pki-concept.md",
+            "mode": "preview"
+          }
+        },
+        "group": "a117f9548e328b75"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8e404d4691f2dc28",
+    "type": "split",
+    "children": [
+      {
+        "id": "dd478866893126ed",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e9193a8cf527e578",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "e48bd41bba62e001",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#security",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "59f974649bf94a3f",
+    "type": "split",
+    "children": [
+      {
+        "id": "8d48c4b427c010ce",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a50601b04b7fe166",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "_posts/20210917-security-pki-concept.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "ef78d903b721a06f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "34350fba99cd3eb6",
+  "lastOpenFiles": [
+    "_posts/20210917-security-pki-concept.md",
+    "_posts/20180620-django-upload-and-show-image.md",
+    "_posts/20160418-opencv-learning-rgb2hsv.md",
+    "_posts/20160417-opencv-learning-install-and-open-image.md",
+    "_posts/20170608-google-spreadsheet-database.md",
+    "_posts/20190104-python-list-copy.md",
+    "_posts/20180830-solve-synology-nas-gitlab-502.md",
+    "_posts/20160131-crack-windows-password.md",
+    "_posts/20210917-pki-concept.md",
+    "_posts/20151223-matlab-replace-method.md"
+  ]
+}
