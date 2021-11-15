@@ -201,11 +201,11 @@
           <!--/noindex-->
         {% else %}
           {{ post.content }}
-          {% include '../_custom/like_coin.ejs' %}
+          <!--{% include '../_custom/like_coin.ejs' %}-->
         {%- endif %}
       {% else %}
         {{ post.content }}
-        {% include '../_custom/like_coin.ejs' %}
+        <!--{% include '../_custom/like_coin.ejs' %}-->
       {%- endif %}
     </div>
 
