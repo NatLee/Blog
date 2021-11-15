@@ -4,15 +4,20 @@
 
 Just a blog.
 
+## Process
+
+```bash
+git clone https://github.com/theme-next/hexo-theme-next.git themes/next
+git clone https://github.com/theme-next/theme-next-pjax themes/next/source/lib/pjax
+```
+
 ## Modification
 
 - Modify `themes/next/_config.yml`
 
-- Add LikeCoin
-    
-    - Create folder `_custom` and add file `like_coin.ejs`
+- Add LikeCoin block
 
-        Content of `themes/next/layout/_custom/like_coin.ejs`
+    Add below code after `post.content` in `themes/next/layout/_macro/post.swig`.
 
         ```html
         <div>
@@ -22,6 +27,4 @@ Just a blog.
             </script>
         <div>
         ```
-
-    - Modify `themes/next/layout/_macro/post.swig` with adding `{% include '../_custom/like_coin.ejs' %}` after `post.content`.
 
