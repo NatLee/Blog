@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言 網路世界如何保障資訊安全，在資安的課本中常常會提到PKI 那麼，什麼是PKI？🤷‍♀️">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T00:00:07.002Z">
+<meta property="article:modified_time" content="2021-11-16T00:06:49.802Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cryptograph">
 <meta property="article:tag" content="pki">
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-16 08:00:07" itemprop="dateModified" datetime="2021-11-16T08:00:07+08:00">2021-11-16</time>
+                <time title="Modified: 2021-11-16 08:06:49" itemprop="dateModified" datetime="2021-11-16T08:06:49+08:00">2021-11-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,7 +229,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>5.9k</span>
+              <span>6k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -408,7 +408,10 @@
 <p>我們以臨櫃申請爲例子，這邊會出現的角色有<code>EE</code>、<code>RA</code>以及<code>CA</code></p>
 <ol>
 <li>EE透過臨櫃與RA約定帳號與取得密碼單<br> 通常臨櫃的時候，對方會查看你的雙證件，甚至拍照記錄你的身份，所以約定後，就等於達成信任關係。</li>
-<li>EE透過手機APP進行線上證券帳號的登入，並向RA送出憑證申請<br> 等一下！等一下！怎麼直接送出憑證申請？<br> 這邊其實有更詳細的內容！<br> 手機的APP會幫你產生公私鑰對，並且把你的資訊及公鑰做成憑證申請請求（CSR）的格式送出給RA，那麼這個格式定義在RFC中的PKCS#10<br> 這邊就產生了一個問題，什麼是PKCS#10？<br> PKCS#10就是有一個國際組織定義了網路上大家如何使用這些密碼跟資訊的標準，也就是公鑰密碼標準（Public Key Cryptography Standards）。可以想成是把這些接口做一個規格化以方便溝通的方法。</li>
+<li>EE透過手機APP進行線上證券帳號的登入，並向RA送出憑證申請<br> 等一下！等一下！怎麼直接送出憑證申請？<br> 這邊其實有更詳細的內容！<br> 手機的APP會幫你產生公私鑰對，並且把你的資訊及公鑰做成憑證申請請求（CSR）的格式送出給RA，那麼這個格式定義在RFC中的PKCS#10<br> 這邊就產生了一個問題，什麼是PKCS#10？<br> PKCS就是有一個公司叫RSA資訊安全公司（對！就是那個RSA），定義了網路上大家如何使用這些密碼跟資訊的標準，也就是公鑰密碼標準（Public Key Cryptography Standards）。可以想成是把這些接口做一個規格化以方便溝通的方法。<br> 那麼，什麼是#10？是編號嗎？能吃嗎？<br> 我們來看看維基百科的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E5%AD%A6%E6%A0%87%E5%87%86">公鑰密碼標準</a>頁面，上面有寫道 <blockquote>
+<p>參見RFC 2986。規範了向憑證中心申請憑證之CSR（certificate signing request）的格式。</p>
+</blockquote>
+ 也就是說，這就是標準中編號十的內容，主要是定義CSR格式<br> 除此之外，還有許多不同的編號分別定義了各種密碼標準在通訊上的格式</li>
 <li>RA將資訊審核，通過後轉送給CA進行簽章變成憑證<br> 這邊產生一個問題是，CA如何信任這個RA？<br> 一樣的程序再走一次，RA本身也需要跟CA申請憑證才能擔任RA這個角色。<br> 那麼，RA要怎麼申請這個擔任審核角色的憑證？<br> 根據不同CA有制定不同等級的方法去接受RA這個角色的憑證申請，但脫不了關係都是會去查驗申請RA身份的人是誰（有沒有這個人或公司，身份證或是相關的工商登記及詢問申請這個的用途等等）。<br> RA只要能夠用當初申請憑證時能對應到的私鑰去對這個申請進行簽章，然後CA驗章成功就代表這個RA是曾經申請過這個憑證並且是我CA能夠信任的RA。</li>
 <li>CA簽章完後，將憑證轉送回RA，再轉送回EE存放</li>
 </ol>
@@ -642,12 +645,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">35k</span>
+    <span title="Symbols count total">36k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:04</span>
+    <span title="Reading time total">1:05</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
