@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言 接續上次的PKI，我們知道有件事是資安裏面一定會遇到的事！ 也就是大家的密碼絕對不會用明文呈現。 那麼，我們要如何把一段明文變成密碼呢？">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-21T13:59:53.003Z">
+<meta property="article:modified_time" content="2021-11-21T20:16:08.499Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cryptograph">
 <meta property="article:tag" content="security">
@@ -212,7 +212,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-21 21:59:53" itemprop="dateModified" datetime="2021-11-21T21:59:53+08:00">2021-11-21</time>
+                <time title="Modified: 2021-11-22 04:16:08" itemprop="dateModified" datetime="2021-11-22T04:16:08+08:00">2021-11-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -294,32 +294,27 @@
 <p>其中，區塊加密方式有分成很多種不同的分塊方式，有興趣的可以參見<a target="_blank" rel="noopener" href="https://notes.andywu.tw/2019/%E5%AF%86%E7%A2%BC%E7%9A%84%E5%8A%A0%E5%AF%86%E6%A8%A1%E5%BC%8Fecb-cbc-cfb-ofb-ctr/">這邊的解說</a>。</p>
 <h4 id="對稱式加密"><a href="#對稱式加密" class="headerlink" title="對稱式加密"></a>對稱式加密</h4><hr>
 <p>區塊對稱加密的算法有很多種，這邊提出兩個比較常見的例子。</p>
-<ul>
-<li><p>DES</p>
-<p>  根據<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B3%87%E6%96%99%E5%8A%A0%E5%AF%86%E6%A8%99%E6%BA%96">維基百科</a>的描述：</p>
+<h5 id="DES"><a href="#DES" class="headerlink" title="DES"></a>DES</h5><hr>
+<p>根據<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B3%87%E6%96%99%E5%8A%A0%E5%AF%86%E6%A8%99%E6%BA%96">維基百科</a>的描述：</p>
 <blockquote>
 <p>資料加密標準（Data Encryption Standard, DES）是一種對稱密鑰加密塊密碼演算法，1976年被美國聯邦政府的國家標準局確定為聯邦資料處理標準（FIPS），隨後在國際上廣泛流傳開來。它基於使用56位金鑰的對稱演算法。這個演算法因為包含一些機密設計元素，相對短的金鑰長度以及懷疑內含美國國家安全局（NSA）的後門而在開始時有爭議，DES因此受到了強烈的學院派式的審查，並以此推動了現代的塊密碼及其密碼分析的發展。</p>
 </blockquote>
-<p>  從以上內容，我們可以得到一些資訊，DES的金鑰是56 bits，但DES每一個加密區塊是64 bits。</p>
-<p>  問題來了，不是說好金鑰長度要跟區塊一樣長嗎？</p>
-<p>  其中，有 8 bits 是同位元檢查碼，是用來檢出錯誤，所以真正用來加密的長度只有 56 bits。</p>
-<p>  運算的時候，會把鑰匙折一半得到一對各32 bits的子鑰匙並分別對也被折半的區塊加密。</p>
-<p>  那麼，如果資料短於 64 bits 怎麼辦？</p>
-<p>  有一種手法叫做<strong>padding</strong>，它加密前會將資料填補<code>0</code>，讓長度剛好能夠被64整除。</p>
-<p>  詳細算法流程可以<a target="_blank" rel="noopener" href="http://www.tsnien.idv.tw/Security_WebBook/chap2/2-8%20DES%20%E5%AF%86%E7%A2%BC%E7%B3%BB%E7%B5%B1.html">參照這裏</a>。</p>
-</li>
-</ul>
-<ul>
-<li><p>AES<br>  這個算法又稱Rijndael演算法，是美國國家安全局NIST有鑑於DES被發現不安全且被破解，於是公開徵求加密演算法，於是產生了這個進階加密標準（Advanced Encryption Standard, AES）加密演算法。</p>
-<p>  它跟DES有根本上的不同，它把金鑰變資料塊變成矩陣來進行加密運算。</p>
-<p>  詳細算法流程可以<a target="_blank" rel="noopener" href="http://www.tsnien.idv.tw/Security_WebBook/chap2/2-10%20AES%20%E5%AF%86%E7%A2%BC%E6%A8%99%E6%BA%96.html">參照這裏</a>。</p>
-</li>
-</ul>
+<p>從以上內容，我們可以得到一些資訊，DES的金鑰是56 bits，但DES每一個加密區塊是64 bits。</p>
+<p>問題來了，不是說好金鑰長度要跟區塊一樣長嗎？</p>
+<p>其中，有 8 bits 是同位元檢查碼，是用來檢出錯誤，所以真正用來加密的長度只有 56 bits。</p>
+<p>運算的時候，會把鑰匙折一半得到一對各32 bits的子鑰匙並分別對也被折半的區塊加密。</p>
+<p>那麼，如果資料短於 64 bits 怎麼辦？</p>
+<p>有一種手法叫做<strong>padding</strong>，它加密前會將資料填補<code>0</code>，讓長度剛好能夠被64整除。</p>
+<p>詳細算法流程可以<a target="_blank" rel="noopener" href="http://www.tsnien.idv.tw/Security_WebBook/chap2/2-8%20DES%20%E5%AF%86%E7%A2%BC%E7%B3%BB%E7%B5%B1.html">參照這裏</a>。</p>
+<h5 id="AES"><a href="#AES" class="headerlink" title="AES"></a>AES</h5><hr>
+<p>這個算法又稱Rijndael演算法，是美國國家安全局NIST有鑑於DES被發現不安全且被破解，於是公開徵求加密演算法，於是產生了這個進階加密標準（Advanced Encryption Standard, AES）加密演算法。</p>
+<p>它跟DES有根本上的不同，它把金鑰變資料塊變成矩陣來進行加密運算。</p>
+<p>詳細算法流程可以<a target="_blank" rel="noopener" href="http://www.tsnien.idv.tw/Security_WebBook/chap2/2-10%20AES%20%E5%AF%86%E7%A2%BC%E6%A8%99%E6%BA%96.html">參照這裏</a>。</p>
 <h4 id="非對稱式加密"><a href="#非對稱式加密" class="headerlink" title="非對稱式加密"></a>非對稱式加密</h4><hr>
 <p>區塊非對稱加密的算法也有很多種，這邊也提出兩個比較常見的例子。</p>
-<ul>
-<li><p>RSA<br>  這個加密算法可以用比較簡單的方式描述。</p>
-<p>  首先，我們要產生一對公私鑰：</p>
+<h5 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h5><hr>
+<p>這個加密算法可以用比較簡單的方式描述。</p>
+<p>首先，我們要產生一對公私鑰：</p>
 <ol>
 <li>選擇兩個大的質數： p, q</li>
 <li>計算 N = p ꞏ q</li>
@@ -328,42 +323,38 @@
 <li>找 e 的mod倒數 d 使 e ꞏ d ≡ 1 (mod r)</li>
 <li>獲得公鑰：(N ,e), 私鑰：(N ,d)</li>
 </ol>
-<p>  ɸ(N)是尤拉函數，也就是從1到N，有多少跟N互質的數。<br>  假設N是7，我們知道是一個質數，從1到7總共有6個數字1, 2, 3, 4, 5, 6都跟7互質，所以ɸ(7)就等於6。<br>  由這邊可以知道當N是質數的話，ɸ(N) 就等於N-1。</p>
-<p>  那麼，我們舉一個產生鑰匙的簡單例子來看看：</p>
+<p>ɸ(N)是尤拉函數，也就是從1到N，有多少跟N互質的數。<br>假設N是7，我們知道是一個質數，從1到7總共有6個數字1, 2, 3, 4, 5, 6都跟7互質，所以ɸ(7)就等於6。<br>由這邊可以知道當N是質數的話，ɸ(N) 就等於N-1。</p>
+<p>那麼，我們舉一個產生鑰匙的簡單例子來看看：</p>
 <blockquote>
 <p>N = p * q = 47 * 71 = 3337<br>φ(N) = 3220 <em>(46*70)</em><br>找一個和 3220 互質的數字，得鑰匙 (N, e) = (3337, 79)<br>有p、q跟e，得另一個對應的鑰匙 (N, d) = (3337, 1019)</p>
 </blockquote>
-<p>  接下來，我們要使用這對鑰匙來進行加解密。</p>
-<p>  先搬出公式：</p>
+<p>接下來，我們要使用這對鑰匙來進行加解密。</p>
+<p>先搬出公式：</p>
 <blockquote>
 <p>公鑰加密 C ≡（M）^e(mod N)<br>私鑰解密 M ≡（C）^d(mod N)</p>
 </blockquote>
-<p>  其中，C是密文(cipher)，M是明文(message)。</p>
-<p>  相反的，我們也可以用私鑰加密，公鑰解密：</p>
+<p>其中，C是密文(cipher)，M是明文(message)。</p>
+<p>相反的，我們也可以用私鑰加密，公鑰解密：</p>
 <blockquote>
 <p>私鑰加密 C ≡（M）^d(mod N)<br>公鑰解密 M ≡（C）^e(mod N)</p>
 </blockquote>
-<p>  我們可以發現兩種不同加解密方式只有<code>d</code>跟<code>e</code>互換而已。</p>
-<p>  接著，我們舉一個簡單的範例來看看，但要注意的是實際使用並不會這麼簡單。</p>
+<p>我們可以發現兩種不同加解密方式只有<code>d</code>跟<code>e</code>互換而已。</p>
+<p>接著，我們舉一個簡單的範例來看看，但要注意的是實際使用並不會這麼簡單。</p>
 <blockquote>
 <p>有一段明文M以16進位(hex，更細來看也可以說是binary)表示爲 <strong>0069 0073</strong><br>用剛剛範例的公鑰加密，把明文分成兩塊0069跟0073分別加密<br>C1 = <strong>0069</strong>^79 (mod 3337) = 00C1<br>C2 = <strong>0073</strong>^79 (mod 3337) = 02DC<br>最後合併得到結果C = <strong>00C1 02DC</strong><br>解密則是反向操作，拿私鑰解密，會得到原本的明文 0069 0073<br>這邊要注意的是不能比每一塊大小不能比N還大，因爲我們是取餘數，如果比較大的話，根據同餘的計算，加密會加成錯誤的結果，解密當然也會解成錯誤的明文（也就是解密失敗）。</p>
 </blockquote>
-<p>  剛剛提到padding，RSA的填充方式也有很多種（還有公私鑰的區別），有全部填FF，還有填亂數的做法。這邊要參照<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc3447">PKCS#1</a>去瞭解它有哪些填充方式。（我覺得最麻煩的是RSA-OAEP）</p>
-<p>  另外，看到這邊就知道加解密不能直接字串去進行數學運算，因爲數學，總是要數字嘛，所以我們得把字串轉成數字。那麼，唯一的方法就是二進位格式。</p>
-<p>  最後，還是得強調加解密只是數學運算，並不會因爲無法計算導致無法加解密，而我們是要看結果正不正確才知道成功還是失敗。</p>
-</li>
-<li><p>ECC<br>  這個加密演算法加解密速度跟在短金鑰的狀況演算法安全度都勝過RSA，現在不全面改用是因爲專利問題跟一些歷史因素。<br>  詳細算法流程可以<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10251031">參照這裏</a>。</p>
-</li>
-</ul>
+<p>剛剛提到padding，RSA的填充方式也有很多種（還有公私鑰的區別），有全部填FF，還有填亂數的做法。這邊要參照<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc3447">PKCS#1</a>去瞭解它有哪些填充方式。（我覺得最麻煩的是RSA-OAEP）</p>
+<p>另外，看到這邊就知道加解密不能直接字串去進行數學運算，因爲數學，總是要數字嘛，所以我們得把字串轉成數字。那麼，唯一的方法就是二進位格式。</p>
+<p>最後，還是得強調加解密只是數學運算，並不會因爲無法計算導致無法加解密，而我們是要看結果正不正確才知道成功還是失敗。</p>
+<h5 id="ECC"><a href="#ECC" class="headerlink" title="ECC"></a>ECC</h5><hr>
+<p>這個加密演算法加解密速度跟在短金鑰的狀況演算法安全度都勝過RSA，現在不全面改用是因爲專利問題跟一些歷史因素。<br>詳細算法流程可以<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10251031">參照這裏</a>。</p>
 <h4 id="何謂安全"><a href="#何謂安全" class="headerlink" title="何謂安全"></a>何謂安全</h4><hr>
 <p>剛剛提到加密演算法的時候，有提到安全問題，那麼什麼是安全？</p>
 <p>安全有分成兩種：</p>
-<ul>
-<li><p>絕對安全<br>  不管使用任何手段都沒有任何辦法可以破解就是絕對安全。</p>
-</li>
-<li><p>相對安全<br>  在有限的資源（包含時間）內，並設定一個範圍，使這段時間內是安全的，這樣就是相對安全。也就是說NIST能夠運用現有資源來推測當前電腦運算速度跟未來發展去判斷RSA-2048到2030年前都是安全的。</p>
-</li>
-</ul>
+<ol>
+<li>絕對安全<br> 不管使用任何手段都沒有任何辦法可以破解就是絕對安全。</li>
+<li>相對安全<br> 在有限的資源（包含時間）內，並設定一個範圍，使這段時間內是安全的，這樣就是相對安全。也就是說NIST能夠運用現有資源來推測當前電腦運算速度跟未來發展去判斷RSA-2048到2030年前都是安全的。</li>
+</ol>
 <p>那麼，強度竟然能比較，就會有等級概念，這樣要怎麼分？</p>
 <p>根據<a target="_blank" rel="noopener" href="https://csrc.nist.gov/glossary/term/security_strength">NIST官方文件</a>定義安全強度（Security strength）如下：</p>
 <blockquote>
@@ -378,7 +369,7 @@
 </blockquote>
 <p>從裏面可以看到它根據大數分解最快速的演算法GNFS推算出RSA-2048對應到112安全強度。<a target="_blank" rel="noopener" href="https://csrc.nist.gov/csrc/media/projects/cryptographic-module-validation-program/documents/fips140-2/fips1402ig.pdf">Implementation Guidance for FIPS 140-2 and the Cryptographic Module Validation Program</a>的第122頁內也有寫到NIST如何用RSA金鑰長度推算出安全強度的公式，裏面的參數是金鑰長度（應該比較直觀），代入後也是可以得到相近的值。</p>
 <h2 id="雜湊算法"><a href="#雜湊算法" class="headerlink" title="雜湊算法"></a>雜湊算法</h2><hr>
-<p>密碼學上有一個東西叫做**訊息摘要(Message digest)**，也就是將一串資料（有可能是字串，也可能是數字，反正都可以是binary），透過雜湊演算法計算，得到一組固定長度的字串。</p>
+<p>密碼學上有一個東西叫做訊息摘要(Message digest)，也就是將一串資料（有可能是字串，也可能是數字，反正都可以是binary），透過雜湊演算法計算，得到一組固定長度的字串。</p>
 <p>那麼，這個雜湊算法會有這些特性：</p>
 <ul>
 <li><p>輸入任意長度（其實還是有上限的，像是SHA-1上限是2^64位元長度），輸出爲固定長度</p>
@@ -393,9 +384,7 @@
 <p>雜湊的演算法有很多種，如MD5、SHA-1、SHA-2等等，但這邊就不全部列舉。</p>
 <p>我們直接來看看SHA雜湊是怎麼做的。</p>
 <h3 id="SHA"><a href="#SHA" class="headerlink" title="SHA"></a>SHA</h3><hr>
-<ul>
-<li>SHA-1</li>
-</ul>
+<h4 id="SHA-1"><a href="#SHA-1" class="headerlink" title="SHA-1"></a>SHA-1</h4><hr>
 <p>根據<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/SHA-1">維基百科</a>：</p>
 <blockquote>
 <p>SHA-1（Secure Hash Algorithm 1）是一種密碼雜湊函式，美國國家安全局設計，並由美國國家標準技術研究所（NIST）發布為聯邦資料處理標準（FIPS）。SHA-1可以生成一個被稱為訊息摘要的<strong>160位</strong>（20位元組）雜湊值，雜湊值通常的呈現形式為<strong>40</strong>個十六進位數。</p>
@@ -436,9 +425,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHA-1(<span class="string">&quot;&quot;</span>) = da39a3ee5e6b4b0d3255bfef95601890afd80709</span><br></pre></td></tr></table></figure>
 
 <p>想不到吧，空字串也可以有雜湊值。</p>
-<ul>
-<li>SHA-2</li>
-</ul>
+<h4 id="SHA-2"><a href="#SHA-2" class="headerlink" title="SHA-2"></a>SHA-2</h4><hr>
 <p>我們來看看維基百科怎麼描述SHA-2：</p>
 <blockquote>
 <p>SHA-2，名稱來自於安全雜湊演算法2（英語：Secure Hash Algorithm 2）的縮寫，一種密碼雜湊函式演算法標準，由美國國家安全局研發，由美國國家標準與技術研究院（NIST）在2001年發布。屬於SHA演算法之一，是SHA-1的後繼者。其下又可再分為六個不同的演算法標準，包括了：SHA-224、SHA-256、SHA-384、SHA-512、SHA-512/224、SHA-512/256。</p>
@@ -556,7 +543,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A2%BC%E5%AD%B8"><span class="nav-number">2.1.</span> <span class="nav-text">古典密碼學</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%B1%E6%92%92%E5%AF%86%E7%A2%BC"><span class="nav-number">2.1.1.</span> <span class="nav-text">凱撒密碼</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8F%BE%E4%BB%A3%E5%AF%86%E7%A2%BC%E5%AD%B8"><span class="nav-number">2.2.</span> <span class="nav-text">現代密碼學</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8D%E7%A8%B1%E5%BC%8F%E5%8A%A0%E5%AF%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">對稱式加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E5%B0%8D%E7%A8%B1%E5%BC%8F%E5%8A%A0%E5%AF%86"><span class="nav-number">2.2.2.</span> <span class="nav-text">非對稱式加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%95%E8%AC%82%E5%AE%89%E5%85%A8"><span class="nav-number">2.2.3.</span> <span class="nav-text">何謂安全</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%9C%E6%B9%8A%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">雜湊算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA"><span class="nav-number">3.1.</span> <span class="nav-text">SHA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">4.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%BE%E8%AA%9E"><span class="nav-number">5.</span> <span class="nav-text">尾語</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A2%BC%E5%AD%B8"><span class="nav-number">2.1.</span> <span class="nav-text">古典密碼學</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%B1%E6%92%92%E5%AF%86%E7%A2%BC"><span class="nav-number">2.1.1.</span> <span class="nav-text">凱撒密碼</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8F%BE%E4%BB%A3%E5%AF%86%E7%A2%BC%E5%AD%B8"><span class="nav-number">2.2.</span> <span class="nav-text">現代密碼學</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8D%E7%A8%B1%E5%BC%8F%E5%8A%A0%E5%AF%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">對稱式加密</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#DES"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">DES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AES"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">AES</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E5%B0%8D%E7%A8%B1%E5%BC%8F%E5%8A%A0%E5%AF%86"><span class="nav-number">2.2.2.</span> <span class="nav-text">非對稱式加密</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RSA"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ECC"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">ECC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%95%E8%AC%82%E5%AE%89%E5%85%A8"><span class="nav-number">2.2.3.</span> <span class="nav-text">何謂安全</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%9C%E6%B9%8A%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">雜湊算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA"><span class="nav-number">3.1.</span> <span class="nav-text">SHA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SHA-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">SHA-1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SHA-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">SHA-2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">4.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%BE%E8%AA%9E"><span class="nav-number">5.</span> <span class="nav-text">尾語</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
