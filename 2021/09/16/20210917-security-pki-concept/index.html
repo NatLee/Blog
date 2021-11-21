@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言 網路世界如何保障資訊安全，在資安的課本中常常會提到PKI 那麼，什麼是PKI？🤷‍♀️">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T10:44:05.621Z">
+<meta property="article:modified_time" content="2021-11-21T13:59:53.003Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cryptograph">
 <meta property="article:tag" content="pki">
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-16 18:44:05" itemprop="dateModified" datetime="2021-11-16T18:44:05+08:00">2021-11-16</time>
+                <time title="Modified: 2021-11-21 21:59:53" itemprop="dateModified" datetime="2021-11-21T21:59:53+08:00">2021-11-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,7 +219,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/develop/" itemprop="url" rel="index"><span itemprop="name">develop</span></a>
+                  <a href="/Blog/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
                 </span>
             </span>
 
@@ -229,7 +229,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>6.3k</span>
+              <span>6.4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -255,11 +255,15 @@
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
 <h3 id="什麼是PKI？"><a href="#什麼是PKI？" class="headerlink" title="什麼是PKI？"></a>什麼是PKI？</h3><hr>
-<p>PKI是英文<code>Public key infrastructure</code>的縮寫，中文名稱是<code>公鑰基礎建設</code></p>
+<p>PKI是英文<code>Public key infrastructure</code>的縮寫，中文名稱是<code>公鑰基礎建設</code>。</p>
+<p>根據<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%AC%E9%96%8B%E9%87%91%E9%91%B0%E5%9F%BA%E7%A4%8E%E5%BB%BA%E8%A8%AD">維基百科</a>的說明</p>
+<blockquote>
+<p>PKI是一組由軟硬體、參與者、管理政策與流程組成的基礎架構，其目的在於創造、管理、分配、使用及儲存憑證。</p>
+</blockquote>
 <p>那麼，這個東西是幹嘛的？🤔</p>
-<p>在資安中，有四個大特性是一定要嚴格遵守，這樣才能保證網路上的安全</p>
-<p>PKI就是前人經過各種考驗後，最後濃縮精簡出來的東西，而它剛好可以來確保這四大特性</p>
-<p>所有定義都被放在製作網路安全程式時，必看的規格聖經<code>RFC</code>中</p>
+<p>在資安中，有四個大特性是一定要嚴格遵守，這樣才能保證網路上的安全。</p>
+<p>PKI就是前人經過各種考驗後，最後濃縮精簡出來的安全架構，而它就能夠來確保這四大特性。</p>
+<p>所有定義都被放在製作網路安全程式時，必看的規格聖經<code>RFC</code>中。</p>
 <p>那麼，四大特性分別是什麼？</p>
 <ol>
 <li><p>身份識別（Authentication）：確保資料傳送者與接收者的身分可以唯一被識別。</p>
@@ -335,8 +339,9 @@
 <p>  像我之前就在蛋花湯裏面不小心吃到釘書針😥</p>
 <p>  只是我們依然選擇相信，爲什麼呢？</p>
 <p>  不是人很正向，充滿正能量，而是因爲經由很多事蹟或是證據來證明相對可信，我們就能夠選擇相信</p>
-<p>  以把錢存到銀行來說的話，我們相信銀行能幫我們保管錢也是因爲除了政府認可外，從各種方面得知銀行的來頭不小以及受到銀行的行銷，甚至是街坊鄰居朋友們都推薦，我們才敢把錢放進銀行</p>
+<p>  以把錢存到銀行來說的話，我們相信銀行能幫我們保管錢也是因爲除了政府認可外，從各種方面得知銀行的來頭不小以及受到銀行的行銷，甚至是街坊鄰居朋友們都推薦，我們才敢把錢放進銀行。</p>
 <p>  讓我們回到原本的話題，認證機構就是這樣的一個存在，它們透過一些方法來證明自己相對可信並且廣爲人知（我是不知道是不是大家都認得每一間認證機構啦），因此能夠作爲頒發證書的一個單位。</p>
+<p>  不過，講到憑證，有些人會突然想到<code>SSL憑證</code>，這又是另外一回事了。</p>
 </li>
 </ul>
 </li>
@@ -395,7 +400,7 @@
 <li><strong>EE透過手機APP進行線上證券帳號的登入，並向RA送出憑證申請</strong><br> 等一下！等一下！怎麼直接送出憑證申請？<br> 這邊其實有更詳細的內容！<br> 手機的APP會幫你產生公私鑰對，並且把你的資訊及公鑰做成憑證申請請求（CSR）的格式送出給RA，那麼這個格式定義在RFC中的PKCS#10<br> 這邊就產生了一個問題，什麼是PKCS#10？<br> PKCS就是有一個公司叫RSA資訊安全公司（對！就是那個RSA），定義了網路上大家如何使用這些密碼跟資訊的標準，也就是公鑰密碼標準（Public Key Cryptography Standards）。可以想成是把這些接口做一個規格化以方便溝通的方法。<br> 那麼，什麼是#10？是編號嗎？能吃嗎？<br> 我們來看看維基百科的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E5%AD%A6%E6%A0%87%E5%87%86">公鑰密碼標準</a>頁面，上面有寫道 <blockquote>
 <p>參見RFC 2986。規範了向憑證中心申請憑證之CSR（certificate signing request）的格式。</p>
 </blockquote>
- 也就是說，這就是標準中編號十的內容，主要是定義CSR格式<br> 除此之外，還有許多不同的編號分別定義了各種密碼標準在通訊上的格式</li>
+ 也就是說，這就是標準中編號十的內容，主要是定義CSR格式。<br> 除此之外，還有許多不同的編號分別定義了各種密碼標準在通訊上的格式。</li>
 <li><strong>RA將資訊審核，通過後轉送給CA進行簽章變成憑證</strong><br> 這邊產生一個問題是，CA如何信任這個RA？<br> 一樣的程序再走一次，RA本身也需要跟CA申請憑證才能擔任RA這個角色。<br> 那麼，RA要怎麼申請這個擔任審核角色的憑證？<br> 根據不同CA有制定不同等級的方法去接受RA這個角色的憑證申請，但脫不了關係都是會去查驗申請RA身份的人是誰（有沒有這個人或公司，身份證或是相關的工商登記及詢問申請這個的用途等等）。<br> RA只要能夠用當初申請憑證時能對應到的私鑰去對這個申請進行簽章，然後CA驗章成功就代表這個RA是曾經申請過這個憑證並且是我CA能夠信任的RA。</li>
 <li><strong>CA簽章完後，將憑證轉送回RA，再轉送回EE存放</strong></li>
 </ol>
@@ -429,7 +434,7 @@
 <li><strong>EE使用憑證對交易資料產生簽章值</strong><br> 等等！簽章值？！怎麼突然又有新名詞！<br> 簡單來說，簽章值是就是用私鑰對雜湊值加密。<br> 那麼，雜湊（hash）是透過數學轉換跟運算產生一定長度的資料（產生的資料稱爲摘要，重複性很低，也就是低碰撞性），並且用私鑰加密代表的是我認可這段資料。<br> 整個意思就是，我用私鑰認可這個足以代表整筆交易的一定長度資料。<br> 從這邊，我們可以看出來雜湊值既然是一定長度的資料，又可以代表不同長度的資料（當初覺得跟UUID超像），不就可以確保<code>完整性</code>了嗎？ 既然完整性代表資料沒被修改過，又被私鑰加密，若能解密成功代表EE認可並同意本次交易內容。也就是本次交易沒辦法反悔或任意修改交易內容，以此也可以達成<code>不可否認性</code>。</li>
 <li><strong>EE將交易資料、簽章值與憑證交給RP來進行交易</strong></li>
 <li><strong>RP將剛剛收到的資訊轉交給VA來進行檢驗</strong></li>
-<li><strong>VA檢驗簽章正確性</strong><br> 這邊會再<code>簽驗章方法</code>進行說明。</li>
+<li><strong>VA檢驗簽章正確性</strong><br> 這邊會在之後的<code>簽驗章方法</code>進行說明。</li>
 <li><strong>VA檢驗憑證有效性</strong><br> 憑證怎樣算有效？<br> 剛剛有提到，<code>在時間內</code>以及<code>不在註銷清單內</code>都算有效，可是問題來了！<br> 時間內還好說，憑證上就有寫，但是要如何知道不在註銷清單內？ 有兩種正規的方法可以知道憑證是否被註銷，一種是VA定期向CA取得CRL清單，另一種是直接線上向CA查詢憑證狀態，也就是OCSP（Online Certificate Status Protocol）。</li>
 <li><strong>VA驗章驗證完成後，通知RP結果</strong></li>
 <li><strong>RP根據結果決定是否提供EE服務</strong></li>
@@ -487,7 +492,10 @@
     <a href="/Blog/2021/09/06/20210907-git-cheat-table/" rel="prev" title="Git 筆記">
       <i class="fa fa-chevron-left"></i> Git 筆記
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/Blog/2021/09/29/20210930-cryptograph-encryption-hash/" rel="next" title="資安常識(2) - 對稱非對稱加密演算法與雜湊算法">
+      資安常識(2) - 對稱非對稱加密演算法與雜湊算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -563,20 +571,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/Blog/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/Blog/tags/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -617,12 +625,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">36k</span>
+    <span title="Symbols count total">44k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:05</span>
+    <span title="Reading time total">1:20</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
