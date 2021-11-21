@@ -1,7 +1,7 @@
 ---
 title: OpenCV學習筆記－RGB轉HSV
 date: 2016-04-18
-categories: develop
+categories: study
 tags: [opencv, code]
 ---
 
