@@ -233,7 +233,7 @@ tags: [cryptograph, security, encrypt, decrypt]
 從裏面可以看到它根據大數分解最快速的演算法GNFS推算出RSA-2048對應到112安全強度。[Implementation Guidance for FIPS 140-2 and the Cryptographic Module Validation Program](https://csrc.nist.gov/csrc/media/projects/cryptographic-module-validation-program/documents/fips140-2/fips1402ig.pdf)的第122頁內也有寫到NIST如何用RSA金鑰長度推算出安全強度的公式，裏面的參數是金鑰長度（應該比較直觀），代入後也是可以得到相近的值。
 
 
-## 雜湊算法
+### 雜湊算法
 ----------
 
 密碼學上有一個東西叫做訊息摘要(Message digest)，也就是將一串資料（有可能是字串，也可能是數字，反正都可以是binary），透過雜湊演算法計算，得到一組固定長度的字串。
@@ -252,10 +252,10 @@ tags: [cryptograph, security, encrypt, decrypt]
 
 我們直接來看看SHA雜湊是怎麼做的。
 
-### SHA
+#### SHA
 ----------
 
-#### SHA-1
+##### SHA-1
 ----------
 
 
@@ -353,7 +353,7 @@ for each chunk
 
 ```
 Produce the final hash value (big-endian):
-digest = hash = h0 **append** h1 **append** h2 **append** h3 **append** h4
+digest = hash = h0 append h1 append h2 append h3 append h4
 ```
 
 比較詳細的解說可以[參考這邊](http://www.tsnien.idv.tw/Security_WebBook/chap4/4-4%20SHA-1%20%E6%BC%94%E7%AE%97%E6%B3%95.html)。
@@ -381,7 +381,7 @@ SHA-1("") = da39a3ee5e6b4b0d3255bfef95601890afd80709
 
 想不到吧，空字串也可以有雜湊值。
 
-#### SHA-2
+##### SHA-2
 ----------
 
 我們來看看維基百科怎麼描述SHA-2：

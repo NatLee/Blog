@@ -37,6 +37,7 @@ git status
 ```
 
 Sample Result (No changed files):
+
 ```cmd
 On branch master
 Your branch is up to date with 'origin/master'.
@@ -45,6 +46,7 @@ nothing to commit, working tree clean
 ```
 
 Sample Result (With uncommitted changes)
+
 ```cmd
 On branch master
 Your branch is up to date with 'origin/master'.
@@ -69,6 +71,7 @@ git branch -avv
 ```   
 
 Sample Result
+
 ```cmd
 * master                                                            944c6b6 [origin/master] Update
   remotes/origin/HEAD                                               -> origin/master
@@ -95,6 +98,7 @@ git remote show origin
 ```
 
 Sample result:
+
 ```cmd
 * remote origin
   Fetch URL: https://github.com/NatLee/Blog.git
