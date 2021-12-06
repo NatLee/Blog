@@ -1,6 +1,6 @@
 ---
 title: 資安常識(3) - 簽驗章流程與完整憑證解析
-date: 2021-10-30
+date: 2021-10-06
 categories: study
 tags: [cryptograph, security, signature, certificate, encoding, decoding]
 ---
@@ -579,7 +579,7 @@ OID就是由國際組織定義的唯一識別碼，[維基百科](https://en.wik
 	CA對這張憑證簽章的時候是使用什麼演算法。
 	- algorithm
 		簽章使用的演算法。
-	`OBJECT IDENTIFIER 1.2.840.113549.1.1.11 sha256WithRSAEncryption (PKCS #1)
+	`OBJECT IDENTIFIER 1.2.840.113549.1.1.11 sha256WithRSAEncryption (PKCS #1)`
 	- parameters
 		簽章演算法需要的參數。大多時候都是`null`，以binary表示就是`05 00`。
 
@@ -926,7 +926,7 @@ OID就是由國際組織定義的唯一識別碼，[維基百科](https://en.wik
 
 最後，關於簽驗章跟憑證，更詳細的說明可以參考[這邊](http://www.tsnien.idv.tw/Security_WebBook/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E6%95%B8%E4%BD%8D%E7%B0%BD%E7%AB%A0%E8%88%87%E6%95%B8%E4%BD%8D%E6%86%91%E8%AD%89.html)，然後ASN.1、BER跟DER可以參考[A Layman's Guide to a Subset of ASN.1, BER, and DER](https://luca.ntop.org/Teaching/Appunti/asn1.html)。
 
-## Reference
+## 圖片串
 ----------
 
 [這次用到的簽驗章截圖imgur存放區](https://imgur.com/a/eseCwy0)
