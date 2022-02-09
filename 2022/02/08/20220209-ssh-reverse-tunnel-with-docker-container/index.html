@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-tw,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/Blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"natlee.github.io","root":"/Blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言之前一直很想寫反向通道的流程，但過程很難描述 剛好最近在docker上看到好用的openssh-server的image 結果一試就上手，於是就有這篇文章了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用docker container建立SSH反向通道穿透內網連接內部裝置">
+<meta property="og:url" content="http://natlee.github.io/Blog/2022/02/08/20220209-ssh-reverse-tunnel-with-docker-container/index.html">
+<meta property="og:site_name" content="Nat&#39;s blog">
+<meta property="og:description" content="前言之前一直很想寫反向通道的流程，但過程很難描述 剛好最近在docker上看到好用的openssh-server的image 結果一試就上手，於是就有這篇文章了">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png">
+<meta property="article:published_time" content="2022-02-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-09T23:37:34.789Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="container">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="tunnel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png">
+
+<link rel="canonical" href="http://natlee.github.io/Blog/2022/02/08/20220209-ssh-reverse-tunnel-with-docker-container/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>使用docker container建立SSH反向通道穿透內網連接內部裝置 | Nat's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-66147173-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Nat's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/NatLee" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/2022/02/08/20220209-ssh-reverse-tunnel-with-docker-container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用docker container建立SSH反向通道穿透內網連接內部裝置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-09 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-09T00:00:00+08:00">2022-02-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-10 07:37:34" itemprop="dateModified" datetime="2022-02-10T07:37:34+08:00">2022-02-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>7.8k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>14 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前一直很想寫反向通道的流程，但過程很難描述</p>
+<p>剛好最近在docker上看到好用的openssh-server的image</p>
+<p>結果一試就上手，於是就有這篇文章了</p>
+<span id="more"></span>
+
+
+<h2 id="步驟說明"><a href="#步驟說明" class="headerlink" title="步驟說明"></a>步驟說明</h2><hr>
+<p>首先，你需要一個<code>位於外網且可以透過SSH連線的裝置</code></p>
+<p>如果沒有，請按上一頁</p>
+<p><img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png"></p>
+<p>我今天看到一個image <a target="_blank" rel="noopener" href="https://hub.docker.com/r/linuxserver/openssh-server">linuxserver/openssh-server</a></p>
+<p>它把openssh-server的部分都做好了</p>
+<p>所以我們可以直接用這個image去run一個container</p>
+<p>也就是寫一份docker-compose的文件就搞定了</p>
+<p>接下來，我們會分別討論三個裝置上的設定</p>
+<ul>
+<li>外網裝置 A</li>
+<li>內網跳板裝置 B</li>
+<li>透過跳板B連至內網裝置C</li>
+</ul>
+<h3 id="外網裝置-A"><a href="#外網裝置-A" class="headerlink" title="外網裝置 A"></a>外網裝置 A</h3><p>首先，我們先在外網的機器A先佈置能能夠進行被反向連接的server</p>
+<p>我們基於docker hub上面官方的文件做修改</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openssh-server:</span></span><br><span class="line">   <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">   <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/openssh-server</span></span><br><span class="line">   <span class="attr">container_name:</span> <span class="string">reverse-tunnel-outside-server</span></span><br><span class="line">   <span class="attr">hostname:</span> <span class="string">nat-tunnel-outside-server</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">TZ=Asia/Taipei</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY=yourpublickey #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_FILE=/path/to/file #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_DIR=/config/.ssh #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_URL=https://github.com/username.keys #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">SUDO_ACCESS=true</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="comment">#- PASSWORD_ACCESS=false #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD=password #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD_FILE=/path/to/file #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">USER_NAME=natlee</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./ssh_setting:/config</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./root_ssh_setting:/root/.ssh</span></span><br><span class="line">   <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">1984</span><span class="string">:2222</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">1994</span><span class="string">:1994</span></span><br></pre></td></tr></table></figure>
+
+<p>主要比較有意義的改動是<code>volumes</code>跟<code>port</code></p>
+<blockquote>
+<p>有些版本的docker會出現無法binding volumes的問題，可以先自己用<code>mkdir</code>建立資料夾</p>
+</blockquote>
+<p>因爲它的image包好的SSH port是<code>2222</code>，那麼我們把外部<code>1984</code>對應進去</p>
+<p>另外，我們需要多開一個port讓內網裏面做反向的裝置能夠連到這臺server</p>
+<p>所以多開了一個port <code>1994</code></p>
+<blockquote>
+<p>這邊記得在路由器幫這兩個port做forwarding，建議內外相同port就行了</p>
+</blockquote>
+<p>接着，我們就執行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<p>記得，這邊沒有使用<code>-d</code>去做背景執行</p>
+<p>我們需要修改openssh-server的設定檔<code>sshd_config</code></p>
+<p>打開剛剛指定目錄中的<code>./ssh_setting/ssh_host_keys/sshd_config</code>去把這設定改成<code>yes</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AllowTCPForwarding yes</span><br><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure>
+
+<p>重新執行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate</span><br></pre></td></tr></table></figure>
+
+<p>我們這時候可以用local做連線測試</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984                          </span><br><span class="line">The authenticity of host <span class="string">&#x27;[localhost]:2000 ([::1]:1984)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:g73WW30kTFqdUvi/mCbIgrW4dnadPiW7ipopK9h6/zk.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[localhost]:1984<span class="string">&#x27; (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">natlee@localhost: Permission denied (publickey,keyboard-interactive).</span></span><br></pre></td></tr></table></figure>
+
+<p>於是，失敗了，因爲我們只能用key進行連線！</p>
+<p>那麼要如何測試連線呢？</p>
+<p>我們先找一對金鑰（如果沒有的話，可以用<code>ssh-keygen</code>生成）</p>
+<p>再把剛找的公鑰（通常預設會在<code>~/.ssh/id_rsa.pub</code>）放到<code>./ssh_setting/.ssh/authorized_keys</code>內</p>
+<p>內容類似長這樣的東西：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDs13dOFtSQ8OJjIIZiVKWTIUbEvy+ZIcswOiXCb4q4nIK80yNyuDOVcbzQyyS0Q0z0UUTpf+TR5Rs4Ox0B8baffTC0CvFHQhwqpgvz/8d179fmUCyDb9yrdgdhSlN4zkMdw8A2P8SQ+3cc+gIQBvj/jo414kynz4zaoGseFxBOpVKc+dW1Y8m3G4wfBB0QpcyxYZ9vkAhrIYyPrIK9EP7LXTlJyQ7gMadJ4eUkMiBSnqfJYxPcYDIeK/uHYyGgpsJQUaxZ8JIqkD2kdmBPX8NHGA1O2VF2UyiJKuRVJEg/oW7YoCJHs81Gj+bl9HdnBC5CEMWckLPLRtfFkW3u9F6PNto9fs48L1dU8MGm6KAirX2GPydmwRS6yh9i32NT5J70izi28cX1IhJn2PtY75aZAPuU2NspsJ1cy4cbd35tJLB0H0= root@test</span><br></pre></td></tr></table></figure>
+
+<p>再用SSH連線一次！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984                      </span><br><span class="line">Welcome to OpenSSH Server</span><br><span class="line"></span><br><span class="line">nat-tunnel-outside-server:~$</span><br></pre></td></tr></table></figure>
+
+<p>到這邊算是外網機器佈置成功了！</p>
+<p>執行中的時候，內容物長這樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">├── root_ssh_setting</span><br><span class="line">└── ssh_setting</span><br><span class="line">    ├── custom-cont-init.d</span><br><span class="line">    ├── custom-services.d</span><br><span class="line">    ├── logs</span><br><span class="line">    │   ├── loginfo.txt</span><br><span class="line">    │   └── openssh</span><br><span class="line">    │       ├── current</span><br><span class="line">    │       ├── lock</span><br><span class="line">    │       └── state</span><br><span class="line">    ├── sshd.pid</span><br><span class="line">    └── ssh_host_keys</span><br><span class="line">        ├── sshd_config</span><br><span class="line">        ├── ssh_host_dsa_key</span><br><span class="line">        ├── ssh_host_dsa_key.pub</span><br><span class="line">        ├── ssh_host_ecdsa_key</span><br><span class="line">        ├── ssh_host_ecdsa_key.pub</span><br><span class="line">        ├── ssh_host_ed25519_key</span><br><span class="line">        ├── ssh_host_ed25519_key.pub</span><br><span class="line">        ├── ssh_host_rsa_key</span><br><span class="line">        └── ssh_host_rsa_key.pub</span><br><span class="line"></span><br><span class="line">7 directories, 15 files</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="內網跳板裝置-B"><a href="#內網跳板裝置-B" class="headerlink" title="內網跳板裝置 B"></a>內網跳板裝置 B</h3><p>內網裝置需要的東西就比較多了</p>
+<p>但還是老樣子，我們再起一個openssh-server</p>
+<p>基於docker hub上面官方的文件做修改</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openssh-server:</span></span><br><span class="line">   <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">   <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/openssh-server</span></span><br><span class="line">   <span class="attr">container_name:</span> <span class="string">reverse-tunnel-inside-bridge</span></span><br><span class="line">   <span class="attr">hostname:</span> <span class="string">nat-tunnel-inside-bridge</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">TZ=Asia/Taipei</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY=yourpublickey #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_FILE=/path/to/file #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_DIR=/config/.ssh #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_URL=https://github.com/username.keys #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">SUDO_ACCESS=true</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="comment">#- PASSWORD_ACCESS=false #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD=password #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD_FILE=/path/to/file #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">USER_NAME=natlee</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./ssh_setting:/config</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./root_ssh_setting:/root/.ssh</span></span><br></pre></td></tr></table></figure>
+
+<p>改完之後直接run一波</p>
+<blockquote>
+<p>有些版本的docker會出現無法binding volumes的問題，可以先自己用<code>mkdir</code>建立資料夾</p>
+</blockquote>
+<p>內網的裝置就不用給ports，給了也只有內網電腦能連進去</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<p>run完會看到它的啓動畫面，然後就跟剛剛一樣生一堆文件出來</p>
+<p>我們接下來要配置一些文件讓它能夠連到server且斷線後能夠重連</p>
+<ul>
+<li><p>建立安裝autossh的腳本</p>
+<p>  使用<code>sudo nano ./ssh_setting/custom-cont-init.d/install.sh</code>將以下內容貼上</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk add --no-cache autossh</span><br></pre></td></tr></table></figure></li>
+<li><p>建立啓動autossh的腳本</p>
+<p>  使用<code>sudo nano ./ssh_setting/custom-services.d/autossh.sh</code>將以下內容貼上</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Start AutoSSH&quot;</span></span><br><span class="line">autossh \</span><br><span class="line"> -p 1984 \</span><br><span class="line"> -M 0 \</span><br><span class="line"> -NR <span class="string">&#x27;*:1994:localhost:2222&#x27;</span> \</span><br><span class="line"> natlee@&lt;EXAMPLE_DOMAIN&gt; \</span><br><span class="line"> -i ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>  這邊請把<code>&lt;EXAMPLE_DOMAIN&gt;</code>改成你自己連接外網裝置的domain或IP</p>
+</li>
+</ul>
+<p>接着，我們直接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<p>然後就噴錯了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reverse-tunnel-inside-bridge | Warning: Identity file /root/.ssh/id_rsa not accessible: No such file or directory.</span><br><span class="line">reverse-tunnel-inside-bridge | Host key verification failed.</span><br></pre></td></tr></table></figure>
+
+<p>爲什麼它會說無法存取<code>/root/.ssh/id_rsa</code>？</p>
+<p>因爲它必須要靠key來連到server，但它並沒有key pairs</p>
+<p>所以我們得幫他產生一組</p>
+<p>我們先別暫停container，而是直接使用這個指令進去container內</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it reverse-tunnel-inside-bridge /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>然後使用以下指令產生公私鑰對</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">root@nat-tunnel-inside-bridge:/<span class="comment"># ssh-key</span></span><br><span class="line">ssh-keygen   ssh-keyscan</span><br><span class="line">root@nat-tunnel-inside-bridge:/<span class="comment"># ssh-keygen</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:YYaMzm7rD4dAQlREdwzOMufrbe5KLwc1z554ePFIvsc root@nat-tunnel-inside-bridge</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+---[RSA 3072]----+</span></span><br><span class="line"><span class="string">|.o++ oo.         |</span></span><br><span class="line"><span class="string">|.   +o.o         |</span></span><br><span class="line"><span class="string">|. .o.+o +        |</span></span><br><span class="line"><span class="string">| o o=  = .       |</span></span><br><span class="line"><span class="string">|  . o.. S        |</span></span><br><span class="line"><span class="string">|   o o.  =       |</span></span><br><span class="line"><span class="string">|    =oo * *      |</span></span><br><span class="line"><span class="string">|   .o=o= B E     |</span></span><br><span class="line"><span class="string">|   .o+O=o.o      |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br></pre></td></tr></table></figure>
+
+<p>我們就可以把公鑰檔案<code>~/.ssh/id_rsa.pub</code>的內容複製出來</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@nat-tunnel-inside-bridge:/<span class="comment"># cat ~/.ssh/id_rsa.pub</span></span><br><span class="line">ssh-rsa AAAAB3NzaC...............bZVysfXr9E= root@nat-tunnel-inside-bridge</span><br></pre></td></tr></table></figure>
+
+<p>把焦點轉回剛剛的container輸出會看到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reverse-tunnel-inside-bridge | Start AutoSSH</span><br><span class="line">reverse-tunnel-inside-bridge | Host key verification failed.</span><br></pre></td></tr></table></figure>
+
+<p>這邊就節省麻煩，我們直接進到內網裝置B的container訪問一次server</p>
+<p>先把剛剛的公鑰複製到我們外網server的<code>./ssh_setting/.ssh/authorized_keys</code>中</p>
+<p>在B的container內用以下指令訪問一次server，並輸入<code>yes</code>去記錄host</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@nat-tunnel-inside-bridge:/<span class="comment"># ssh natlee@&lt;EXAMPLE_DOMAIN&gt; -p 1984</span></span><br><span class="line">The authenticity of host <span class="string">&#x27;[EXAMPLE_DOMAIN]:1984 ([XXX.XXX.XXX.XXX]:1984)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:JNKQF+GwAgca6xPeoz2ROfz6WXe2oo7HepwuemJH58M.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[EXAMPLE_DOMAIN]:1984<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">Welcome to OpenSSH Server</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">nat-tunnel-server:~$</span></span><br></pre></td></tr></table></figure>
+
+<p>這時候看回去container輸出就沒有再跳錯誤了！</p>
+<p>到這邊內網裝置B已經算是設定完成了</p>
+<p>接下來，我們把自己PC的公鑰複製到內網裝置的<code>ssh_setting/.ssh/authorized_keys</code>後，重新執行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate</span><br></pre></td></tr></table></figure>
+
+<p>再來，我們從PC端使用SSH連接server的另外一個port <code>1994</code>去做測試</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@&lt;EXAMPLE_DOMAIN&gt; -p 1994</span><br><span class="line">Welcome to OpenSSH Server</span><br><span class="line"></span><br><span class="line">nat-tunnel-inside-bridge:~$</span><br></pre></td></tr></table></figure>
+
+<p>連到裝置B，也就是成功打洞進到內網了！</p>
+<h3 id="透過跳板B連至內網裝置C"><a href="#透過跳板B連至內網裝置C" class="headerlink" title="透過跳板B連至內網裝置C"></a>透過跳板B連至內網裝置C</h3><p>這邊的裝置C，我使用樹莓派當範例</p>
+<p>我們可以利用<code>~/.ssh/config</code>去設定SSH的快速連線方式，如下面的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Host reverse-tunnel-outside-server</span><br><span class="line">    HostName &lt;EXAMPLE_DOMAIN&gt;</span><br><span class="line">    User natlee</span><br><span class="line">    port 1984</span><br><span class="line">    Compression yes</span><br><span class="line"></span><br><span class="line">Host reverse-tunnel-inside-bridge</span><br><span class="line">    HostName &lt;EXAMPLE_DOMAIN&gt;</span><br><span class="line">    User natlee</span><br><span class="line">    port 1994</span><br><span class="line">    Compression yes</span><br><span class="line"></span><br><span class="line">Host pi-reversed</span><br><span class="line">    HostName 192.168.1.87</span><br><span class="line">    User pi</span><br><span class="line">    port 22</span><br><span class="line">    Compression yes</span><br><span class="line">    ProxyCommand ssh -W %h:%p reverse-tunnel-inside-bridge</span><br></pre></td></tr></table></figure>
+
+<p>第一個host，我們可以連到外網server A，也就是port爲<code>1984</code>的那位</p>
+<p>第二個host，我們可以連到內網裝置B，也就是經過反向後，port爲<code>1994</code>的那位</p>
+<p>最重要的是第三個host，裏面這句<code>ProxyCommand ssh -W %h:%p reverse-tunnel-inside-bridge</code>是精髓</p>
+<p>意思是透過第二個host <code>reverse-tunnel-inside-bridge</code> 進行proxy連到區網的位置 <code>192.168.1.87</code></p>
+<p>有了這個快速連線法，我們就可以直接來體驗一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh pi-reversed</span><br><span class="line">Linux raspberrypi 5.10.17-v7l+ <span class="comment">#1421 SMP Thu May 27 14:00:13 BST 2021 armv7l</span></span><br><span class="line"></span><br><span class="line">The programs included with the Debian GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms <span class="keyword">for</span> each program are described <span class="keyword">in</span> the</span><br><span class="line">individual files <span class="keyword">in</span> /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law.</span><br><span class="line">Last login: Thu Feb 10 01:17:55 2022 from 192.168.1.133</span><br><span class="line"></span><br><span class="line">pi@raspberrypi:~ $</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這樣配置之後，我們很簡單就可以直接從外網穿透到其他內部機器上了！</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這篇實驗做滿久的，不過從頭跑一次整個流程之後，我也對打洞有更深一步的認識</p>
+<p>打洞的好處很多，像是vscode可以使用remote-ssh的套件</p>
+<p>我們就可以直接選擇<code>./ssh/config</code>內的機器進行連線</p>
+<p>而且SFTP也是走SSH通道，我們可以直接在外網做內網檔案的傳輸</p>
+<p>甚至我們也可以直接用內網做proxy來瀏覽內部才能看的網站</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="http://arondight.me/2016/02/17/%E4%BD%BF%E7%94%A8SSH%E5%8F%8D%E5%90%91%E9%9A%A7%E9%81%93%E8%BF%9B%E8%A1%8C%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">使用SSH反向隧道进行内网穿透</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/">SSH TUNNELLING FOR FUN AND PROFIT: AUTOSSH</a></p>
+
+    </div>
+
+    ### Button like
+    <div>
+      <script type="text/javascript">
+          document.write(
+          "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/natlee_/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+      </script>
+    </div>
+    ##############
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/Blog/tags/docker/" rel="tag"># docker</a>
+              <a href="/Blog/tags/container/" rel="tag"># container</a>
+              <a href="/Blog/tags/ssh/" rel="tag"># ssh</a>
+              <a href="/Blog/tags/tunnel/" rel="tag"># tunnel</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Blog/2021/10/30/20211031-PKCS1-RSA-padding/" rel="prev" title="PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）">
+      <i class="fa fa-chevron-left"></i> PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F%E8%AA%AA%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">步驟說明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E7%B6%B2%E8%A3%9D%E7%BD%AE-A"><span class="nav-number">2.1.</span> <span class="nav-text">外網裝置 A</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A7%E7%B6%B2%E8%B7%B3%E6%9D%BF%E8%A3%9D%E7%BD%AE-B"><span class="nav-number">2.2.</span> <span class="nav-text">內網跳板裝置 B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E9%81%8E%E8%B7%B3%E6%9D%BFB%E9%80%A3%E8%87%B3%E5%85%A7%E7%B6%B2%E8%A3%9D%E7%BD%AEC"><span class="nav-number">2.3.</span> <span class="nav-text">透過跳板B連至內網裝置C</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/Blog/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/Blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/Blog/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NatLee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">79k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:24</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/Blog/lib/anime.min.js"></script>
+  <script src="/Blog/lib/pjax/pjax.min.js"></script>
+  <script src="/Blog/lib/velocity/velocity.min.js"></script>
+  <script src="/Blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/Blog/js/utils.js"></script>
+
+<script src="/Blog/js/motion.js"></script>
+
+
+<script src="/Blog/js/schemes/pisces.js"></script>
+
+
+<script src="/Blog/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+  <script data-pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 30696,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'afee937b22f0617227f6',
+      clientSecret: '8e699a19a6f56f46c11c4c38619b75667267cdba',
+      repo        : 'Blog',
+      owner       : 'natlee',
+      admin       : ['natlee'],
+      id          : '3efe080a29efa9da83d30a5c36c33075',
+        language: 'zh-TW,en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+</body>
+</html>
