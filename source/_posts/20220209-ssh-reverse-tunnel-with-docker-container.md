@@ -5,6 +5,8 @@ categories: blog
 tags: [docker, ssh, container, tunnel]
 ---
 
+![](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)
+
 ## 前言
 ----------
 
@@ -21,11 +23,9 @@ tags: [docker, ssh, container, tunnel]
 ## 步驟說明
 ----------
 
-首先，你需要一個`位於外網且可以透過SSH連線的裝置`
-
-如果沒有，請按上一頁
-
-![](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)
+> 首先，你需要一個`位於外網且可以透過SSH連線的裝置`
+> 
+> 如果沒有，請按上一頁
 
 我今天看到一個image [linuxserver/openssh-server](https://hub.docker.com/r/linuxserver/openssh-server)
 
@@ -98,11 +98,11 @@ docker-compose up
 
 我們需要修改openssh-server的設定檔`sshd_config`
 
-打開剛剛指定目錄中的`./ssh_setting/ssh_host_keys/sshd_config`去把這設定改成`yes`
+打開剛剛指定目錄中的`./ssh_setting/ssh_host_keys/sshd_config`去把這兩個設定改成`yes`
 
 ```
-AllowTCPForwarding yes
-GatewayPorts yes
+AllowTCPForwarding yes # 有些教學沒說要開這個，但不開它就不讓你forwarding了
+GatewayPorts yes # 這個是讓你能夠轉port用的，一定要開
 ```
 
 重新執行
@@ -414,6 +414,7 @@ pi@raspberrypi:~ $
 這樣配置之後，我們很簡單就可以直接從外網穿透到其他內部機器上了！
 
 ## 結語
+----------
 
 這篇實驗做滿久的，不過從頭跑一次整個流程之後，我也對打洞有更深一步的認識
 
@@ -427,6 +428,7 @@ pi@raspberrypi:~ $
 
 
 ## Reference
+----------
 
 [使用SSH反向隧道进行内网穿透](http://arondight.me/2016/02/17/%E4%BD%BF%E7%94%A8SSH%E5%8F%8D%E5%90%91%E9%9A%A7%E9%81%93%E8%BF%9B%E8%A1%8C%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/)
 
