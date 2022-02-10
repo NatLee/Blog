@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png">
 <meta property="article:published_time" content="2022-02-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-10T00:51:15.113Z">
+<meta property="article:modified_time" content="2022-02-10T12:02:57.137Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="container">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-10 08:51:15" itemprop="dateModified" datetime="2022-02-10T08:51:15+08:00">2022-02-10</time>
+                <time title="Modified: 2022-02-10 20:02:57" itemprop="dateModified" datetime="2022-02-10T20:02:57+08:00">2022-02-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,7 +258,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+        <p><img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
 <p>之前一直很想寫反向通道的流程，但過程很難描述</p>
 <p>剛好最近在docker上看到好用的openssh-server的image</p>
 <p>結果一試就上手，於是就有這篇文章了</p>
@@ -266,9 +267,10 @@
 
 
 <h2 id="步驟說明"><a href="#步驟說明" class="headerlink" title="步驟說明"></a>步驟說明</h2><hr>
+<blockquote>
 <p>首先，你需要一個<code>位於外網且可以透過SSH連線的裝置</code></p>
 <p>如果沒有，請按上一頁</p>
-<p><img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png"></p>
+</blockquote>
 <p>我今天看到一個image <span class="exturl" data-url="aHR0cHM6Ly9odWIuZG9ja2VyLmNvbS9yL2xpbnV4c2VydmVyL29wZW5zc2gtc2VydmVy">linuxserver/openssh-server<i class="fa fa-external-link-alt"></i></span></p>
 <p>它把openssh-server的部分都做好了</p>
 <p>所以我們可以直接用這個image去run一個container</p>
@@ -298,8 +300,8 @@
 
 <p>記得，這邊沒有使用<code>-d</code>去做背景執行</p>
 <p>我們需要修改openssh-server的設定檔<code>sshd_config</code></p>
-<p>打開剛剛指定目錄中的<code>./ssh_setting/ssh_host_keys/sshd_config</code>去把這設定改成<code>yes</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AllowTCPForwarding yes</span><br><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure>
+<p>打開剛剛指定目錄中的<code>./ssh_setting/ssh_host_keys/sshd_config</code>去把這兩個設定改成<code>yes</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AllowTCPForwarding yes # 有些教學沒說要開這個，但不開它就不讓你forwarding了</span><br><span class="line">GatewayPorts yes # 這個是讓你能夠轉port用的，一定要開</span><br></pre></td></tr></table></figure>
 
 <p>重新執行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate</span><br></pre></td></tr></table></figure>
@@ -394,12 +396,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh pi-reversed</span><br><span class="line">Linux raspberrypi 5.10.17-v7l+ <span class="comment">#1421 SMP Thu May 27 14:00:13 BST 2021 armv7l</span></span><br><span class="line"></span><br><span class="line">The programs included with the Debian GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms <span class="keyword">for</span> each program are described <span class="keyword">in</span> the</span><br><span class="line">individual files <span class="keyword">in</span> /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law.</span><br><span class="line">Last login: Thu Feb 10 01:17:55 2022 from 192.168.1.133</span><br><span class="line"></span><br><span class="line">pi@raspberrypi:~ $</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>這樣配置之後，我們很簡單就可以直接從外網穿透到其他內部機器上了！</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這篇實驗做滿久的，不過從頭跑一次整個流程之後，我也對打洞有更深一步的認識</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
+<p>這篇實驗做滿久的，不過從頭跑一次整個流程之後，我也對打洞有更深一步的認識</p>
 <p>打洞的好處很多，像是vscode可以使用remote-ssh的套件</p>
 <p>我們就可以直接選擇<code>./ssh/config</code>內的機器進行連線</p>
 <p>而且SFTP也是走SSH通道，我們可以直接在外網做內網檔案的傳輸</p>
 <p>甚至我們也可以直接用內網做proxy來瀏覽內部才能看的網站</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><span class="exturl" data-url="aHR0cDovL2Fyb25kaWdodC5tZS8yMDE2LzAyLzE3LyVFNCVCRCVCRiVFNyU5NCVBOFNTSCVFNSU4RiU4RCVFNSU5MCU5MSVFOSU5QSVBNyVFOSU4MSU5MyVFOCVCRiU5QiVFOCVBMSU4QyVFNSU4NiU4NSVFNyVCRCU5MSVFNyVBOSVCRiVFOSU4MCU4Ri8=">使用SSH反向隧道进行内网穿透<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<p><span class="exturl" data-url="aHR0cDovL2Fyb25kaWdodC5tZS8yMDE2LzAyLzE3LyVFNCVCRCVCRiVFNyU5NCVBOFNTSCVFNSU4RiU4RCVFNSU5MCU5MSVFOSU5QSVBNyVFOSU4MSU5MyVFOCVCRiU5QiVFOCVBMSU4QyVFNSU4NiU4NSVFNyVCRCU5MSVFNyVBOSVCRiVFOSU4MCU4Ri8=">使用SSH反向隧道进行内网穿透<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZXZlcnl0aGluZ2NsaS5vcmcvc3NoLXR1bm5lbGxpbmctZm9yLWZ1bi1hbmQtcHJvZml0LWF1dG9zc2gv">SSH TUNNELLING FOR FUN AND PROFIT: AUTOSSH<i class="fa fa-external-link-alt"></i></span></p>
 
 
@@ -442,7 +446,10 @@
     <a href="/Blog/posts/833732900/" rel="prev" title="PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）">
       <i class="fa fa-chevron-left"></i> PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/Blog/posts/823759430/" rel="next" title="多版本CUDA及cuDNN管理">
+      多版本CUDA及cuDNN管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -518,7 +525,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -531,7 +538,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/Blog/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -572,12 +579,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">79k</span>
+    <span title="Symbols count total">81k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:24</span>
+    <span title="Reading time total">2:27</span>
 </div>
   <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span>
   </div>

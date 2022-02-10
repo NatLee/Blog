@@ -20,6 +20,33 @@
   </url>
   
   <url>
+    <loc>http://natlee.github.io/Blog/posts/2800319203/</loc>
+    
+    <lastmod>2022-02-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/posts/3672378701/</loc>
+    
+    <lastmod>2022-02-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/posts/165930856/</loc>
+    
+    <lastmod>2022-02-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://natlee.github.io/Blog/posts/4162982688/</loc>
     
     <lastmod>2022-02-10</lastmod>
@@ -93,6 +120,15 @@
   
   <url>
     <loc>http://natlee.github.io/Blog/posts/509187850/</loc>
+    
+    <lastmod>2022-02-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/posts/823759430/</loc>
     
     <lastmod>2022-02-10</lastmod>
     
@@ -201,33 +237,6 @@
   
   <url>
     <loc>http://natlee.github.io/Blog/posts/3924355189/</loc>
-    
-    <lastmod>2022-02-10</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://natlee.github.io/Blog/posts/2800319203/</loc>
-    
-    <lastmod>2022-02-10</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://natlee.github.io/Blog/posts/3672378701/</loc>
-    
-    <lastmod>2022-02-10</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://natlee.github.io/Blog/posts/165930856/</loc>
     
     <lastmod>2022-02-10</lastmod>
     
@@ -547,6 +556,48 @@
   
   <url>
     <loc>http://natlee.github.io/Blog/tags/tunnel/</loc>
+    <lastmod>2022-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/tags/cuda/</loc>
+    <lastmod>2022-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/tags/cudnn/</loc>
+    <lastmod>2022-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/tags/deep-learning/</loc>
+    <lastmod>2022-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/tags/ai/</loc>
+    <lastmod>2022-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/tags/linux/</loc>
+    <lastmod>2022-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/tags/ubuntu/</loc>
     <lastmod>2022-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
