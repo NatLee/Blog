@@ -17,7 +17,9 @@ timezone: 'Asia/Taipei'
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: http://natlee.github.io/Blog
 
-permalink: :year/:month/:day/:title/
+#permalink: :year/:month/:day/:title/
+permalink: posts/:abbrlink/
+
 
 permalink_defaults:
 
@@ -73,6 +75,12 @@ index_generator:
 # Category & Tag
 default_category: uncategorized
 category_map:
+  教學: teach
+  Hexo: hexo
+  NexT: next
+  SEO: seo
+  帖子: posts
+
 tag_map:
 
 # Metadata elements
@@ -120,3 +128,8 @@ symbols_count_time:
   awl: 2 #平均文字長度，中文為 2, 英文為 5, 預設為 4
   wpm: 275 #一分鐘閱讀字數，預設為 275
   suffix: "Min"
+
+# abbrlink config
+abbrlink:
+  alg: crc32  # 演算法：crc16(default) and crc32 
+  rep: dec    # 進位制：dec(default) and hex
