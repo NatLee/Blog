@@ -187,7 +187,6 @@ social:
   #YouTube: https://youtube.com/yourname || fab fa-youtube
   #Instagram: https://instagram.com/yourname || fab fa-instagram
   #Skype: skype:yourname?call|chat || fab fa-skype
-  rss: /atom.xml
 
 social_icons:
   enable: true
@@ -1004,9 +1003,3 @@ nofollow:
 	exclude:  # 不加上 nofollow 的友情連結可以放在這邊。
     - http://site1.com/
     - http://site2.com/
-
-#RSS訂閱
-feed:
-  type: atom
-  path: atom.xml
-  limit: 20
