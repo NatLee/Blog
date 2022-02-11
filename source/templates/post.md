@@ -6,7 +6,7 @@ tags:
   - 
   - 
   - 
-date: {{date}} {{time:HH:mm:ss}}
+date: {{date:YYYY-MM-DD HH:mm:ss}}
 ---
 
 
@@ -17,4 +17,6 @@ date: {{date}} {{time:HH:mm:ss}}
 
 ## 內容
 ----------
+
+
 
