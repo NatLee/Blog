@@ -1,8 +1,12 @@
 ---
 title: OpenCV學習筆記－安裝與開圖
-date: 2016-04-17
 categories: study
-tags: [opencv, code, c++]
+tags:
+  - opencv
+  - code
+  - c++
+abbrlink: 3012259224
+date: 2016-04-17 00:00:00
 ---
 
 ![](http://i.imgur.com/aEGYK6p.jpg)

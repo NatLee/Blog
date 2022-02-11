@@ -1,8 +1,13 @@
 ---
 title: MIUI7中WSM/XPOSED Framwork無法使用問題
-date: 2015-12-20
 categories: android
-tags: [android, miui, wsm, xiaomi]
+tags:
+  - android
+  - miui
+  - wsm
+  - xiaomi
+abbrlink: 1497250561
+date: 2015-12-20 00:00:00
 ---
 
 ## 前言

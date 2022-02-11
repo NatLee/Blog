@@ -1,8 +1,13 @@
 ---
 title: 使用docker container建立SSH反向通道穿透內網連接內部裝置
-date: 2022-02-09
 categories: blog
-tags: [docker, ssh, container, tunnel]
+tags:
+  - docker
+  - ssh
+  - container
+  - tunnel
+abbrlink: 509187850
+date: 2022-02-09 00:00:00
 ---
 
 ![](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)

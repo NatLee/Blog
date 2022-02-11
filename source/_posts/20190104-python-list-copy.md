@@ -1,8 +1,11 @@
 ---
 title: Python中List的Copy反直覺踩坑
-date: 2019-01-04
 categories: develop
-tags: [python, code, develop]
+tags:
+  - code
+  - python
+abbrlink: 165930856
+date: 2019-01-04 00:00:00
 ---
 
 ![](https://i.imgur.com/7mrHp3H.jpg)

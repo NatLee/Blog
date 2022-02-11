@@ -1,8 +1,15 @@
 ---
 title: 資安常識(3) - 簽驗章流程與完整憑證解析
-date: 2021-10-06
 categories: study
-tags: [cryptograph, security, signature, certificate, encoding, decoding]
+tags:
+  - cryptograph
+  - security
+  - signature
+  - certificate
+  - encoding
+  - decoding
+abbrlink: 736906820
+date: 2021-10-06 00:00:00
 ---
 
 

@@ -1,8 +1,12 @@
 ---
 title: 使用Container來快速建立開發環境(以python為例)
-date: 2021-09-06
 categories: develop
-tags: [docker, python, container]
+tags:
+  - docker
+  - python
+  - container
+abbrlink: 440569875
+date: 2021-09-06 00:00:00
 ---
 
 ## 前言

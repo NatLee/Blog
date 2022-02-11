@@ -1,8 +1,10 @@
 ---
 title: Blog Upgraded
-date: 2021-07-22 12:20:05
 categories: blog
-tags: [blog]
+tags:
+  - blog
+abbrlink: 1950864450
+date: 2021-07-22 12:20:05
 ---
 
 ## 前言

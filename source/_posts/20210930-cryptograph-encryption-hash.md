@@ -1,8 +1,13 @@
 ---
 title: 資安常識(2) - 對稱非對稱加密演算法與雜湊算法
-date: 2021-09-30
 categories: study
-tags: [cryptograph, security, encrypt, decrypt]
+tags:
+  - cryptograph
+  - security
+  - encrypt
+  - decrypt
+abbrlink: 1489926540
+date: 2021-09-30 00:00:00
 ---
 
 

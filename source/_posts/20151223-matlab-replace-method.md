@@ -1,8 +1,11 @@
 ---
 title: Matlab 取代語法
-date: 2015-12-23
 categories: develop
-tags: [matlab, code]
+tags:
+  - matlab
+  - code
+abbrlink: 419938887
+date: 2015-12-23 00:00:00
 ---
 
 ## 前言

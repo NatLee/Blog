@@ -1,8 +1,15 @@
 ---
 title: 多版本CUDA及cuDNN管理
-date: 2022-02-10
 categories: develop
-tags: [cuda, cudnn, deep_learning, ai, linux, ubuntu]
+tags:
+  - cuda
+  - cudnn
+  - deep_learning
+  - ai
+  - linux
+  - ubuntu
+abbrlink: 823759430
+date: 2022-02-10 00:00:00
 ---
 
 ![](https://upload.wikimedia.org/wikipedia/commons/5/59/CUDA.png)

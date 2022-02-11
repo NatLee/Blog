@@ -1,8 +1,13 @@
 ---
 title: 在Hexo的主題jacman中使用Disqus
-date: 2015-08-18
 categories: blog
-tags: [hexo, disqus, github, comment]
+tags:
+  - hexo
+  - disqus
+  - github
+  - comment
+abbrlink: 3977034761
+date: 2015-08-18 00:00:00
 ---
 
 ## 前言

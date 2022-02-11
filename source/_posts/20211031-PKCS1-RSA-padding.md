@@ -1,8 +1,15 @@
 ---
 title: PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）
-date: 2021-10-31
 categories: study
-tags: [cryptograph, security, encoding, decoding, RSA, PKCS]
+tags:
+  - cryptograph
+  - security
+  - encoding
+  - decoding
+  - RSA
+  - PKCS
+abbrlink: 833732900
+date: 2021-10-31 00:00:00
 ---
 
 

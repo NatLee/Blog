@@ -1,8 +1,13 @@
 ---
 title: 使用Django框架建置圖片上傳與展示的平台
-date: 2018-06-20
 categories: develop
-tags: [django, python, web, platform]
+tags:
+  - django
+  - python
+  - web
+  - platform
+abbrlink: 2800319203
+date: 2018-06-20 00:00:00
 ---
 
 ![](https://i.imgur.com/PECvJrh.jpg)

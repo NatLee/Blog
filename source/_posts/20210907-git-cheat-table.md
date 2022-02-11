@@ -1,8 +1,11 @@
 ---
 title: Git 筆記
-date: 2021-09-07
 categories: develop
-tags: [git, develop]
+tags:
+  - git
+  - develop
+abbrlink: 4239708371
+date: 2021-09-07 00:00:00
 ---
 
 ## 前言

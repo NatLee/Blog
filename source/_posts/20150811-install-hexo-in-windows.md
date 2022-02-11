@@ -1,8 +1,14 @@
 ---
 title: Hexo在Windows上的安裝心得
-date: 2015-08-11
 categories: blog
-tags: [hexo, windows, github, blog, nodejs]
+tags:
+  - hexo
+  - windows
+  - github
+  - blog
+  - nodejs
+abbrlink: 2264945776
+date: 2015-08-11 00:00:00
 ---
 
 ## 前言

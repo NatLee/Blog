@@ -1,8 +1,12 @@
 ---
 title: 資安常識(1) - 公鑰基礎建設（PKI）概念
-date: 2021-09-17
 categories: study
-tags: [cryptograph, pki, security]
+tags:
+  - cryptograph
+  - pki
+  - security
+abbrlink: 1123965036
+date: 2021-09-17 00:00:00
 ---
 
 ## 前言

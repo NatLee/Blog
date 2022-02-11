@@ -1,8 +1,12 @@
 ---
 title: 解決SynologyNAS上Gitlab發生的502錯誤
-date: 2018-08-30
 categories: gitlab
-tags: [synology, nas, gitlab]
+tags:
+  - synology
+  - nas
+  - gitlab
+abbrlink: 3672378701
+date: 2018-08-30 00:00:00
 ---
 
 ![](https://i.imgur.com/F87nc59.jpg)

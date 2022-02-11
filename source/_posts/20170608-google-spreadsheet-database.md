@@ -1,8 +1,13 @@
 ---
 title: 以 Google 表單做資料庫使用方法
-date: 2017-06-08
 categories: blog
-tags: [google, database, googlesheet, blog]
+tags:
+  - google
+  - database
+  - googlesheet
+  - blog
+abbrlink: 3924355189
+date: 2017-06-08 00:00:00
 ---
 
 ![我很感動](http://i.imgur.com/CHxfjRG.jpg)

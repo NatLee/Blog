@@ -1,9 +1,12 @@
 ---
 title: Blog近代化改修
-date: 2016-01-28
 categories: blog
-tags: [blog]
+tags:
+  - blog
+abbrlink: 3907118332
+date: 2016-01-28 00:00:00
 ---
+
 
 ![何等鬼畜的行為](http://i.imgur.com/x3aK407.jpg)
 <center>*為美好的世界獻上祝福*</center>

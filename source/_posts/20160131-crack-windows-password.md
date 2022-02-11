@@ -1,8 +1,10 @@
 ---
 title: 修改Windows的登入密碼
-date: 2016-01-31
 categories: windows
-tags: [windows]
+tags:
+  - windows
+abbrlink: 3382314989
+date: 2016-01-31 00:00:00
 ---
 
 ![更重要的是努力的話總會有回報的](http://i.imgur.com/S6qH6xo.jpg)
