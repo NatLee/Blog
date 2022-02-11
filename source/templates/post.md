@@ -1,9 +1,14 @@
+
 ---
-title: 
-date: {{date}}
-categories:
-tags: []
+title: {{title}}
+categories: 
+tags:
+  - 
+  - 
+  - 
+date: {{date}} {{time:HH:mm:ss}}
 ---
+
 
 ## 前言
 ----------
@@ -12,3 +17,4 @@ tags: []
 
 ## 內容
 ----------
+
