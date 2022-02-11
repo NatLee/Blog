@@ -11,6 +11,24 @@
   </url>
   
   <url>
+    <loc>http://natlee.github.io/Blog/templates/post.html</loc>
+    
+    <lastmod>2022-02-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://natlee.github.io/Blog/posts/1489926540/</loc>
+    
+    <lastmod>2022-02-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://natlee.github.io/Blog/posts/736906820/</loc>
     
     <lastmod>2022-02-11</lastmod>
@@ -66,15 +84,6 @@
   
   <url>
     <loc>http://natlee.github.io/Blog/categories/index.html</loc>
-    
-    <lastmod>2022-02-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://natlee.github.io/Blog/posts/1489926540/</loc>
     
     <lastmod>2022-02-11</lastmod>
     
