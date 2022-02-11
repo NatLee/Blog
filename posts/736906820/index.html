@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://i.imgur.com/mQjOBte.png">
 <meta property="og:image" content="https://miro.medium.com/max/2400/1*ShM4dle1AXnR9pvZ1gTKfA.png">
 <meta property="article:published_time" content="2021-10-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-11T04:15:15.055Z">
+<meta property="article:modified_time" content="2022-02-11T05:47:48.613Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cryptograph">
 <meta property="article:tag" content="security">
@@ -241,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-11 12:15:15" itemprop="dateModified" datetime="2022-02-11T12:15:15+08:00">2022-02-11</time>
+                <time title="Modified: 2022-02-11 13:47:48" itemprop="dateModified" datetime="2022-02-11T13:47:48+08:00">2022-02-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -407,7 +407,7 @@
 <ul>
 <li><p>+ -&gt; -<br>  這是因爲網站對路徑解析的時候，加號會被當成參數，所以得換掉。</p>
 </li>
-<li><p>/ -&gt; _<br>  這是因爲網站解析斜線會被當成子路徑，所以也得換掉。</p>
+<li><p>&#x2F; -&gt; _<br>  這是因爲網站解析斜線會被當成子路徑，所以也得換掉。</p>
 </li>
 </ul>
 <p>那麼，這個編碼方式通常被用來網路服務直接存取base64 URL文字再解碼成binary的做法。</p>
@@ -446,7 +446,7 @@
 <p>接下來，就要看看Type有哪些。</p>
 <p>根據<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvWC42OTAjVHlwZXM=">維基百科<i class="fa fa-external-link-alt"></i></span>上面列的表格：</p>
 <p><img src="https://i.imgur.com/uNle3pT.png" alt="types"></p>
-<p>最左邊的<code>Name</code>是指這個type / tag / label / class的名稱（超多種代稱）。</p>
+<p>最左邊的<code>Name</code>是指這個type &#x2F; tag &#x2F; label &#x2F; class的名稱（超多種代稱）。</p>
 <p>再來，<code>Permitted Construction</code>是指說這個class必須是哪種類型，是permitive？還是constructed？或是我全都要。</p>
 <p>這邊會有疑問的是permitive到底是什麼？</p>
 <p><img src="https://i.imgur.com/EzHgkFf.png" alt="permitive"></p>
@@ -462,14 +462,14 @@
 <p>這邊舉例一個tag就是<code>0x30</code>的<code>sequence</code>，以二進位表示就是<code>0011 0000</code>。</p>
 <p>以表格的模式拆解，會得到Octet1，變成<code>00 1 10000</code>。</p>
 <p>從這邊可以看對上一個表格中，sequence的decimal表示是<code>16</code>，也就是二進位的<code>10000</code>。</p>
-<p>那麼，它是的P/C是Primitive，也就是<code>1</code>，所以我們可以得到<code>110000</code>。</p>
+<p>那麼，它是的P&#x2F;C是Primitive，也就是<code>1</code>，所以我們可以得到<code>110000</code>。</p>
 <p>可是前綴還有<code>00</code>，這要怎麼解釋？</p>
 <p>維基上面還有另外兩個表格，如下：</p>
 <p><img src="https://i.imgur.com/Gdm97rH.png" alt="class_name"></p>
 <p>這邊第一個表格定義了我們Tag Class，也就是Tag的類型，有點饒舌，但就是Tag本身還有被分類的意思。</p>
 <p>那麼<code>0</code>就是所謂的ASN.1原生類別，寫成16進位就是<code>0x00</code>。</p>
 <p>ASN.1我們等等會提到。</p>
-<p>第二個表格則是再解釋了一次P/C的意思。</p>
+<p>第二個表格則是再解釋了一次P&#x2F;C的意思。</p>
 <p>這樣線索都找齊了，我們可以拼出<code>sequence</code>的真正編碼<code>00 1 10000</code>。</p>
 <p>可是剛剛說到的Octet 1後面還有一個Octet 2 onwards是什麼意思？</p>
 <p>這時就要提到有一個東西叫Long form，也就是萬一我們與時俱進，多了很多tag，導致編號超過5個bit長度的時候，就會用到了。</p>
@@ -594,12 +594,13 @@
 </li>
 <li><p>signature<br>  CA對這張憑證簽章的時候是使用什麼演算法。</p>
 <ul>
-<li>algorithm<br>  簽章使用的演算法。<br><code>OBJECT IDENTIFIER 1.2.840.113549.1.1.11 sha256WithRSAEncryption (PKCS #1)</code></li>
+<li>algorithm<br>  簽章使用的演算法。<br>  <code>OBJECT IDENTIFIER 1.2.840.113549.1.1.11 sha256WithRSAEncryption (PKCS #1)</code></li>
 <li>parameters<br>  簽章演算法需要的參數。大多時候都是<code>null</code>，以binary表示就是<code>05 00</code>。</li>
 </ul>
 </li>
 <li><p>issuer<br>  發起這個憑證的人或組織是誰，通常會寫組織名字（organizationName）跟一般稱呼（commonName）。</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">	<span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">	  <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.10</span> organizationName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">	  <span class="title class_">PrintableString</span> <span class="title class_">Digital</span> <span class="title class_">Signature</span> <span class="title class_">Trust</span> <span class="title class_">Co</span>.</span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">	<span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">	  <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.3</span> commonName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">	  <span class="title class_">PrintableString</span> <span class="variable constant_">DST</span> <span class="title class_">Root</span> <span class="variable constant_">CA</span> <span class="variable constant_">X3</span></span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">	<span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">	  <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.10</span> organizationName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">	  <span class="title class_">PrintableString</span> <span class="title class_">Digital</span> <span class="title class_">Signature</span> <span class="title class_">Trust</span> <span class="title class_">Co</span>.</span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">	<span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">	  <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.3</span> commonName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">	  <span class="title class_">PrintableString</span> <span class="variable constant_">DST</span> <span class="title class_">Root</span> <span class="variable constant_">CA</span> <span class="variable constant_">X3</span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>validity<br>  一張憑證的有效期限。</p>
 <ul>
 <li>notBefore<br>  在這之前無效。</li>
@@ -618,17 +619,19 @@
 <blockquote>
 <p>Type GeneralizedTime takes values of the year, month, day, hour, time, minute,second, and second fraction in any of three forms.</p>
 <ol>
-<li> Local time only. ``YYYYMMDDHH[MM[SS[.fff]]]‘’, where the optional fff is accurate to three decimal places.</li>
-<li> Universal time (UTC time) only. ``YYYYMMDDHH[MM[SS[.fff]]]Z’’.</li>
-<li> Difference between local and UTC times. ``YYYYMMDDHH[MM[SS[.fff]]]+-HHMM’’.</li>
+<li>Local time only. &#96;&#96;YYYYMMDDHH[MM[SS[.fff]]]‘’, where the optional fff is accurate to three decimal places.</li>
+<li>Universal time (UTC time) only. &#96;&#96;YYYYMMDDHH[MM[SS[.fff]]]Z’’.</li>
+<li>Difference between local and UTC times. &#96;&#96;YYYYMMDDHH[MM[SS[.fff]]]+-HHMM’’.</li>
 </ol>
 </blockquote>
 <p>  那有個問題是，爲什麼要分成兩種格式？</p>
 <p>  這是因爲一開始設計的人沒想過人類竟然會活過西元2000年。（並沒有<br>  其實是因爲以前電腦記憶體很珍貴，要盡量減少資源消耗，所以才把西元年縮減成兩位，也就是UTCTime（從1950開始）。<br>  但是，後來過2000年發現這東西遲早會遇到Bug，就是萬一時間到2051年就會被表示成1951年，所以才出現GeneralizedTime。</p>
-<p>  所以，RFC裏面也規定憑證在2050之後MUST全面使用GeneralizedTime。</p>
+<p>  所以，RFC裏面也規定憑證在2050之後MUST全面使用GeneralizedTime。
+      </p>
 </li>
 <li><p>subject<br>  這張憑證是要頒給誰的，通常會寫國家（countryName）、組織名稱（organizationName）及一般稱呼（commonName）。</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">SEQUENCE</span> (<span class="number">3</span> elem)</span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">    <span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">      <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.6</span> countryName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">      <span class="title class_">PrintableString</span> <span class="variable constant_">US</span></span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">    <span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">      <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.10</span> organizationName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">      <span class="title class_">PrintableString</span> <span class="title class_">Let</span><span class="string">&#x27;s Encrypt</span></span><br><span class="line"><span class="string">  SET (1 elem)</span></span><br><span class="line"><span class="string">    SEQUENCE (2 elem)</span></span><br><span class="line"><span class="string">      OBJECT IDENTIFIER 2.5.4.3 commonName (X.520 DN component)</span></span><br><span class="line"><span class="string">      PrintableString Let&#x27;</span>s <span class="title class_">Encrypt</span> <span class="title class_">Authority</span> <span class="variable constant_">X3</span>	</span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">SEQUENCE</span> (<span class="number">3</span> elem)</span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">    <span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">      <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.6</span> countryName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">      <span class="title class_">PrintableString</span> <span class="variable constant_">US</span></span><br><span class="line">  <span class="variable constant_">SET</span> (<span class="number">1</span> elem)</span><br><span class="line">    <span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">      <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">2.5</span><span class="number">.4</span><span class="number">.10</span> organizationName (X<span class="number">.520</span> <span class="variable constant_">DN</span> component)</span><br><span class="line">      <span class="title class_">PrintableString</span> <span class="title class_">Let</span><span class="string">&#x27;s Encrypt</span></span><br><span class="line"><span class="string">  SET (1 elem)</span></span><br><span class="line"><span class="string">    SEQUENCE (2 elem)</span></span><br><span class="line"><span class="string">      OBJECT IDENTIFIER 2.5.4.3 commonName (X.520 DN component)</span></span><br><span class="line"><span class="string">      PrintableString Let&#x27;</span>s <span class="title class_">Encrypt</span> <span class="title class_">Authority</span> <span class="variable constant_">X3</span>	</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>subjectPublicKeyInfo<br>  申請人的公鑰資訊。</p>
 <ul>
 <li>algorithm<br>  公鑰是適用於哪種非對稱加密演算法的。</li>
@@ -637,7 +640,8 @@
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">  <span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">    <span class="variable constant_">OBJECT</span> <span class="variable constant_">IDENTIFIER</span> <span class="number">1.2</span><span class="number">.840</span><span class="number">.113549</span><span class="number">.1</span><span class="number">.1</span><span class="number">.1</span> rsaEncryption (<span class="variable constant_">PKCS</span> #<span class="number">1</span>)</span><br><span class="line">    <span class="variable constant_">NULL</span></span><br><span class="line">  <span class="variable constant_">BIT</span> <span class="variable constant_">STRING</span> (<span class="number">2160</span> bit) <span class="number">0011000010000010000000</span>…</span><br><span class="line">    <span class="variable constant_">SEQUENCE</span> (<span class="number">2</span> elem)</span><br><span class="line">      <span class="variable constant_">INTEGER</span> (<span class="number">2048</span> bit) <span class="number">197972484760754376823558522464922272</span>…</span><br><span class="line">      <span class="variable constant_">INTEGER</span> <span class="number">65537</span></span><br></pre></td></tr></table></figure>
 
 <p>  這個範例我們可以看到它適用於RSA，然後底下的金鑰有2048 bit，也就是RSA-2048。另外，我們可以發現65537，就是我們上次說的RSA中公鑰(N, e)裏面<code>e</code>。</p>
-<p>  問題是爲什麼是65537？<br>  這邊我就不詳細說明了，有興趣的可以參考<span class="exturl" data-url="aHR0cHM6Ly9jcnlwdG8uc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzMxMTAvaW1wYWN0cy1vZi1ub3QtdXNpbmctcnNhLWV4cG9uZW50LW9mLTY1NTM3LzMxMTM=">這邊<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>  問題是爲什麼是65537？<br>  這邊我就不詳細說明了，有興趣的可以參考<span class="exturl" data-url="aHR0cHM6Ly9jcnlwdG8uc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzMxMTAvaW1wYWN0cy1vZi1ub3QtdXNpbmctcnNhLWV4cG9uZW50LW9mLTY1NTM3LzMxMTM=">這邊<i class="fa fa-external-link-alt"></i></span>。
+  </p>
 </li>
 <li><p>issuerUniqueID（Optional）<br>  憑證發起者的唯一ID。</p>
 <p>  RFC裏面有提到</p>
@@ -652,8 +656,6 @@
 </blockquote>
 <p>  這個問題會變成雖然CA可以按照憑證編號去判斷，但也只能判斷是發出的不同張憑證，卻無法判斷故事中A到底是舊的還是新的，也就是因爲這樣才需要唯一識別的方式。</p>
 </li>
-</ul>
-<ul>
 <li><p>subjectUniqueID（Optional）<br>  申請人的唯一ID。</p>
 <p>  RFC裏面有提到</p>
 <blockquote>
@@ -944,7 +946,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:27</span>
+    <span title="Reading time total">2:28</span>
 </div>
   <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span>
   </div>

@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://i.imgur.com/O2349Yt.png">
 <meta property="og:image" content="https://i.imgur.com/FCFlPXi.png">
 <meta property="article:published_time" content="2021-10-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-11T04:15:15.055Z">
+<meta property="article:modified_time" content="2022-02-11T05:47:48.613Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cryptograph">
 <meta property="article:tag" content="security">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-11 12:15:15" itemprop="dateModified" datetime="2022-02-11T12:15:15+08:00">2022-02-11</time>
+                <time title="Modified: 2022-02-11 13:47:48" itemprop="dateModified" datetime="2022-02-11T13:47:48+08:00">2022-02-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,7 +250,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>6k</span>
+              <span>6.1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -292,7 +292,7 @@
 <p>  就是我們熟知的公鑰(N, e)。</p>
 <p>  其中，N是兩個質數p、q相乘。<br>  那麼，e是根據費馬小定理去計算：</p>
 <blockquote>
-<p>r = ɸ(N) = ɸ(p) ɸ(q) = (p-1)(q-1)</p>
+<p>r &#x3D; ɸ(N) &#x3D; ɸ(p) ɸ(q) &#x3D; (p-1)(q-1)</p>
 </blockquote>
 <p>  然後，找一個小於 r 且互質的整數，就是e。</p>
 <p>  這個e通常是<code>65537</code>，因爲安全性問題。</p>
@@ -325,14 +325,14 @@
 <blockquote>
 <p><strong>I2OSP(x, L)</strong><br>x: nonnegative integer, but less than 256^L.<br>L: octet string 的字節長度(length)，一個字節是8-bit。</p>
 <blockquote>
-<p>這邊有個範例<br>I2OSP(4095, 2) = 0F:FF</p>
+<p>這邊有個範例<br>I2OSP(4095, 2) &#x3D; 0F:FF</p>
 </blockquote>
 </blockquote>
 <h5 id="OS2IP"><a href="#OS2IP" class="headerlink" title="OS2IP"></a>OS2IP</h5><p>Octet-String-to-Integer primitive<br>文字轉數字</p>
 <blockquote>
 <p><strong>OS2IP(X)</strong><br>X: octet string，出來的輸出就是按照位數進行二進位值的相加。</p>
 <blockquote>
-<p>這邊有個範例<br>OS2IP(0F:FF) = 4095（因爲<code>0x0FFF = 0000 1111 1111 1111</code>）</p>
+<p>這邊有個範例<br>OS2IP(0F:FF) &#x3D; 4095（因爲<code>0x0FFF = 0000 1111 1111 1111</code>）</p>
 </blockquote>
 </blockquote>
 <h4 id="Cryptographic-Primitives"><a href="#Cryptographic-Primitives" class="headerlink" title="Cryptographic Primitives"></a>Cryptographic Primitives</h4><hr>
@@ -352,7 +352,7 @@
 <h5 id="中國餘式定理加速運算"><a href="#中國餘式定理加速運算" class="headerlink" title="中國餘式定理加速運算"></a>中國餘式定理加速運算</h5><p>我們知道明文<code>m = c^d mod n</code>，<code>c</code>是密文，<code>d</code>是私鑰組成的其中一個元素，<code>n</code>則是兩個大質數<code>p</code>跟<code>q</code>相乘。</p>
 <p>那麼，我們可以把這個公式依照餘數定理轉換形式得到兩式：</p>
 <blockquote>
-<p>c^d mod p = m1 —(1)<br>c^d mod q = m2 —(2)</p>
+<p>c^d mod p &#x3D; m1 —(1)<br>c^d mod q &#x3D; m2 —(2)</p>
 </blockquote>
 <p>其中，(1)式中的<code>m1</code>可以使用費馬小定理簡化運算，我們把<code>d = d mod (p-1)</code>帶入：</p>
 <blockquote>
@@ -361,15 +361,15 @@
 <p>m2同理。</p>
 <p>接着，我們令一常數爲<code>h</code>，(2)式可以改寫爲<code>c^d = m2 + hq</code>，代入第(1)式：</p>
 <blockquote>
-<p>(m2 + hq) mod p = m1<br>→ (m1 - m2) mod p = hq</p>
+<p>(m2 + hq) mod p &#x3D; m1<br>→ (m1 - m2) mod p &#x3D; hq</p>
 </blockquote>
 <p>因爲<code>p</code>跟<code>q</code>互質，我們可以將兩邊同乘<code>q</code>的倒數<code>q^(-1)</code>得到：</p>
 <blockquote>
-<p>((m1 - m2 ) q^(-1))  mod p = h q q^(-1)<br>-&gt; h = ((m1 - m2 ) q^(-1))  mod p</p>
+<p>((m1 - m2 ) q^(-1))  mod p &#x3D; h q q^(-1)<br>-&gt; h &#x3D; ((m1 - m2 ) q^(-1))  mod p</p>
 </blockquote>
 <p>最後，我們知道<code>n=pq</code>，所以可以推得：</p>
 <blockquote>
-<p>m = c^d mod n = m2 + hq</p>
+<p>m &#x3D; c^d mod n &#x3D; m2 + hq</p>
 </blockquote>
 <p>因爲這邊公式沒有用數學格式表示，可能比較難看，可以參考<span class="exturl" data-url="aHR0cDovL2ppYW5pYXUuYmxvZ3Nwb3QuY29tLzIwMTQvMDUvcnNhLWRlY3J5cHQtd2l0aC1jcnQuaHRtbA==">這邊<i class="fa fa-external-link-alt"></i></span>，會有比較好看的敘述。</p>
 <p>程式上的實作可以參考<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ2Vla3Nmb3JnZWVrcy5vcmcvd2Vhay1yc2EtZGVjcnlwdGlvbi1jaGluZXNlLXJlbWFpbmRlci10aGVvcmVtLw==">這邊<i class="fa fa-external-link-alt"></i></span>，以下是節錄並修改成python3版本的程式碼。</p>
@@ -403,7 +403,7 @@
 <p>上面有說到編碼產生<code>EM</code>，那這個<code>EM</code>（Encoded Message）到底是怎麼組成的？</p>
 <p>PKCS裏面是這樣寫的：</p>
 <blockquote>
-<p>EM = 00 || BT || PS || 00 || M</p>
+<p>EM &#x3D; 00 || BT || PS || 00 || M</p>
 </blockquote>
 <p>裏面的<code>||</code>是分割符號，<code>BT</code>是資料塊的型別（Block Type），<code>PS</code>是填充用字串（Padding String），<code>M</code>是明文資料（Message）。</p>
 <p>根據這個定義拼湊出EM，我們就可以得到一個具有PKCS承認合法的padding格式。</p>
@@ -670,7 +670,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:27</span>
+    <span title="Reading time total">2:28</span>
 </div>
   <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span>
   </div>

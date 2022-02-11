@@ -30,7 +30,7 @@
 <meta property="og:description" content="前言 接續上次的PKI，我們知道有件事是資安裏面一定會遇到的事！ 也就是大家的密碼絕對不會用明文呈現。 那麼，我們要如何把一段明文變成密碼呢？">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-11T04:15:15.055Z">
+<meta property="article:modified_time" content="2022-02-11T05:47:48.613Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cryptograph">
 <meta property="article:tag" content="security">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-11 12:15:15" itemprop="dateModified" datetime="2022-02-11T12:15:15+08:00">2022-02-11</time>
+                <time title="Modified: 2022-02-11 13:47:48" itemprop="dateModified" datetime="2022-02-11T13:47:48+08:00">2022-02-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,7 +237,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>8k</span>
+              <span>8.1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -324,8 +324,8 @@
 <p>首先，我們要產生一對公私鑰：</p>
 <ol>
 <li>選擇兩個大的質數： p, q</li>
-<li>計算 N = p ꞏ q</li>
-<li>計算 r = ɸ(N) = ɸ(p) ɸ(q) = (p-1)(q-1)</li>
+<li>計算 N &#x3D; p ꞏ q</li>
+<li>計算 r &#x3D; ɸ(N) &#x3D; ɸ(p) ɸ(q) &#x3D; (p-1)(q-1)</li>
 <li>找一個小於 r 且互質的整數 e</li>
 <li>找 e 的mod倒數 d 使 e ꞏ d ≡ 1 (mod r)</li>
 <li>獲得公鑰：(N ,e), 私鑰：(N ,d)</li>
@@ -333,7 +333,7 @@
 <p>ɸ(N)是尤拉函數，也就是從1到N，有多少跟N互質的數。<br>假設N是7，我們知道是一個質數，從1到7總共有6個數字1, 2, 3, 4, 5, 6都跟7互質，所以ɸ(7)就等於6。<br>由這邊可以知道當N是質數的話，ɸ(N) 就等於N-1。</p>
 <p>那麼，我們舉一個產生鑰匙的簡單例子來看看：</p>
 <blockquote>
-<p>N = p * q = 47 * 71 = 3337<br>φ(N) = 3220 <em>(46*70)</em><br>找一個和 3220 互質的數字，得鑰匙 (N, e) = (3337, 79)<br>有p、q跟e，得另一個對應的鑰匙 (N, d) = (3337, 1019)</p>
+<p>N &#x3D; p * q &#x3D; 47 * 71 &#x3D; 3337<br>φ(N) &#x3D; 3220 <em>(46*70)</em><br>找一個和 3220 互質的數字，得鑰匙 (N, e) &#x3D; (3337, 79)<br>有p、q跟e，得另一個對應的鑰匙 (N, d) &#x3D; (3337, 1019)</p>
 </blockquote>
 <p>接下來，我們要使用這對鑰匙來進行加解密。</p>
 <p>先搬出公式：</p>
@@ -348,7 +348,7 @@
 <p>我們可以發現兩種不同加解密方式只有<code>d</code>跟<code>e</code>互換而已。</p>
 <p>接著，我們舉一個簡單的範例來看看，但要注意的是實際使用並不會這麼簡單。</p>
 <blockquote>
-<p>有一段明文M以16進位(hex，更細來看也可以說是binary)表示爲 <strong>0069 0073</strong><br>用剛剛範例的公鑰加密，把明文分成兩塊0069跟0073分別加密<br>C1 = <strong>0069</strong>^79 (mod 3337) = 00C1<br>C2 = <strong>0073</strong>^79 (mod 3337) = 02DC<br>最後合併得到結果C = <strong>00C1 02DC</strong><br>解密則是反向操作，拿私鑰解密，會得到原本的明文 0069 0073<br>這邊要注意的是不能比每一塊大小不能比N還大，因爲我們是取餘數，如果比較大的話，根據同餘的計算，加密會加成錯誤的結果，解密當然也會解成錯誤的明文（也就是解密失敗）。</p>
+<p>有一段明文M以16進位(hex，更細來看也可以說是binary)表示爲 <strong>0069 0073</strong><br>用剛剛範例的公鑰加密，把明文分成兩塊0069跟0073分別加密<br>C1 &#x3D; <strong>0069</strong>^79 (mod 3337) &#x3D; 00C1<br>C2 &#x3D; <strong>0073</strong>^79 (mod 3337) &#x3D; 02DC<br>最後合併得到結果C &#x3D; <strong>00C1 02DC</strong><br>解密則是反向操作，拿私鑰解密，會得到原本的明文 0069 0073<br>這邊要注意的是不能比每一塊大小不能比N還大，因爲我們是取餘數，如果比較大的話，根據同餘的計算，加密會加成錯誤的結果，解密當然也會解成錯誤的明文（也就是解密失敗）。</p>
 </blockquote>
 <p>剛剛提到padding，RSA的填充方式也有很多種（還有公私鑰的區別），有全部填FF，還有填亂數的做法。這邊要參照<span class="exturl" data-url="aHR0cHM6Ly9kYXRhdHJhY2tlci5pZXRmLm9yZy9kb2MvaHRtbC9yZmMzNDQ3">PKCS#1<i class="fa fa-external-link-alt"></i></span>去瞭解它有哪些填充方式。（我覺得最麻煩的是RSA-OAEP）</p>
 <p>另外，看到這邊就知道加解密不能直接字串去進行數學運算，因爲數學，總是要數字嘛，所以我們得把字串轉成數字。那麼，唯一的方法就是二進位格式。</p>
@@ -410,7 +410,7 @@
 
 <p>我們可以看到中間，有個<code>k</code>的變數，如下：</p>
 <blockquote>
-<p>k := 0x5A827999<br>k := 0x6ED9EBA1<br>k := 0x8F1BBCDC<br>k := 0xCA62C1D6</p>
+<p>k :&#x3D; 0x5A827999<br>k :&#x3D; 0x6ED9EBA1<br>k :&#x3D; 0x8F1BBCDC<br>k :&#x3D; 0xCA62C1D6</p>
 </blockquote>
 <p>這些在這邊被稱爲鹽（Salt），但爲什麼是這些數字，我也沒研究。</p>
 <p>但是，SHA-1最重要的精髓就是中間那80-round，它把資料壓縮成160-bit，並且在每次迴圈都使用破壞性相加，所以也沒辦法回推初始值是什麼。</p>
@@ -421,12 +421,12 @@
 <p>這邊會有個疑問就是，我們剛剛說因爲五個32-bit暫存器，所以輸出爲160 bits的長度，可是爲什麼一開始維基百科最後一句說輸出其實是四十個十六進位值？</p>
 <p>這個問題在<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzcwNDAxMC93aHktaXMtYS1zaGEtMS1oYXNoLTQwLWNoYXJhY3RlcnMtbG9uZy1pZi1pdC1pcy1vbmx5LTE2MC1iaXQ=">這邊<i class="fa fa-external-link-alt"></i></span>可以找到答案。</p>
 <blockquote>
-<p>One hex character can only represent 16 different values, i.e. 4 bits. (16 = 24)<br>40 × 4 = 160.</p>
+<p>One hex character can only represent 16 different values, i.e. 4 bits. (16 &#x3D; 24)<br>40 × 4 &#x3D; 160.</p>
 </blockquote>
-<p>因爲我們用字元呈現，那麼每個字元是4-bit，我們就可以推算以字串的表示方式的長度爲 2^160 = 16^40，也就是需要四十個十六進位值來表示。</p>
+<p>因爲我們用字元呈現，那麼每個字元是4-bit，我們就可以推算以字串的表示方式的長度爲 2^160 &#x3D; 16^40，也就是需要四十個十六進位值來表示。</p>
 <p>這邊也有另外一個<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMjY0NDE5MzEvc2hhMS1lbmNvZGluZy10by1oZXgtaGFzLTQwLWNoYXJhY3RlcnMtYW5kLTE2MC1iaXRz">解答<i class="fa fa-external-link-alt"></i></span></p>
 <blockquote>
-<p>160 bits / 8 = 20 bytes; a byte in hex is 2 characters (<code>00</code> to <code>FF</code>) and 2 * 20 = 40 hex characters.<br>The longer output is the hexadecimally encoded version of the hexadecimal encoded hash.</p>
+<p>160 bits &#x2F; 8 &#x3D; 20 bytes; a byte in hex is 2 characters (<code>00</code> to <code>FF</code>) and 2 * 20 &#x3D; 40 hex characters.<br>The longer output is the hexadecimally encoded version of the hexadecimal encoded hash.</p>
 </blockquote>
 <p>最後，我們看看空字串的SHA-1雜湊值，如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHA-1(<span class="string">&quot;&quot;</span>) = da39a3ee5e6b4b0d3255bfef95601890afd80709</span><br></pre></td></tr></table></figure>
@@ -435,17 +435,17 @@
 <h5 id="SHA-2"><a href="#SHA-2" class="headerlink" title="SHA-2"></a>SHA-2</h5><hr>
 <p>我們來看看維基百科怎麼描述SHA-2：</p>
 <blockquote>
-<p>SHA-2，名稱來自於安全雜湊演算法2（英語：Secure Hash Algorithm 2）的縮寫，一種密碼雜湊函式演算法標準，由美國國家安全局研發，由美國國家標準與技術研究院（NIST）在2001年發布。屬於SHA演算法之一，是SHA-1的後繼者。其下又可再分為六個不同的演算法標準，包括了：SHA-224、SHA-256、SHA-384、SHA-512、SHA-512/224、SHA-512/256。</p>
+<p>SHA-2，名稱來自於安全雜湊演算法2（英語：Secure Hash Algorithm 2）的縮寫，一種密碼雜湊函式演算法標準，由美國國家安全局研發，由美國國家標準與技術研究院（NIST）在2001年發布。屬於SHA演算法之一，是SHA-1的後繼者。其下又可再分為六個不同的演算法標準，包括了：SHA-224、SHA-256、SHA-384、SHA-512、SHA-512&#x2F;224、SHA-512&#x2F;256。</p>
 </blockquote>
 <p>由上面這段，我們可以知道SHA-2使用更多參數來提高混合性，進而誕生SHA-224、SHA-256等等雜湊算法。</p>
-<p>以SHA-256爲例子來說，它的256我們可以由SHA-1猜測到32 * 8 = 256。</p>
+<p>以SHA-256爲例子來說，它的256我們可以由SHA-1猜測到32 * 8 &#x3D; 256。</p>
 <p>也就是它擁有八個32-bit暫存器， 如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">h0 := 0x6a09e667</span><br><span class="line">h1 := 0xbb67ae85</span><br><span class="line">h2 := 0x3c6ef372</span><br><span class="line">h3 := 0xa54ff53a</span><br><span class="line">h4 := 0x510e527f</span><br><span class="line">h5 := 0x9b05688c</span><br><span class="line">h6 := 0x1f83d9ab</span><br><span class="line">h7 := 0x5be0cd19</span><br></pre></td></tr></table></figure>
 
 <p>它最後會產生256-bit的摘要長度資料。</p>
 <p>算法跟SHA-1相比，也是大同小異，可以直接參照<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvU0hBLTIjJUU2JUJDJTk0JUU3JUFFJTk3JUU2JUIzJTk1">維基百科<i class="fa fa-external-link-alt"></i></span>。</p>
 <p>最後有個問題，不管是SHA-1還是SHA-2，我們說暫存器是32-bit，但是暫存器初始值爲什麼卻有八個十六進位值？</p>
-<p>因爲我們用八個十六進位值去表示八個字元長度的字串，也就是一個字元是4-bit，那就是8 * 4 = 32 bits。</p>
+<p>因爲我們用八個十六進位值去表示八個字元長度的字串，也就是一個字元是4-bit，那就是8 * 4 &#x3D; 32 bits。</p>
 <h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><hr>
 <p>我們從對稱與非對稱的加密演算法瞭解可以保障PKI中敘述的資料傳遞的隱密性，也從不同演算法瞭解安全的意義。</p>
 <p>雜湊演算法則是因爲低碰撞性的原因，讓我們可以檢查傳遞資料的完整性。</p>
@@ -640,7 +640,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:27</span>
+    <span title="Reading time total">2:28</span>
 </div>
   <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span>
   </div>

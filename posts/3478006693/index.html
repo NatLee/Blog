@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://i.imgur.com/e3458Z0.png">
 <meta property="og:image" content="http://i.imgur.com/Mql1XuL.png">
 <meta property="article:published_time" content="2016-04-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-11T04:15:15.055Z">
+<meta property="article:modified_time" content="2022-02-11T05:47:48.613Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="code">
 <meta property="article:tag" content="opencv">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-11 12:15:15" itemprop="dateModified" datetime="2022-02-11T12:15:15+08:00">2022-02-11</time>
+                <time title="Modified: 2022-02-11 13:47:48" itemprop="dateModified" datetime="2022-02-11T13:47:48+08:00">2022-02-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,7 +241,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.4k</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -264,7 +264,7 @@
 <center>*最弱無敗機龍*</center>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>RGB轉HSV，並分離成單通道R/G/B與H/S/V</p>
+<p>RGB轉HSV，並分離成單通道R&#x2F;G&#x2F;B與H&#x2F;S&#x2F;V</p>
 <span id="more"></span>
 
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><hr>
@@ -279,21 +279,21 @@
 <p>這樣就成功以內建函式的方式轉換了原圖</p>
 <p><img src="http://i.imgur.com/l6lihNQ.png"></p>
 <p>詳細轉換的方式可參考OpenCV文件<br><span class="exturl" data-url="aHR0cDovL2RvY3Mub3BlbmN2Lm9yZy8yLjQvbW9kdWxlcy9pbWdwcm9jL2RvYy9taXNjZWxsYW5lb3VzX3RyYW5zZm9ybWF0aW9ucy5odG1sP2hpZ2hsaWdodD1jdnRjb2xvciNjdnRjb2xvcg==">點我到OpenCV<i class="fa fa-external-link-alt"></i></span></p>
-<p>再來為了分離三個通道成R/G/B得先宣告存放空間並把img分離</p>
+<p>再來為了分離三個通道成R&#x2F;G&#x2F;B得先宣告存放空間並把img分離</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">IplImage* Bimg=<span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(img),<span class="number">8</span>,<span class="number">1</span>);</span><br><span class="line">IplImage* Gimg=<span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(img),<span class="number">8</span>,<span class="number">1</span>);</span><br><span class="line">IplImage* Rimg=<span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(img),<span class="number">8</span>,<span class="number">1</span>);</span><br><span class="line"><span class="built_in">cvSplit</span>(img, Bimg, Gimg, Rimg, <span class="number">0</span>);<span class="comment">//複製各個通道到三個空間</span></span><br><span class="line"><span class="comment">//目標圖像必須與來源圖像在大小和資料型態上一樣</span></span><br><span class="line"><span class="comment">//輸入多通道，輸出為B，G，R單通道</span></span><br></pre></td></tr></table></figure>
 
 <p>但這時要注意，圖片因為單通道所以還是<strong>灰階的</strong><br>要再宣告三個三通道的圖片空間</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IplImage* pImg1=<span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(img),<span class="number">8</span>,<span class="number">3</span>);</span><br><span class="line">IplImage* pImg2=<span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(img),<span class="number">8</span>,<span class="number">3</span>);</span><br><span class="line">IplImage* pImg3=<span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(img),<span class="number">8</span>,<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
 <p>並且把空間初始化</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cvSetZero</span>(pImg1);</span><br><span class="line"><span class="built_in">cvSetZero</span>(pImg2);</span><br><span class="line"><span class="built_in">cvSetZero</span>(pImg3);</span><br></pre></td></tr></table></figure>
-<p>此時，把三個通道合成後可以得到一張完整的圖(R/G/B)</p>
+<p>此時，把三個通道合成後可以得到一張完整的圖(R&#x2F;G&#x2F;B)</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注意順序是BGR</span></span><br><span class="line"><span class="built_in">cvMerge</span>(Bimg,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,pImg3);</span><br><span class="line"><span class="built_in">cvMerge</span>(<span class="number">0</span>,Gimg,<span class="number">0</span>,<span class="number">0</span>,pImg2);</span><br><span class="line"><span class="built_in">cvMerge</span>(<span class="number">0</span>,<span class="number">0</span>,Rimg,<span class="number">0</span>,pImg1);</span><br><span class="line"><span class="comment">//將三個通道合成</span></span><br><span class="line"><span class="comment">//輸入参數為B，G，R單通道，最後一個為輸出</span></span><br></pre></td></tr></table></figure>
 <p>最後，開個視窗把圖片輸出就成了<br>注意這邊是輸出<strong>pImg1、pImg2、pImg3</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">namedWindow</span>(<span class="string">&quot;B&quot;</span>, WINDOW_AUTOSIZE);</span><br><span class="line"><span class="built_in">cvShowImage</span>(<span class="string">&quot;B&quot;</span>, pImg3);</span><br><span class="line"><span class="built_in">namedWindow</span>(<span class="string">&quot;G&quot;</span>, WINDOW_AUTOSIZE);</span><br><span class="line"><span class="built_in">cvShowImage</span>(<span class="string">&quot;G&quot;</span>, pImg2);</span><br><span class="line"><span class="built_in">namedWindow</span>(<span class="string">&quot;R&quot;</span>, WINDOW_AUTOSIZE);</span><br><span class="line"><span class="built_in">cvShowImage</span>(<span class="string">&quot;R&quot;</span>, pImg1);</span><br></pre></td></tr></table></figure>
 <p><img src="http://i.imgur.com/AiAn03X.png"></p>
-<p>為了分離H/S/V，我們必須也做同樣的事</p>
+<p>為了分離H&#x2F;S&#x2F;V，我們必須也做同樣的事</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用一開始轉換好的HSV宣告三個單通道圖片空間</span></span><br><span class="line">IplImage* Himg = <span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(hsv), <span class="number">8</span>, <span class="number">1</span>);</span><br><span class="line">IplImage* Simg = <span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(hsv), <span class="number">8</span>, <span class="number">1</span>);</span><br><span class="line">IplImage* Vimg = <span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(hsv), <span class="number">8</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//宣告三個三通道圖片空間</span></span><br><span class="line">IplImage* HSV1 = <span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(hsv), <span class="number">8</span>, <span class="number">3</span>);</span><br><span class="line">IplImage* HSV2 = <span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(hsv), <span class="number">8</span>, <span class="number">3</span>);</span><br><span class="line">IplImage* HSV3 = <span class="built_in">cvCreateImage</span>(<span class="built_in">cvGetSize</span>(hsv), <span class="number">8</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//把hsv複製到三個空間</span></span><br><span class="line"><span class="built_in">cvSplit</span>(hsv, Vimg, Simg, Himg, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//把圖片空間初始化</span></span><br><span class="line"><span class="built_in">cvSetZero</span>(HSV1);</span><br><span class="line"><span class="built_in">cvSetZero</span>(HSV2);</span><br><span class="line"><span class="built_in">cvSetZero</span>(HSV3);</span><br><span class="line"></span><br><span class="line"><span class="comment">//把三個通道合成，注意順序是VSH</span></span><br><span class="line"><span class="built_in">cvMerge</span>(Vimg, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, HSV3);</span><br><span class="line"><span class="built_in">cvMerge</span>(<span class="number">0</span>, Simg, <span class="number">0</span>, <span class="number">0</span>, HSV2);</span><br><span class="line"><span class="built_in">cvMerge</span>(<span class="number">0</span>, <span class="number">0</span>, Himg, <span class="number">0</span>, HSV1);</span><br></pre></td></tr></table></figure>
-<p>輸出後，我們可以得到三張圖，分別是H/S/V</p>
+<p>輸出後，我們可以得到三張圖，分別是H&#x2F;S&#x2F;V</p>
 <p><img src="http://i.imgur.com/e3458Z0.png"></p>
 <p>試著一次把所有圖都輸出</p>
 <p><img src="http://i.imgur.com/Mql1XuL.png"></p>
@@ -306,7 +306,7 @@
 
 
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
-<p><span class="exturl" data-url="aHR0cHM6Ly9jZzIwMTBzdHVkaW8uY29tLzIwMTIvMTAvMDkvb3BlbmN2LSVFOCVCRCU4OSVFNiU4RiU5QiVFOCU4OSVCMiVFNSVCRCVBOSVFNyVBOSVCQSVFOSU5NiU5My10cmFuc2Zvcm0tY29sb3Itc3BhY2Uv">[OpenCV] 轉換色彩空間 (Transform Color Space)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2ZhbmxpNy5uZXQvYS9iaWFuY2hlbmd5dXlhbi9DX18vMjAxNDA1MDIvNDk4MjY2Lmh0bWw=">基於Opencv下RGB圖像轉HSV，並分離成單通道R/G/B與H/S/V<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZzIwMTBzdHVkaW8uY29tLzIwMTIvMTAvMDkvb3BlbmN2LSVFOCVCRCU4OSVFNiU4RiU5QiVFOCU4OSVCMiVFNSVCRCVBOSVFNyVBOSVCQSVFOSU5NiU5My10cmFuc2Zvcm0tY29sb3Itc3BhY2Uv">[OpenCV] 轉換色彩空間 (Transform Color Space)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2ZhbmxpNy5uZXQvYS9iaWFuY2hlbmd5dXlhbi9DX18vMjAxNDA1MDIvNDk4MjY2Lmh0bWw=">基於Opencv下RGB圖像轉HSV，並分離成單通道R&#x2F;G&#x2F;B與H&#x2F;S&#x2F;V<i class="fa fa-external-link-alt"></i></span></p>
 
 
     </div>
@@ -490,7 +490,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:27</span>
+    <span title="Reading time total">2:28</span>
 </div>
   <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span>
   </div>

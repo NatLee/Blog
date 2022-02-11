@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/5/59/CUDA.png">
 <meta property="article:published_time" content="2022-02-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-11T04:15:15.055Z">
+<meta property="article:modified_time" content="2022-02-11T05:47:48.613Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cuda">
 <meta property="article:tag" content="cudnn">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-11 12:15:15" itemprop="dateModified" datetime="2022-02-11T12:15:15+08:00">2022-02-11</time>
+                <time title="Modified: 2022-02-11 13:47:48" itemprop="dateModified" datetime="2022-02-11T13:47:48+08:00">2022-02-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -288,23 +288,23 @@
 <h3 id="Install-cuDNN"><a href="#Install-cuDNN" class="headerlink" title="Install cuDNN"></a>Install cuDNN</h3><ol>
 <li><p>從NVIDIA官網下載對應CUDA版本的cuDNN，然後用<code>tar -xvf &lt;CUDNN_ZIP_NAME&gt;</code>解壓縮</p>
 <p> 內容會長得像下面這樣</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ tree -L 2 ./cuda</span><br><span class="line">.</span><br><span class="line">├── cuda</span><br><span class="line">│   ├── include</span><br><span class="line">│   ├── lib64</span><br><span class="line">│   └── NVIDIA_SLA_cuDNN_Support.txt</span><br><span class="line">└── cudnn_install.sh</span><br><span class="line"></span><br><span class="line">3 directories, 2 files</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ tree -L 2 ./cuda</span><br><span class="line">.</span><br><span class="line">├── cuda</span><br><span class="line">│   ├── include</span><br><span class="line">│   ├── lib64</span><br><span class="line">│   └── NVIDIA_SLA_cuDNN_Support.txt</span><br><span class="line">└── cudnn_install.sh</span><br><span class="line"></span><br><span class="line">3 directories, 2 files</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>在解壓縮的cuDNN同目錄下，使用<code>touch cudnn_install.sh</code>新增腳本，並且把下面的指令貼進去</p>
  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read</span> -p <span class="string">&quot;CUDA-version: &quot;</span> ver</span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> cuda/include/cudnn.h /usr/local/cuda-<span class="string">&quot;<span class="variable">$&#123;ver&#125;</span>&quot;</span>/include</span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> cuda/lib64/libcudnn* /usr/local/cuda-<span class="string">&quot;<span class="variable">$&#123;ver&#125;</span>&quot;</span>/lib64</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> a+r /usr/local/cuda*/include/cudnn.h /usr/local/cuda*/lib64/libcudnn*</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> include</span><br><span class="line"></span><br><span class="line">tree -L 1 /usr/local/cuda-<span class="string">&quot;<span class="variable">$&#123;ver&#125;</span>&quot;</span>/include | grep cudnn</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> lib64</span><br><span class="line"></span><br><span class="line">tree -L 1 /usr/local/cuda-<span class="string">&quot;<span class="variable">$&#123;ver&#125;</span>&quot;</span>/lib64 | grep cudnn</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p> 這個腳本是自動幫你把cuDNN丟到CUDA目錄下</p>
 <p> 我真的不知道爲什麼cuDNN跟CUDA要分開下載，有夠麻煩</p>
 </li>
-</ol>
-<ol start="3">
 <li><p>更改權限後，run安裝cuDNN的腳本</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x cudnn_install.sh &amp; sudo ./cudnn_install.sh</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x cudnn_install.sh &amp; sudo ./cudnn_install.sh</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>安裝完成後，我們可以新增一個切換CUDA版本的function在<code>~/.bashrc</code>或<code>~/.zshrc</code>裏面，以便下次直接call它來切換版本</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add below to your env bash file.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> _switch_cuda &#123;</span><br><span class="line">   v=<span class="variable">$1</span></span><br><span class="line">   <span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/local/cuda-<span class="variable">$v</span>/bin</span><br><span class="line">   <span class="built_in">export</span> CUDADIR=/usr/local/cuda-<span class="variable">$v</span></span><br><span class="line">   <span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/cuda-<span class="variable">$v</span>/lib64</span><br><span class="line">   nvcc --version</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add below to your env bash file.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> _switch_cuda &#123;</span><br><span class="line">   v=<span class="variable">$1</span></span><br><span class="line">   <span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/local/cuda-<span class="variable">$v</span>/bin</span><br><span class="line">   <span class="built_in">export</span> CUDADIR=/usr/local/cuda-<span class="variable">$v</span></span><br><span class="line">   <span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/cuda-<span class="variable">$v</span>/lib64</span><br><span class="line">   nvcc --version</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p> 改完記得<code>source</code>一下</p>
-<p> 它只要輸入版本號就能使用，裏面會自動幫你切換目前使用CUDA的路徑</p>
-<p> 例如： <code>_switch_cuda 10.1</code>.</p>
+<p>改完記得<code>source</code>一下</p>
+<p>它只要輸入版本號就能使用，裏面會自動幫你切換目前使用CUDA的路徑</p>
+<p>例如： <code>_switch_cuda 10.1</code>.</p>
 </li>
 <li><p>最後，可以確認看看<code>/usr/local</code>中的CUDA版本</p>
  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ tree -L 1 /usr/local</span><br><span class="line">.</span><br><span class="line">├── bin</span><br><span class="line">├── cuda-10.0</span><br><span class="line">├── cuda-10.1</span><br><span class="line">├── cuda-10.2</span><br><span class="line">├── cuda-9.0</span><br><span class="line">├── cuda-9.1</span><br><span class="line">├── cuda-9.2</span><br><span class="line">├── etc</span><br><span class="line">├── games</span><br><span class="line">├── include</span><br><span class="line">├── lib</span><br><span class="line">├── man -&gt; share/man</span><br><span class="line">├── sbin</span><br><span class="line">├── share</span><br><span class="line">├── src</span><br><span class="line">└── texlive</span><br><span class="line"></span><br><span class="line">16 directories, 0 files</span><br></pre></td></tr></table></figure></li>
@@ -486,7 +486,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:27</span>
+    <span title="Reading time total">2:28</span>
 </div>
   <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span>
   </div>
