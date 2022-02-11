@@ -16,7 +16,7 @@ tags: [cuda, cudnn, deep_learning, ai, linux, ubuntu]
 
 還有package相依問題也很麻煩
 
-需要一個有效管理多CUDA版本的方法勢在必行
+所以非常需要一個有效管理多CUDA版本的方法
 
 
 <!-- more -->
