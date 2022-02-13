@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png">
 <meta property="article:published_time" content="2022-02-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-13T08:43:39.316Z">
+<meta property="article:modified_time" content="2022-02-13T14:46:23.112Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="container">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-13 16:43:39" itemprop="dateModified" datetime="2022-02-13T16:43:39+08:00">2022-02-13</time>
+                <time title="Modified: 2022-02-13 22:46:23" itemprop="dateModified" datetime="2022-02-13T22:46:23+08:00">2022-02-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -306,7 +306,8 @@
 <p>重新執行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate</span><br></pre></td></tr></table></figure>
 
-<p>到我們就可以背景執行這個container了</p>
+<p>完成這個步驟後</p>
+<p>我們就可以放著不管，用背景執行這個container了</p>
 <h4 id="Extra-Step"><a href="#Extra-Step" class="headerlink" title="Extra Step"></a>Extra Step</h4><p>這邊是額外的連線測試，不做也不影響後面的流程</p>
 <p>可以使用local做連線測試</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984                          </span><br><span class="line">The authenticity of host <span class="string">&#x27;[localhost]:2000 ([::1]:1984)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:g73WW30kTFqdUvi/mCbIgrW4dnadPiW7ipopK9h6/zk.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[localhost]:1984<span class="string">&#x27; (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">natlee@localhost: Permission denied (publickey,keyboard-interactive).</span></span><br></pre></td></tr></table></figure>
@@ -327,7 +328,7 @@
 
 
 <h3 id="內網跳板裝置-B"><a href="#內網跳板裝置-B" class="headerlink" title="內網跳板裝置 B"></a>內網跳板裝置 B</h3><p>內網裝置需要的東西就比較多了</p>
-<p>但還是老樣子，我們再起一個openssh-server</p>
+<p>但還是老樣子，我們在內網裝置上起一個openssh-server</p>
 <p>基於docker hub上面官方的文件做修改</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openssh-server:</span></span><br><span class="line">   <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">   <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/openssh-server</span></span><br><span class="line">   <span class="attr">container_name:</span> <span class="string">reverse-tunnel-inside-bridge</span></span><br><span class="line">   <span class="attr">hostname:</span> <span class="string">nat-tunnel-inside-bridge</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">TZ=Asia/Taipei</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY=yourpublickey #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_FILE=/path/to/file #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_DIR=/config/.ssh #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_URL=https://github.com/username.keys #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">SUDO_ACCESS=true</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="comment">#- PASSWORD_ACCESS=false #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD=password #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD_FILE=/path/to/file #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">USER_NAME=natlee</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./ssh_setting:/config</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./root_ssh_setting:/root/.ssh</span></span><br></pre></td></tr></table></figure>
 
