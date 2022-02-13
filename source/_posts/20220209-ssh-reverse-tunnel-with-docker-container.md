@@ -116,7 +116,9 @@ GatewayPorts yes # 這個是讓你能夠轉port用的，一定要開
 docker-compose up --force-recreate
 ```
 
-到我們就可以背景執行這個container了
+完成這個步驟後
+
+我們就可以放著不管，用背景執行這個container了
 
 #### Extra Step
 
@@ -193,7 +195,7 @@ nat-tunnel-outside-server:~$
 
 內網裝置需要的東西就比較多了
 
-但還是老樣子，我們再起一個openssh-server
+但還是老樣子，我們在內網裝置上起一個openssh-server
 
 基於docker hub上面官方的文件做修改
 
