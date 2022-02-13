@@ -99,7 +99,7 @@ services:
 docker-compose up
 ```
 
-記得，這邊沒有使用`-d`去做背景執行
+記得，這邊沒有使用`-d`去做背景執行是因爲等等debug比較方便
 
 我們需要修改openssh-server的設定檔`sshd_config`
 
@@ -116,7 +116,13 @@ GatewayPorts yes # 這個是讓你能夠轉port用的，一定要開
 docker-compose up --force-recreate
 ```
 
-我們這時候可以用local做連線測試
+到我們就可以背景執行這個container了
+
+#### Extra Step
+
+這邊是額外的連線測試，不做也不影響後面的流程
+
+可以使用local做連線測試
 
 ```bash
 ❯ ssh natlee@localhost -p 1984                          
@@ -152,7 +158,7 @@ nat-tunnel-outside-server:~$
 
 到這邊算是外網機器佈置成功了！
 
-執行中的時候，內容物長這樣
+執行中的時候，資料夾內的內容物長這樣
 
 ```
 .
@@ -316,18 +322,15 @@ root@nat-tunnel-inside-bridge:/# cat ~/.ssh/id_rsa.pub
 ssh-rsa AAAAB3NzaC...............bZVysfXr9E= root@nat-tunnel-inside-bridge
 ```
 
-把焦點轉回剛剛的container輸出會看到
+把公鑰檔案內容複製到我們外網server A的`./ssh_setting/.ssh/authorized_keys`中
 
-```
-reverse-tunnel-inside-bridge | Start AutoSSH
-reverse-tunnel-inside-bridge | Host key verification failed.
-```
+再把焦點轉回剛剛的container輸出，還是會有看到錯誤
 
-這邊就節省麻煩，我們直接進到內網裝置B的container訪問一次server
+因爲我們未曾使用這個key連線過
 
-先把剛剛的公鑰複製到我們外網server的`./ssh_setting/.ssh/authorized_keys`中
+爲了節省麻煩，我們直接進到內網裝置B的container訪問一次server
 
-在B的container內用以下指令訪問一次server，並輸入`yes`去記錄host
+在B的container內用以下指令訪問一次server，並輸入`yes`去記錄hostname
 
 ```bash
 root@nat-tunnel-inside-bridge:/# ssh natlee@<EXAMPLE_DOMAIN> -p 1984
@@ -345,7 +348,7 @@ nat-tunnel-server:~$
 
 到這邊內網裝置B已經算是設定完成了
 
-接下來，我們把自己PC的公鑰複製到內網裝置的`ssh_setting/.ssh/authorized_keys`後，重新執行
+接下來，我們把自己第三方位置的PC公鑰複製到內網裝置B的`ssh_setting/.ssh/authorized_keys`後，重新執行
 
 ```
 docker-compose up --force-recreate
@@ -430,6 +433,14 @@ pi@raspberrypi:~ $
 而且SFTP也是走SSH通道，我們可以直接在外網做內網檔案的傳輸
 
 甚至我們也可以直接用內網做proxy來瀏覽內部才能看的網站
+
+但是，這樣做其實會有些資安風險
+
+從上面的流程，我們可以看出來`反向`這件事是從內部機器主動連到外網機器
+
+也就是如果有心人士拿到內部機器的存取權限的話，外部機器自然不保了
+
+這邊能做的也只有保管好金鑰了
 
 
 ## Reference
