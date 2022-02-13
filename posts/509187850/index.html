@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png">
 <meta property="article:published_time" content="2022-02-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-11T06:51:00.270Z">
+<meta property="article:modified_time" content="2022-02-13T08:43:39.316Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="container">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-11 14:51:00" itemprop="dateModified" datetime="2022-02-11T14:51:00+08:00">2022-02-11</time>
+                <time title="Modified: 2022-02-13 16:43:39" itemprop="dateModified" datetime="2022-02-13T16:43:39+08:00">2022-02-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,7 +239,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>7.8k</span>
+              <span>7.9k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -298,7 +298,7 @@
 <p>接着，我們就執行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
 
-<p>記得，這邊沒有使用<code>-d</code>去做背景執行</p>
+<p>記得，這邊沒有使用<code>-d</code>去做背景執行是因爲等等debug比較方便</p>
 <p>我們需要修改openssh-server的設定檔<code>sshd_config</code></p>
 <p>打開剛剛指定目錄中的<code>./ssh_setting/ssh_host_keys/sshd_config</code>去把這兩個設定改成<code>yes</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AllowTCPForwarding yes # 有些教學沒說要開這個，但不開它就不讓你forwarding了</span><br><span class="line">GatewayPorts yes # 這個是讓你能夠轉port用的，一定要開</span><br></pre></td></tr></table></figure>
@@ -306,7 +306,9 @@
 <p>重新執行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate</span><br></pre></td></tr></table></figure>
 
-<p>我們這時候可以用local做連線測試</p>
+<p>到我們就可以背景執行這個container了</p>
+<h4 id="Extra-Step"><a href="#Extra-Step" class="headerlink" title="Extra Step"></a>Extra Step</h4><p>這邊是額外的連線測試，不做也不影響後面的流程</p>
+<p>可以使用local做連線測試</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984                          </span><br><span class="line">The authenticity of host <span class="string">&#x27;[localhost]:2000 ([::1]:1984)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:g73WW30kTFqdUvi/mCbIgrW4dnadPiW7ipopK9h6/zk.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[localhost]:1984<span class="string">&#x27; (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">natlee@localhost: Permission denied (publickey,keyboard-interactive).</span></span><br></pre></td></tr></table></figure>
 
 <p>於是，失敗了，因爲我們只能用key進行連線！</p>
@@ -320,7 +322,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984                      </span><br><span class="line">Welcome to OpenSSH Server</span><br><span class="line"></span><br><span class="line">nat-tunnel-outside-server:~$</span><br></pre></td></tr></table></figure>
 
 <p>到這邊算是外網機器佈置成功了！</p>
-<p>執行中的時候，內容物長這樣</p>
+<p>執行中的時候，資料夾內的內容物長這樣</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">├── root_ssh_setting</span><br><span class="line">└── ssh_setting</span><br><span class="line">    ├── custom-cont-init.d</span><br><span class="line">    ├── custom-services.d</span><br><span class="line">    ├── logs</span><br><span class="line">    │   ├── loginfo.txt</span><br><span class="line">    │   └── openssh</span><br><span class="line">    │       ├── current</span><br><span class="line">    │       ├── lock</span><br><span class="line">    │       └── state</span><br><span class="line">    ├── sshd.pid</span><br><span class="line">    └── ssh_host_keys</span><br><span class="line">        ├── sshd_config</span><br><span class="line">        ├── ssh_host_dsa_key</span><br><span class="line">        ├── ssh_host_dsa_key.pub</span><br><span class="line">        ├── ssh_host_ecdsa_key</span><br><span class="line">        ├── ssh_host_ecdsa_key.pub</span><br><span class="line">        ├── ssh_host_ed25519_key</span><br><span class="line">        ├── ssh_host_ed25519_key.pub</span><br><span class="line">        ├── ssh_host_rsa_key</span><br><span class="line">        └── ssh_host_rsa_key.pub</span><br><span class="line"></span><br><span class="line">7 directories, 15 files</span><br></pre></td></tr></table></figure>
 
 
@@ -368,17 +370,16 @@
 <p>我們就可以把公鑰檔案<code>~/.ssh/id_rsa.pub</code>的內容複製出來</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@nat-tunnel-inside-bridge:/<span class="comment"># cat ~/.ssh/id_rsa.pub</span></span><br><span class="line">ssh-rsa AAAAB3NzaC...............bZVysfXr9E= root@nat-tunnel-inside-bridge</span><br></pre></td></tr></table></figure>
 
-<p>把焦點轉回剛剛的container輸出會看到</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reverse-tunnel-inside-bridge | Start AutoSSH</span><br><span class="line">reverse-tunnel-inside-bridge | Host key verification failed.</span><br></pre></td></tr></table></figure>
-
-<p>這邊就節省麻煩，我們直接進到內網裝置B的container訪問一次server</p>
-<p>先把剛剛的公鑰複製到我們外網server的<code>./ssh_setting/.ssh/authorized_keys</code>中</p>
-<p>在B的container內用以下指令訪問一次server，並輸入<code>yes</code>去記錄host</p>
+<p>把公鑰檔案內容複製到我們外網server A的<code>./ssh_setting/.ssh/authorized_keys</code>中</p>
+<p>再把焦點轉回剛剛的container輸出，還是會有看到錯誤</p>
+<p>因爲我們未曾使用這個key連線過</p>
+<p>爲了節省麻煩，我們直接進到內網裝置B的container訪問一次server</p>
+<p>在B的container內用以下指令訪問一次server，並輸入<code>yes</code>去記錄hostname</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@nat-tunnel-inside-bridge:/<span class="comment"># ssh natlee@&lt;EXAMPLE_DOMAIN&gt; -p 1984</span></span><br><span class="line">The authenticity of host <span class="string">&#x27;[EXAMPLE_DOMAIN]:1984 ([XXX.XXX.XXX.XXX]:1984)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:JNKQF+GwAgca6xPeoz2ROfz6WXe2oo7HepwuemJH58M.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[EXAMPLE_DOMAIN]:1984<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">Welcome to OpenSSH Server</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">nat-tunnel-server:~$</span></span><br></pre></td></tr></table></figure>
 
 <p>這時候看回去container輸出就沒有再跳錯誤了！</p>
 <p>到這邊內網裝置B已經算是設定完成了</p>
-<p>接下來，我們把自己PC的公鑰複製到內網裝置的<code>ssh_setting/.ssh/authorized_keys</code>後，重新執行</p>
+<p>接下來，我們把自己第三方位置的PC公鑰複製到內網裝置B的<code>ssh_setting/.ssh/authorized_keys</code>後，重新執行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate</span><br></pre></td></tr></table></figure>
 
 <p>再來，我們從PC端使用SSH連接server的另外一個port <code>1994</code>去做測試</p>
@@ -403,6 +404,10 @@
 <p>我們就可以直接選擇<code>./ssh/config</code>內的機器進行連線</p>
 <p>而且SFTP也是走SSH通道，我們可以直接在外網做內網檔案的傳輸</p>
 <p>甚至我們也可以直接用內網做proxy來瀏覽內部才能看的網站</p>
+<p>但是，這樣做其實會有些資安風險</p>
+<p>從上面的流程，我們可以看出來<code>反向</code>這件事是從內部機器主動連到外網機器</p>
+<p>也就是如果有心人士拿到內部機器的存取權限的話，外部機器自然不保了</p>
+<p>這邊能做的也只有保管好金鑰了</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
 <p><span class="exturl" data-url="aHR0cDovL2Fyb25kaWdodC5tZS8yMDE2LzAyLzE3LyVFNCVCRCVCRiVFNyU5NCVBOFNTSCVFNSU4RiU4RCVFNSU5MCU5MSVFOSU5QSVBNyVFOSU4MSU5MyVFOCVCRiU5QiVFOCVBMSU4QyVFNSU4NiU4NSVFNyVCRCU5MSVFNyVBOSVCRiVFOSU4MCU4Ri8=">使用SSH反向隧道进行内网穿透<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZXZlcnl0aGluZ2NsaS5vcmcvc3NoLXR1bm5lbGxpbmctZm9yLWZ1bi1hbmQtcHJvZml0LWF1dG9zc2gv">SSH TUNNELLING FOR FUN AND PROFIT: AUTOSSH<i class="fa fa-external-link-alt"></i></span></p>
@@ -510,7 +515,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F%E8%AA%AA%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">步驟說明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E7%B6%B2%E8%A3%9D%E7%BD%AE-A"><span class="nav-number">2.1.</span> <span class="nav-text">外網裝置 A</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A7%E7%B6%B2%E8%B7%B3%E6%9D%BF%E8%A3%9D%E7%BD%AE-B"><span class="nav-number">2.2.</span> <span class="nav-text">內網跳板裝置 B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E9%81%8E%E8%B7%B3%E6%9D%BFB%E9%80%A3%E8%87%B3%E5%85%A7%E7%B6%B2%E8%A3%9D%E7%BD%AEC"><span class="nav-number">2.3.</span> <span class="nav-text">透過跳板B連至內網裝置C</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F%E8%AA%AA%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">步驟說明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E7%B6%B2%E8%A3%9D%E7%BD%AE-A"><span class="nav-number">2.1.</span> <span class="nav-text">外網裝置 A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Extra-Step"><span class="nav-number">2.1.1.</span> <span class="nav-text">Extra Step</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A7%E7%B6%B2%E8%B7%B3%E6%9D%BF%E8%A3%9D%E7%BD%AE-B"><span class="nav-number">2.2.</span> <span class="nav-text">內網跳板裝置 B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E9%81%8E%E8%B7%B3%E6%9D%BFB%E9%80%A3%E8%87%B3%E5%85%A7%E7%B6%B2%E8%A3%9D%E7%BD%AEC"><span class="nav-number">2.3.</span> <span class="nav-text">透過跳板B連至內網裝置C</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -580,7 +585,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">81k</span>
+    <span title="Symbols count total">82k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
