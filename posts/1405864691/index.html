@@ -22,29 +22,22 @@
     var CONFIG = {"hostname":"natlee.github.io","root":"/Blog/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="前言 之前裝hexo的時候，留言一直弄不好，還是先記錄一下步驟，以免之後忘記XD">
+  <meta name="description" content="前言 我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在Hexo的主題jacman中使用Disqus">
-<meta property="og:url" content="http://natlee.github.io/Blog/posts/3977034761/index.html">
+<meta property="og:title" content="在群暉Synology NAS DSM7.0上安裝套件管理器">
+<meta property="og:url" content="http://natlee.github.io/Blog/posts/1405864691/index.html">
 <meta property="og:site_name" content="Nat&#39;s blog">
-<meta property="og:description" content="前言 之前裝hexo的時候，留言一直弄不好，還是先記錄一下步驟，以免之後忘記XD">
+<meta property="og:description" content="前言 我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="http://i.imgur.com/LJYmpVy.png">
-<meta property="og:image" content="http://i.imgur.com/w7A8ZVw.png">
-<meta property="og:image" content="http://i.imgur.com/2x04Lcz.png">
-<meta property="og:image" content="http://i.imgur.com/2uH5tyZ.png">
-<meta property="og:image" content="http://i.imgur.com/Zd2W1zg.png">
-<meta property="article:published_time" content="2015-08-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-16T14:53:10.522Z">
+<meta property="article:published_time" content="2022-02-16T14:15:54.000Z">
+<meta property="article:modified_time" content="2022-02-16T14:53:10.526Z">
 <meta property="article:author" content="Nat Lee">
-<meta property="article:tag" content="hexo">
-<meta property="article:tag" content="github">
-<meta property="article:tag" content="disqus">
-<meta property="article:tag" content="comment">
+<meta property="article:tag" content="synology">
+<meta property="article:tag" content="nas">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://i.imgur.com/LJYmpVy.png">
 
-<link rel="canonical" href="http://natlee.github.io/Blog/posts/3977034761/">
+<link rel="canonical" href="http://natlee.github.io/Blog/posts/1405864691/">
 
 
 <script id="page-configurations">
@@ -57,7 +50,7 @@
   };
 </script>
 
-  <title>在Hexo的主題jacman中使用Disqus | Nat's blog</title>
+  <title>在群暉Synology NAS DSM7.0上安裝套件管理器 | Nat's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
     <script data-pjax>
@@ -195,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/posts/3977034761/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/posts/1405864691/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -208,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          在Hexo的主題jacman中使用Disqus
+          在群暉Synology NAS DSM7.0上安裝套件管理器
         </h1>
 
         <div class="post-meta">
@@ -217,23 +210,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2015-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2015-08-18T00:00:00+08:00">2015-08-18</time>
+              <time title="Created: 2022-02-16 22:15:54 / Modified: 22:53:10" itemprop="dateCreated datePublished" datetime="2022-02-16T22:15:54+08:00">2022-02-16</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-16 22:53:10" itemprop="dateModified" datetime="2022-02-16T22:53:10+08:00">2022-02-16</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                  <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
                 </span>
             </span>
 
@@ -243,14 +230,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.6k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
+              <span>4 mins.</span>
             </span>
 
         </div>
@@ -263,44 +250,44 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>之前裝hexo的時候，留言一直弄不好，還是先記錄一下步驟，以免之後忘記XD</p>
+<p>我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西</p>
+<p>但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧</p>
 <span id="more"></span>
 
-<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><hr>
-<p>先註冊<span class="exturl" data-url="aHR0cHM6Ly9kaXNxdXMuY29tLw==">Disqus<i class="fa fa-external-link-alt"></i></span>帳號並登入到主頁面</p>
-<ol>
-<li><p>點選右上角的選項-&gt;<strong>Add Disqus To Site</strong></p>
-<p> <img src="http://i.imgur.com/LJYmpVy.png"></p>
-</li>
-<li><p>點選<strong>Start Using Engage</strong></p>
-<p> <img src="http://i.imgur.com/w7A8ZVw.png"></p>
-</li>
-<li><p>在<strong>Site name</strong>輸入你要的名字（這裡以<strong>justTryTest</strong>為例）</p>
-<p> <img src="http://i.imgur.com/2x04Lcz.png"></p>
-</li>
-<li><p>按下<strong>Universal Code</strong>，把內容貼至<br><strong>.\themes\jacman\layout_partial\post\comment.ejs</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  	&lt;% <span class="keyword">if</span> (theme.<span class="property">disqus_shortname</span> &amp;&amp; page.<span class="property">comments</span>)&#123; %&gt;</span><br><span class="line">	<span class="language-xml"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;comments&quot;</span> <span class="attr">class</span>=<span class="string">&quot;comment&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;ds-thread&quot;</span> <span class="attr">data-thread-key</span>=<span class="string">&quot;&lt;%- page.path %&gt;&quot;</span> <span class="attr">data-title</span>=<span class="string">&quot;&lt;%- page.title %&gt;&quot;</span> <span class="attr">data-url</span>=<span class="string">&quot;&lt;%- page.permalink %&gt;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;disqus_thread&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">			<span class="comment">/* * * CONFIGURATION VARIABLES * * */</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">			<span class="keyword">var</span> disqus_shortname = <span class="string">&#x27;justtrytest&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">			<span class="comment">/* * * DON&#x27;T EDIT BELOW THIS LINE * * */</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">			(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">	    		<span class="keyword">var</span> dsq = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;script&#x27;</span>); dsq.<span class="property">type</span> = <span class="string">&#x27;text/javascript&#x27;</span>; dsq.<span class="property">async</span> = <span class="literal">true</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">	    		dsq.<span class="property">src</span> = <span class="string">&#x27;//&#x27;</span> + disqus_shortname + <span class="string">&#x27;.disqus.com/embed.js&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">       		(<span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;head&#x27;</span>)[<span class="number">0</span>] || <span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;body&#x27;</span>)[<span class="number">0</span>]).<span class="title function_">appendChild</span>(dsq);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">			&#125;)();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">		</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">		<span class="tag">&lt;<span class="name">noscript</span>&gt;</span>Please enable JavaScript to view the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://disqus.com/?ref_noscript&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;nofollow&quot;</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">	<span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>再到**.\themes\jacman_config.yml**，在最後一行加入</p>
-<pre><code> #### Comment
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<p>某次我SSH連線進NAS的時候發現Git沒辦法使用</p>
+<p>而且官方Docker套件又弄得很廢</p>
+<p>於是萌生出有沒有辦法在上面自己安裝套件的想法</p>
+<p>然後我就使用了<code>apt</code>大法</p>
+<p>結果發現 幹！原來OS不是debian系列</p>
+<p>花時間上網搜了一波發現大多資料都是DSM6以前的，DSM7.0以上的資料超級少</p>
+<p>最後找到<span class="exturl" data-url="aHR0cHM6Ly93aW5kaXgubWVkaXVtLmNvbS9pbnN0YWxsLXBhY2thZ2UtdmlhLW9wa2ctZW50d2FyZS1mb3Itc3lub2xvZ3ktZHNtLTctOWI5OTk0NDE1YjJk">這篇文章<i class="fa fa-external-link-alt"></i></span>說可以用<code>opkg</code>來安裝</p>
+<p>我就查一下發現它裏面說的<code>Entware</code>是邊緣嵌入式系統用的套件管理器</p>
+<p>於是跟着連結往深處尋找發現這個安裝流程<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0VudHdhcmUvRW50d2FyZS93aWtpL0luc3RhbGwtb24tU3lub2xvZ3ktTkFT">Entware install guide<i class="fa fa-external-link-alt"></i></span></p>
+<p>因爲我NAS的CPU是intel x64，所以我直接執行了這個腳本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - https://bin.entware.net/x64-k3.2/installer/generic.sh | /bin/sh</span><br></pre></td></tr></table></figure>
 
- duoshuo_shortname:
- disqus_shortname: justtrytest
-</code></pre>
+<p>它就會拉下來開始裝一些基本工具，成功會有下面訊息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Info: Congratulations!</span><br><span class="line">Info: If there are no errors above <span class="keyword">then</span> Entware was successfully initialized.</span><br><span class="line">Info: Add /opt/bin &amp; /opt/sbin to <span class="variable">$PATH</span> variable</span><br><span class="line">Info: Add <span class="string">&quot;/opt/etc/init.d/rc.unslung start&quot;</span> to startup script <span class="keyword">for</span> Entware services to start</span><br><span class="line">Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接着用瀏覽器去個人NAS的首頁找到這個地方</p>
 <blockquote>
-<p>　　<strong>justtrytest</strong>是你在<strong>步驟3</strong>所輸入的名字</p>
+<p>設定 -&gt; 服務 -&gt; 任務排程器</p>
 </blockquote>
-</li>
-<li><p>回到剛剛的網頁，按下<strong>Advance</strong></p>
-<p> <img src="http://i.imgur.com/2uH5tyZ.png"></p>
-</li>
-<li><p>在<strong>Trusted Domains</strong>加入自己Blog的位置</p>
-<p> <img src="http://i.imgur.com/Zd2W1zg.png"></p>
-</li>
-<li><p>按下<strong>Save Changes</strong>後，重新啟用Blog即可以啟用Disqus</p>
-</li>
-</ol>
-<h2 id="追記"><a href="#追記" class="headerlink" title="追記"></a>追記</h2><hr>
-<p>安裝時，注意一下站點與theme本身需求的**_config.yml**的配置<br>似乎可以省一些麻煩XD</p>
+<p>按下新增<code>觸發任務</code>裏面的<code>使用者定義程式碼</code></p>
+<p>裏面照着下面填寫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">一般設定</span><br><span class="line"></span><br><span class="line">&gt; 任務名稱：Entware</span><br><span class="line">&gt; 使用者帳號：root</span><br><span class="line">&gt; 事件：開機</span><br><span class="line">&gt; 先行任務：</span><br><span class="line"></span><br><span class="line">[v]已啓動</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接着按上面的<code>任務設定</code>的tab把下面程式碼貼上以確保每次重開機都能夠先載入套件管理的工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mount/Start Entware</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt</span><br><span class="line">mount -o <span class="built_in">bind</span> <span class="string">&quot;/volume1/@Entware/opt&quot;</span> /opt</span><br><span class="line">/opt/etc/init.d/rc.unslung start</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add Entware Profile in Global Profile</span></span><br><span class="line"><span class="keyword">if</span> grep  -qF  <span class="string">&#x27;/opt/etc/profile&#x27;</span> /etc/profile; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;Confirmed: Entware Profile in Global Profile&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;Adding: Entware Profile in Global Profile&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/profile &lt;&lt;<span class="string">&quot;EOF&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load Entware Profile</span></span><br><span class="line">. /opt/etc/profile</span><br><span class="line">EOF</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update Entware List</span></span><br><span class="line">/opt/bin/opkg update</span><br></pre></td></tr></table></figure>
+
+<p>按下確定後就可以重開機了！</p>
+<p>開機完成後，我們可以試試看安裝git</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@Nat-Nas:~<span class="comment"># opkg install git-http</span></span><br><span class="line">Installing git-http (2.33.1-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/git-http_2.33.1-1_x64-3.2.ipk</span><br><span class="line">Installing git (2.33.1-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/git_2.33.1-1_x64-3.2.ipk</span><br><span class="line">Installing ca-bundle (20211016-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/ca-bundle_20211016-1_all.ipk</span><br><span class="line">Installing libcurl (7.80.0-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/libcurl_7.80.0-1_x64-3.2.ipk</span><br><span class="line">Configuring ca-bundle.</span><br><span class="line">Configuring libcurl.</span><br><span class="line">Configuring git.</span><br><span class="line">Configuring git-http.</span><br></pre></td></tr></table></figure>
+
+<p>終於搞定了！</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0VudHdhcmUvRW50d2FyZS93aWtpL0luc3RhbGwtb24tU3lub2xvZ3ktTkFT">Entware install guide<i class="fa fa-external-link-alt"></i></span></p>
 
 
     </div>
@@ -320,17 +307,19 @@
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/Blog/posts/2264945776/" rel="bookmark">Hexo在Windows上的安裝心得</a></div>
+      <div class="popular-posts-title"><a href="/Blog/posts/3672378701/" rel="bookmark">解決SynologyNAS上Gitlab發生的502錯誤</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Blog/posts/823759430/" rel="bookmark">多版本CUDA及cuDNN管理</a></div>
     </li>
   </ul>
 
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/Blog/tags/hexo/" rel="tag"># hexo</a>
-              <a href="/Blog/tags/github/" rel="tag"># github</a>
-              <a href="/Blog/tags/disqus/" rel="tag"># disqus</a>
-              <a href="/Blog/tags/comment/" rel="tag"># comment</a>
+              <a href="/Blog/tags/synology/" rel="tag"># synology</a>
+              <a href="/Blog/tags/nas/" rel="tag"># nas</a>
+              <a href="/Blog/tags/linux/" rel="tag"># linux</a>
           </div>
 
         
@@ -339,13 +328,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Blog/posts/2264945776/" rel="prev" title="Hexo在Windows上的安裝心得">
-      <i class="fa fa-chevron-left"></i> Hexo在Windows上的安裝心得
+    <a href="/Blog/posts/823759430/" rel="prev" title="多版本CUDA及cuDNN管理">
+      <i class="fa fa-chevron-left"></i> 多版本CUDA及cuDNN管理
     </a></div>
-      <div class="post-nav-item">
-    <a href="/Blog/posts/1497250561/" rel="next" title="MIUI7中WSM/XPOSED Framwork無法使用問題">
-      MIUI7中WSM/XPOSED Framwork無法使用問題 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -405,7 +391,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.</span> <span class="nav-text">步驟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%BD%E8%A8%98"><span class="nav-number">3.</span> <span class="nav-text">追記</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -611,7 +597,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'Blog',
       owner       : 'natlee',
       admin       : ['natlee'],
-      id          : 'fa8e5e8c81b37fdf10edc1e42b739c8e',
+      id          : '4647ca3b208b24632b2083bc25ca030c',
         language: 'zh-TW,en',
       distractionFreeMode: true
     });
