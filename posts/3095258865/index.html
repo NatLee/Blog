@@ -22,38 +22,23 @@
     var CONFIG = {"hostname":"natlee.github.io","root":"/Blog/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="前言  一次開發一次爽一直開發一直慘解決環境問題的一種好方法 ── Docker">
+  <meta name="description" content="前言 NAS大多被用來儲存或是分享檔案 但其實還可以有很多其他有趣的用途，像是當個docker容器伺服器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Container來快速建立開發環境(以python為例)">
-<meta property="og:url" content="http://natlee.github.io/Blog/posts/440569875/index.html">
+<meta property="og:title" content="Synology NAS Docker更新與遠端控制">
+<meta property="og:url" content="http://natlee.github.io/Blog/posts/3095258865/index.html">
 <meta property="og:site_name" content="Nat&#39;s blog">
-<meta property="og:description" content="前言  一次開發一次爽一直開發一直慘解決環境問題的一種好方法 ── Docker">
+<meta property="og:description" content="前言 NAS大多被用來儲存或是分享檔案 但其實還可以有很多其他有趣的用途，像是當個docker容器伺服器">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png">
-<meta property="og:image" content="https://i.imgur.com/jGE3rXY.png">
-<meta property="og:image" content="https://i.imgur.com/Ibkv1g5.png">
-<meta property="og:image" content="https://i.imgur.com/ZxSGfeo.png">
-<meta property="og:image" content="https://i.imgur.com/gOwm6zg.png">
-<meta property="og:image" content="https://i.imgur.com/rsvco2q.png">
-<meta property="og:image" content="https://i.imgur.com/X6r1kma.png">
-<meta property="og:image" content="https://i.imgur.com/J3SGDOj.png">
-<meta property="og:image" content="https://i.imgur.com/c9XBSDH.png">
-<meta property="og:image" content="https://i.imgur.com/MxmZLIb.png">
-<meta property="og:image" content="https://i.imgur.com/B0RyI5Z.png">
-<meta property="og:image" content="https://i.imgur.com/KyeUmAg.png">
-<meta property="og:image" content="https://i.imgur.com/I7OyA5a.png">
-<meta property="og:image" content="https://i.imgur.com/Oy6au5Z.png">
-<meta property="og:image" content="https://i.imgur.com/iPFmnXf.png">
-<meta property="article:published_time" content="2021-09-05T16:00:00.000Z">
+<meta property="article:published_time" content="2022-02-17T02:44:22.000Z">
 <meta property="article:modified_time" content="2022-02-17T07:39:41.040Z">
 <meta property="article:author" content="Nat Lee">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="synology">
+<meta property="article:tag" content="nas">
 <meta property="article:tag" content="docker">
-<meta property="article:tag" content="container">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png">
 
-<link rel="canonical" href="http://natlee.github.io/Blog/posts/440569875/">
+<link rel="canonical" href="http://natlee.github.io/Blog/posts/3095258865/">
 
 
 <script id="page-configurations">
@@ -66,7 +51,7 @@
   };
 </script>
 
-  <title>使用Container來快速建立開發環境(以python為例) | Nat's blog</title>
+  <title>Synology NAS Docker更新與遠端控制 | Nat's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
     <script data-pjax>
@@ -204,7 +189,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/posts/440569875/">
+    <link itemprop="mainEntityOfPage" href="http://natlee.github.io/Blog/posts/3095258865/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -217,7 +202,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          使用Container來快速建立開發環境(以python為例)
+          Synology NAS Docker更新與遠端控制
         </h1>
 
         <div class="post-meta">
@@ -226,23 +211,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-09-06 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-06T00:00:00+08:00">2021-09-06</time>
+              <time title="Created: 2022-02-17 10:44:22 / Modified: 15:39:41" itemprop="dateCreated datePublished" datetime="2022-02-17T10:44:22+08:00">2022-02-17</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-17 15:39:41" itemprop="dateModified" datetime="2022-02-17T15:39:41+08:00">2022-02-17</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/develop/" itemprop="url" rel="index"><span itemprop="name">develop</span></a>
+                  <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
                 </span>
             </span>
 
@@ -252,7 +231,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.4k</span>
+              <span>1.3k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -272,47 +251,54 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p><img src="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png" alt="whale"></p>
-<p>一次開發一次爽<br>一直開發一直慘<br>解決環境問題的一種好方法 ── Docker</p>
+<p>NAS大多被用來儲存或是分享檔案</p>
+<p>但其實還可以有很多其他有趣的用途，像是當個docker容器伺服器</p>
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
-<h3 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h3><p>一開始先在 VScode Plugin 中找到並安裝 Remote Container 插件</p>
-<p><img src="https://i.imgur.com/jGE3rXY.png" alt="Remote container plugin"></p>
-<p>然後，找一個你喜歡的地方，clone官方範例</p>
-<p><code>git clone https://github.com/Microsoft/vscode-remote-try-python</code></p>
-<p> 使用 VScode 打開它，VScode抓到設定檔後，右下角會跳出訊息問你要不要使用Container開啟，請按下<strong>Reopen in Container</strong>!</p>
-<p><img src="https://i.imgur.com/Ibkv1g5.png" alt="Reopen in container"></p>
-<p>等待建立完成後，你會發現整個環境都在Cotainer內了，舒服！<br>接著注意左邊檔案可以發現一個資料夾**.devcontainer**<br>這是VScode建立容器參照的設定</p>
-<p><img src="https://i.imgur.com/ZxSGfeo.png" alt=".devcontainer"></p>
-<p>點進去 <strong>devcontainer.json</strong> 可以看到有一行拿來指定port<br>這邊可以自行設定要publish到外部的port<br>換句話說就是你要使用的port<br>預設9000，但為了示範整個流程跟衝port，所以我這邊把它改成4000<br>其他還有一些執行相關的有趣設定可以研究 </p>
-<p><img src="https://i.imgur.com/gOwm6zg.png" alt="port"></p>
-<p>接著由於 VScode 設定的關係<br>我們要去 <strong>.vscode</strong> 資料夾內查看他的設定<br>可以發現我們直接F5在VScode內偵錯時，他執行port不是我們剛剛指定的4000也因為這樣我們必須把20行改成4000</p>
 <blockquote>
-<p>這邊有一些原因，是因爲上一步驟指定4000後，如果VScode沒有在這邊設定指定4000並且跑過一次，他會暫時鎖住4000 port 會造成 connection refuse，算是一個坑，但如果你沒有port相沖的問題，基本上開發用預設的9000測試就可以了</p>
+<p><em>WAIT！請注意！直接更改NAS內的檔案都會有風險！</em><br><em>請一定要知道你的每一步操作在做什麼！</em></p>
 </blockquote>
-<p><img src="https://i.imgur.com/rsvco2q.png" alt="setting"></p>
-<p>接著，儲存後按下 F5 執行 <strong>app.py</strong>! </p>
-<p><img src="https://i.imgur.com/X6r1kma.png" alt="demo page"></p>
-<h3 id="補充說明"><a href="#補充說明" class="headerlink" title="補充說明"></a>補充說明</h3><p>有時候總是會有那麼點原因導致你可能不想用vscode設定<br>而是想要直接在Container用單純的command去執行</p>
-<p>那麼只要map好輸出的port也可以在底下的terminal直接run</p>
-<p><code>python app.py</code></p>
-<p><img src="https://i.imgur.com/J3SGDOj.png"></p>
-<p><img src="https://i.imgur.com/c9XBSDH.png"></p>
-<p>或是直接用 docker 進入container內 run </p>
-<p><img src="https://i.imgur.com/MxmZLIb.png"></p>
-<p>這邊就要說兩種做法了，你可以直接 <strong>docker exec -it</strong> 進去（這樣做的話，你得知道他幫你建立的容器叫什麼，可能要先 <strong>docker ps -a</strong> 一下） 也可以透過現在新版 docker 提供的 dashboard 進去</p>
-<p><img src="https://i.imgur.com/B0RyI5Z.png"><br><img src="https://i.imgur.com/KyeUmAg.png">  </p>
-<p>進去之後，再 cd 到 <strong>&#x2F;workspaces&#x2F;vscode-remote-try-python</strong> ，就可以看到你的程式了，其中 <strong>vscode-remote-try-python</strong> 是你的專案名稱</p>
-<p>如果你程式有更動的話，像是我新增了一個套件<br>你可以選擇直接在容器內使用pip 安裝，也可以rebuild Container(建議) 來更新環境（當然，新的套件要註明在requirements.txt內）</p>
-<p>簡單來說就是左下角點下去，上面會出現一個bar，按下第二個重新建立container （他會幫你蓋掉舊的Container，舒服！)</p>
-<p><img src="https://i.imgur.com/I7OyA5a.png"><br><img src="https://i.imgur.com/Oy6au5Z.png"></p>
-<p>如果我們直接關掉VScode 他也會幫你把container關閉</p>
-<p><img src="https://i.imgur.com/iPFmnXf.png"></p>
-<p>下次再打開專案資料夾時，他就會問你要不要從container開啟，如果開啟的話，他就會幫你把container打開</p>
-<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>透過container開發真的很方便，麻煩的環境不用每次都顧慮<br>不過這樣做，整體步驟還是有點冗長，希望之後能夠發現更快部署的方法</p>
+<h3 id="更新Docker"><a href="#更新Docker" class="headerlink" title="更新Docker"></a>更新Docker</h3><p>首先，我們要確保NAS內的docker版本比較新的</p>
+<p>因爲Synology官方都很念舊，docker版本一直都不想更新</p>
+<p>甚至現在都2022年了，docker還停在18版</p>
+<p>所以我們必須更新它</p>
+<p>當然這個問題衆所皆知，國外也有網友自幹了一波更新腳本</p>
+<p>可以參考一下這邊<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtkdW1heS9zeW5vbG9neS1kb2NrZXI=">Synology docker<i class="fa fa-external-link-alt"></i></span></p>
+<p>我們依照它的教學，先以ROOT登入NAS後，把腳本clone下來</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/markdumay/synology-docker.git</span><br><span class="line">$ <span class="built_in">cd</span> synology-docker</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你沒有GIT指令，請參考之前的文章去安裝套件管理器</p>
+</blockquote>
+<p>接着，我們就可以使用腳本更新docker了</p>
+<blockquote>
+<p>請注意！如果你舊有docker有重要資料，請不要強制更新！</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./syno_docker_update.sh update</span><br></pre></td></tr></table></figure>
+
+<p>更新成功後，我們可以確認一下docker版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker --version</span><br><span class="line">Docker version 20.10.12, build e91ed57</span><br></pre></td></tr></table></figure>
+
+<p>到這邊就成功更新docker版本了！</p>
+<h3 id="Docker遠端設定"><a href="#Docker遠端設定" class="headerlink" title="Docker遠端設定"></a>Docker遠端設定</h3><p>安裝好docker後，我們必須expose docker的遠端控制port</p>
+<p>所以，要編輯這個文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /var/packages/Docker/etc/dockerd.json</span><br></pre></td></tr></table></figure>
+
+<p>把裏面改成下面這樣，主要是加上<code>hosts</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">+    <span class="attr">&quot;hosts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;unix:///var/run/docker.sock&quot;</span><span class="punctuation">,</span> <span class="string">&quot;tcp://0.0.0.0:2375&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;data-root&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;/var/packages/Docker/target/docker&quot;</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;log-driver&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;json-file&quot;</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;registry-mirrors&quot;</span> <span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="string">&quot;administrators&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>接下來，把NAS的docker服務重啓</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /var/packages/Docker/scripts/start-stop-status stop</span><br><span class="line">$ /var/packages/Docker/scripts/start-stop-status start</span><br></pre></td></tr></table></figure>
+
+<p>重啓完成後，用瀏覽器訪問NAS的port 2375，可以看到有回應（雖然404）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;message&quot;</span><span class="punctuation">:</span><span class="string">&quot;page not found&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣代表我們已經成功expose了</p>
+<p>之後，只要再用別台裝置的docker就能夠遠端在NAS上run container了</p>
+<p>甚至是我們也可以用portainer去控制NAS的docker</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
-<p><span class="exturl" data-url="aHR0cHM6Ly9pbWd1ci5jb20vYS9HblFFUHBp">這次用到的截圖imgur存放區<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtkdW1heS9zeW5vbG9neS1kb2NrZXI=">Synology docker<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmFzcGVyLm9uZS8yMDE4LzAxL2RvY2tlci1kb2NrZXItaG9zdC1zeW5vbG9neS11YnVudHUuaHRtbA==">Docker Host<i class="fa fa-external-link-alt"></i></span></p>
 
 
     </div>
@@ -332,28 +318,29 @@
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Blog/posts/1405864691/" rel="bookmark">在群暉Synology NAS DSM7.0上安裝套件管理器</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Blog/posts/3672378701/" rel="bookmark">解決SynologyNAS上Gitlab發生的502錯誤</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/Blog/posts/440569875/" rel="bookmark">使用Container來快速建立開發環境(以python為例)</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/Blog/posts/509187850/" rel="bookmark">使用docker container建立SSH反向通道穿透內網連接內部裝置</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/Blog/posts/2800319203/" rel="bookmark">使用Django框架建置圖片上傳與展示的平台</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/Blog/posts/165930856/" rel="bookmark">Python中List的Copy反直覺踩坑</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/Blog/posts/3095258865/" rel="bookmark">Synology NAS Docker更新與遠端控制</a></div>
+      <div class="popular-posts-title"><a href="/Blog/posts/823759430/" rel="bookmark">多版本CUDA及cuDNN管理</a></div>
     </li>
   </ul>
 
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/Blog/tags/python/" rel="tag"># python</a>
+              <a href="/Blog/tags/synology/" rel="tag"># synology</a>
+              <a href="/Blog/tags/nas/" rel="tag"># nas</a>
               <a href="/Blog/tags/docker/" rel="tag"># docker</a>
-              <a href="/Blog/tags/container/" rel="tag"># container</a>
+              <a href="/Blog/tags/linux/" rel="tag"># linux</a>
           </div>
 
         
@@ -362,13 +349,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Blog/posts/1950864450/" rel="prev" title="Blog Upgraded">
-      <i class="fa fa-chevron-left"></i> Blog Upgraded
+    <a href="/Blog/posts/1405864691/" rel="prev" title="在群暉Synology NAS DSM7.0上安裝套件管理器">
+      <i class="fa fa-chevron-left"></i> 在群暉Synology NAS DSM7.0上安裝套件管理器
     </a></div>
-      <div class="post-nav-item">
-    <a href="/Blog/posts/4239708371/" rel="next" title="Git 筆記">
-      Git 筆記 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -428,7 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.1.</span> <span class="nav-text">步驟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%9C%E5%85%85%E8%AA%AA%E6%98%8E"><span class="nav-number">2.2.</span> <span class="nav-text">補充說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">2.3.</span> <span class="nav-text">結論</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0Docker"><span class="nav-number">2.1.</span> <span class="nav-text">更新Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E9%81%A0%E7%AB%AF%E8%A8%AD%E5%AE%9A"><span class="nav-number">2.2.</span> <span class="nav-text">Docker遠端設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -634,7 +618,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'Blog',
       owner       : 'natlee',
       admin       : ['natlee'],
-      id          : '2aa983f1900fc996a1c34c290095decf',
+      id          : 'f060640460282253529a0f4d3244e17f',
         language: 'zh-TW,en',
       distractionFreeMode: true
     });
