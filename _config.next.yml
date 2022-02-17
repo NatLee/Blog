@@ -47,8 +47,8 @@ google_adsense:
   postheader_enable: false
   postheader_data_ad_slot: # <slot id>
   ## post footer
-  postfooter_enable: true
-  postfooter_data_ad_slot: 8435412695 # <slot id>
+  postfooter_enable: false
+  postfooter_data_ad_slot: #8435412695 # <slot id>
 
 # like coin
 like_coin:
@@ -684,7 +684,7 @@ isso: # <data_isso>
 # Star rating support to each article.
 # To get your ID visit https://widgetpack.com
 rating:
-  enable: true
+  enable: false
   id: 30696 # <app_id>
   color:  "#fc6423"
 
