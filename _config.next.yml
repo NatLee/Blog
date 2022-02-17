@@ -93,7 +93,7 @@ creative_commons:
   # Available values: big | small
   size: small
   sidebar: false
-  post: false
+  post: true
   # You can set a language value if you prefer a translated version of CC license, e.g. deed.zh
   # CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org
   language:
@@ -160,8 +160,8 @@ sidebar:
 # Sidebar Avatar
 avatar:
   # Replace the default image and set the url here.
-  url: #/images/avatar.gif
-  # If true, the avatar will be displayed in circle.
+  url: https://avatars.githubusercontent.com/u/10178964 #/images/avatar.gif
+  # If true, the avatar will be dispalyed in circle.
   rounded: true
   # If true, the avatar will be rotated with the cursor.
   rotated: true
@@ -310,15 +310,14 @@ follow_me:
 # Dependencies: https://github.com/sergeyzwezdin/hexo-related-posts
 related_posts:
   enable: true
-  title: 相关文章推荐      # 属性的命名
+  title: 相關文章推薦      # 属性的命名
   display_in_home: false # false代表首页不显示
   params:
     maxCount: 5          # 最多5条
-    PPMixingRate: 0.0   # 相关度
-    isDate: true        # 是否显示日期
-    isImage: false      # 是否显示配图
-    isExcerpt: false     # 是否显示摘要
-
+    #PPMixingRate: 0.0   # 相关度
+    #isDate: true        # 是否显示日期
+    #isImage: false      # 是否显示配图
+    #isExcerpt: false     # 是否显示摘要
 
 # Post edit
 # Easily browse and edit blog source code online.
@@ -871,7 +870,7 @@ mermaid:
 # For more information: https://animate.style
 motion:
   enable: true
-  async: false
+  async: true
   transition:
     # All available transition variants: https://theme-next.js.org/animate/
     post_block: fadeIn

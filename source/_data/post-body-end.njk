@@ -1,8 +1,36 @@
+
+{%- if theme.related_posts.enable and (theme.related_posts.display_in_home or not is_index) %}
+    <!-- related posts -->
+    {%- set popular_posts = popular_posts_json(theme.related_posts.params, page) %}
+    {%- if popular_posts.json and popular_posts.json.length > 0 %}
+    <div class="popular-posts-header">{{ theme.related_posts.title or __('post.related_posts') }}</div>
+    <ul class="popular-posts">
+    {%- for popular_post in popular_posts.json %}
+        <li class="popular-posts-item">
+        {%- if popular_post.date and popular_post.date != '' %}
+            <div class="popular-posts-date">{{ popular_post.date }}</div>
+        {%- endif %}
+        {%- if popular_post.img and popular_post.img != '' %}
+            <div class="popular-posts-img"><img src="{{ popular_post.img }}"></div>
+        {%- endif %}
+        <div class="popular-posts-title"><a href="{{ popular_post.path }}" rel="bookmark">{{ popular_post.title }}</a></div>
+        {%- if popular_post.excerpt and popular_post.excerpt != '' %}
+            <div class="popular-posts-excerpt"><p>{{ popular_post.excerpt }}</p></div>
+        {%- endif %}
+        </li>
+    {%- endfor %}
+    </ul>
+    {%- endif %}
+{%- endif %}
+
 {% if theme.like_coin.enable %}
 <!-- like coin -->
 <div>
-    <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/{{ theme.like_coin.id }}/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
-<div>
+    <script type="text/javascript">
+        document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/{{ theme.like_coin.id }}/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
 {% endif %}
 
 {% if theme.google_adsense.postfooter_enable %}
@@ -10,11 +38,11 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- typeart_post_body_end -->
     <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="{{ theme.google_adsense.google_ad_client_id }}"
-         data-ad-slot="{{ theme.google_adsense.postfooter_data_ad_slot }}"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+        style="display:block"
+        data-ad-client="{{ theme.google_adsense.google_ad_client_id }}"
+        data-ad-slot="{{ theme.google_adsense.postfooter_data_ad_slot }}"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
