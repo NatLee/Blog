@@ -1,0 +1,117 @@
+{
+  "main": {
+    "id": "8233dc41eaffef5b",
+    "type": "split",
+    "children": [
+      {
+        "id": "193aa4a49d560ba8",
+        "type": "leaf",
+        "dimension": 55.30600786075238,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "_posts/20220217-synology-nas-update-version-of-docker.md",
+            "mode": "source"
+          }
+        },
+        "group": "db5c071ffe9884d8"
+      },
+      {
+        "id": "783693a58e6ca350",
+        "type": "leaf",
+        "dimension": 44.69399213924761,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "_posts/20220217-synology-nas-update-version-of-docker.md",
+            "mode": "preview"
+          }
+        },
+        "group": "db5c071ffe9884d8"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d81e6d69e5378ed5",
+    "type": "split",
+    "children": [
+      {
+        "id": "6f5cd32c461b076e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "83fa5e1e8dea9d4a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "8961dc7bd1aa26cb",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#deep_learning",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 291
+  },
+  "right": {
+    "id": "78a98ce3c8723450",
+    "type": "split",
+    "children": [
+      {
+        "id": "bcbd660bfa28782a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a0854b45c0fe90c9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "_posts/20220217-synology-nas-update-version-of-docker.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "193aa4a49d560ba8",
+  "lastOpenFiles": [
+    "_posts/20220217-synology-nas-update-version-of-docker.md",
+    "_posts/20220216-install-a-package-manager-on-synology-nas-dsm-7.md",
+    "_posts/20220210-multiple-versions-of-cuda-and-cudnn-management.md",
+    "templates/post.md",
+    "_posts/20190805-python-multithread-and-multiprocessing.md",
+    "_posts/20211006-digital-signature.md",
+    "_posts/20210906-python-container-environment.md",
+    "_posts/20180830-solve-synology-nas-gitlab-502.md",
+    "_posts/20220209-ssh-reverse-tunnel-with-docker-container.md",
+    "_posts/20210930-cryptograph-encryption-hash.md"
+  ]
+}

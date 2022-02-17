@@ -1,4 +1,3 @@
-
 ---
 title: Synology NAS Docker更新與遠端控制
 categories: dev
@@ -7,6 +6,7 @@ tags:
   - nas
   - docker
   - linux
+abbrlink: b87de6f1
 date: 2022-02-17 10:44:22
 ---
 
@@ -76,14 +76,14 @@ Docker version 20.10.12, build e91ed57
 所以，要編輯這個文件
 
 ```bash
-vi /var/packages/Docker/etc/dockerd.json
+$ vi /var/packages/Docker/etc/dockerd.json
 ```
 
 把裏面改成下面這樣，主要是加上`hosts`
 
 ```json
 {
-+    "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"],
+     "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"],
      "data-root" : "/var/packages/Docker/target/docker",
      "log-driver" : "json-file",
      "registry-mirrors" : [],

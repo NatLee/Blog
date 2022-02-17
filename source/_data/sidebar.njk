@@ -1,0 +1,15 @@
+{% if theme.google_adsense.sidebar_enable %}
+<div class="sidebar-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="{{ theme.google_adsense.google_ad_client_id }}"
+         data-ad-slot="{{ theme.google_adsense.sidebar_data_ad_slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+{% endif %}

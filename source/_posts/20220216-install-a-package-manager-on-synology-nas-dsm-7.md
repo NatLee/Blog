@@ -1,4 +1,3 @@
-
 ---
 title: 在群暉Synology NAS DSM7.0上安裝套件管理器
 categories: dev
@@ -6,6 +5,7 @@ tags:
   - synology
   - nas
   - linux
+abbrlink: 53cbcaf3
 date: 2022-02-16 22:15:54
 ---
 
