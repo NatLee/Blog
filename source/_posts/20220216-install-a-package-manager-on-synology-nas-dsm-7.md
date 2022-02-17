@@ -9,6 +9,7 @@ tags:
 date: 2022-02-16 22:15:54
 ---
 
+![entware](https://repository-images.githubusercontent.com/123925061/fe5a0600-f91a-11ea-8914-601e3e722062)
 
 ## 前言
 ----------
@@ -129,6 +130,22 @@ Configuring git-http.
 ```
 
 終於搞定了！
+
+接下來就可以用GIT去clone一些專案
+
+
+## 結語
+----------
+
+其實在DSM6的時候，官方套件管理可以安裝Git功能
+
+甚至是連Gitlab都能在官方套件內安裝
+
+後來看起來是Synology不想更新這一塊了
+
+所以乾脆直接把套件抽掉
+
+好險非官方社群還有人在研究，不然閒置一台機器真的滿浪費的
 
 
 ## Reference
