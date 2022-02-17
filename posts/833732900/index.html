@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.10.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+  <meta name="description" content="前言 這篇算是之前資安常識裏面提到RSA加密的延伸補充。 我們說的RSA加密不是單純只有加密，還必須加料。 這樣才能夠有一定的混淆性。 這邊記錄一下PKCS#1裏面定義的RSA加解密流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）">
+<meta property="og:url" content="https://github.com/Blog/posts/833732900/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言 這篇算是之前資安常識裏面提到RSA加密的延伸補充。 我們說的RSA加密不是單純只有加密，還必須加料。 這樣才能夠有一定的混淆性。 這邊記錄一下PKCS#1裏面定義的RSA加解密流程。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/XBhWSgm.png">
+<meta property="og:image" content="https://i.imgur.com/SxnPfCz.png">
+<meta property="og:image" content="https://i.imgur.com/6SV8Vit.png">
+<meta property="og:image" content="https://i.imgur.com/onAOFL3.png">
+<meta property="og:image" content="https://i.imgur.com/Ui4NmUh.png">
+<meta property="og:image" content="https://i.imgur.com/63qxp8P.png">
+<meta property="og:image" content="https://i.imgur.com/qs5M1Jj.png">
+<meta property="og:image" content="https://i.imgur.com/7zgvnbW.png">
+<meta property="og:image" content="https://i.imgur.com/O2349Yt.png">
+<meta property="og:image" content="https://i.imgur.com/FCFlPXi.png">
+<meta property="article:published_time" content="2021-10-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-17T16:07:59.955Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="cryptograph">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="encoding">
+<meta property="article:tag" content="decoding">
+<meta property="article:tag" content="RSA">
+<meta property="article:tag" content="PKCS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/XBhWSgm.png">
+
+
+<link rel="canonical" href="https://github.com/Blog/posts/833732900/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/833732900/","path":"posts/833732900/","title":"PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP） | Nat's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-66147173-1","only_pageview":false}</script>
+  <script src="/Blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'pub-6070159426076964',
+    enable_page_level_ads: false
+  });
+</script>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RSA-Cryptography-Specifications"><span class="nav-number">2.1.</span> <span class="nav-text">RSA Cryptography Specifications</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Key-Types"><span class="nav-number">2.1.1.</span> <span class="nav-text">Key Types</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-Conversion-Primitives"><span class="nav-number">2.1.2.</span> <span class="nav-text">Data Conversion Primitives</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#I2OSP"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">I2OSP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#OS2IP"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">OS2IP</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cryptographic-Primitives"><span class="nav-number">2.1.3.</span> <span class="nav-text">Cryptographic Primitives</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E5%9C%8B%E9%A4%98%E5%BC%8F%E5%AE%9A%E7%90%86%E5%8A%A0%E9%80%9F%E9%81%8B%E7%AE%97"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">中國餘式定理加速運算</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Encryption-Schemes"><span class="nav-number">2.1.4.</span> <span class="nav-text">Encryption Schemes</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RSAES-PKCS1-V1-5"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">RSAES-PKCS1-V1_5</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#EME-PKCS1-v1-5-Encoding-amp-Decoding"><span class="nav-number">2.1.4.1.1.</span> <span class="nav-text">EME-PKCS1-v1_5 Encoding &amp; Decoding</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RSAES-OAEP"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">RSAES-OAEP</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#EME-OAEP-Encoding-amp-Decoding"><span class="nav-number">2.1.4.2.1.</span> <span class="nav-text">EME-OAEP Encoding &amp; Decoding</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%96%E7%89%87%E4%B8%B2"><span class="nav-number">4.</span> <span class="nav-text">圖片串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NatLee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/NatLee" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/833732900/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-31 00:00:00" itemprop="dateCreated datePublished" datetime="2021-10-31T00:00:00+08:00">2021-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-18 00:07:59" itemprop="dateModified" datetime="2022-02-18T00:07:59+08:00">2022-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>11 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>這篇算是之前資安常識裏面提到RSA加密的延伸補充。</p>
+<p>我們說的RSA加密不是單純只有加密，還必須加料。</p>
+<p>這樣才能夠有一定的混淆性。</p>
+<p>這邊記錄一下PKCS#1裏面定義的RSA加解密流程。</p>
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<p>下面部分內容會從PKCS#1中節錄，但這邊只討論加解密，並不會談到簽驗章流程。</p>
+<h3 id="RSA-Cryptography-Specifications"><a href="#RSA-Cryptography-Specifications" class="headerlink" title="RSA Cryptography Specifications"></a>RSA Cryptography Specifications</h3><hr>
+<h4 id="Key-Types"><a href="#Key-Types" class="headerlink" title="Key Types"></a>Key Types</h4><hr>
+<p>這邊寫在PKCS#1裏面的Sec.3。</p>
+<p>我們知道RSA是非對稱加密，然後會產生兩把鑰匙，一把是公鑰，另一把則是私鑰。</p>
+<p>但是，平常在加解密的時候，我們要怎麼知道到底哪個是私鑰？哪個是公鑰？</p>
+<p>在PKCS#1裏面就有分別定義公鑰跟私鑰的長相。</p>
+<ul>
+<li><p>公鑰（Public Key）</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">RSAPublicKey</span> ::= <span class="variable constant_">SEQUENCE</span> &#123;</span><br><span class="line"> modulus <span class="variable constant_">INTEGER</span>, -- n</span><br><span class="line"> publicExponent <span class="variable constant_">INTEGER</span> -- e</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  這裏面有兩個參數，分別是modulus跟publicExponent。</p>
+<p>  就是我們熟知的公鑰(N, e)。</p>
+<p>  其中，N是兩個質數p、q相乘。<br>  那麼，e是根據費馬小定理去計算：</p>
+<blockquote>
+<p>r &#x3D; ɸ(N) &#x3D; ɸ(p) ɸ(q) &#x3D; (p-1)(q-1)</p>
+</blockquote>
+<p>  然後，找一個小於 r 且互質的整數，就是e。</p>
+<p>  這個e通常是<code>65537</code>，因爲安全性問題。</p>
+<p>  可以看看<span class="exturl" data-url="aHR0cHM6Ly9jcnlwdG8uc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzMxMTAvaW1wYWN0cy1vZi1ub3QtdXNpbmctcnNhLWV4cG9uZW50LW9mLTY1NTM3LzMxMTM=">這邊<i class="fa fa-external-link-alt"></i></span>的解釋。</p>
+</li>
+<li><p>私鑰（Private Key）</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">RSAPrivateKey</span> ::= <span class="variable constant_">SEQUENCE</span> &#123;</span><br><span class="line"> version <span class="title class_">Version</span>,</span><br><span class="line"> modulus <span class="variable constant_">INTEGER</span>, -- n</span><br><span class="line"> publicExponent <span class="variable constant_">INTEGER</span>, -- e</span><br><span class="line"> privateExponent <span class="variable constant_">INTEGER</span>, -- d</span><br><span class="line"> prime1 <span class="variable constant_">INTEGER</span>, -- p</span><br><span class="line"> prime2 <span class="variable constant_">INTEGER</span>, -- q</span><br><span class="line"> exponent1 <span class="variable constant_">INTEGER</span>, -- d mod (p-<span class="number">1</span>)</span><br><span class="line"> exponent2 <span class="variable constant_">INTEGER</span>, -- d mod (q-<span class="number">1</span>)</span><br><span class="line"> coefficient <span class="variable constant_">INTEGER</span> -- (inverse <span class="keyword">of</span> q) mod p</span><br><span class="line"> otherPrimeInfos <span class="title class_">OtherPrimeInfos</span> <span class="variable constant_">OPTIONAL</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Version</span> ::= <span class="variable constant_">INTEGER</span></span><br></pre></td></tr></table></figure>
+
+<p>  從定義裏面，我們可以看到私鑰裏面裝得東西超級多。</p>
+<p>  除了使用的版本(version)外，還有剛剛我們提到的公鑰，沒錯私鑰裏面也有公鑰(N, e)。</p>
+<p>  裏面還有私鑰的d跟組成N的p、q。</p>
+<p>  這邊除了這些東西外，還有一些神奇的定義就是exponent1、exponent2、coefficient跟otherPrimeInfos。</p>
+<p>  otherPrimeInfos還好理解，就是有關質數的一些其他資訊。</p>
+<p>  但其他的項目是什麼作用呢？</p>
+<p>  就是一種建表的方式，有些東西先算好寫好，避免日後運算再花時間。</p>
+</li>
+</ul>
+<h4 id="Data-Conversion-Primitives"><a href="#Data-Conversion-Primitives" class="headerlink" title="Data Conversion Primitives"></a>Data Conversion Primitives</h4><hr>
+<p>這邊的內容在PKCS#1的Sec.4。</p>
+<p>主要內容是定義函數，介紹數字跟二進位文字（可以說是binary string）的互轉。</p>
+<p>學海無涯，這邊推廣一下python：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 這樣就可以表示binary string了</span></span><br><span class="line"><span class="string">b&#x27;Hello World&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Binary string也可以說是octet string或是byte string。</p>
+<p>聽說會取名<code>octet</code>是因爲很容易跟<code>byte</code>搞混。</p>
+<p>Octet string的範例 -&gt; <code>af:ec:ec:8a:f4:09:52:53:69:d4:da:54</code></p>
+<p>那爲什麼要轉來轉去？</p>
+<p>答案是因爲RSA是數學運算，那文字沒辦法直接計算加密，我們得轉成數字才能計算。</p>
+<h5 id="I2OSP"><a href="#I2OSP" class="headerlink" title="I2OSP"></a>I2OSP</h5><p>Integer-to-Octet-String primitive<br>數字轉文字</p>
+<blockquote>
+<p><strong>I2OSP(x, L)</strong><br>x: nonnegative integer, but less than 256^L.<br>L: octet string 的字節長度(length)，一個字節是8-bit。</p>
+<blockquote>
+<p>這邊有個範例<br>I2OSP(4095, 2) &#x3D; 0F:FF</p>
+</blockquote>
+</blockquote>
+<h5 id="OS2IP"><a href="#OS2IP" class="headerlink" title="OS2IP"></a>OS2IP</h5><p>Octet-String-to-Integer primitive<br>文字轉數字</p>
+<blockquote>
+<p><strong>OS2IP(X)</strong><br>X: octet string，出來的輸出就是按照位數進行二進位值的相加。</p>
+<blockquote>
+<p>這邊有個範例<br>OS2IP(0F:FF) &#x3D; 4095（因爲<code>0x0FFF = 0000 1111 1111 1111</code>）</p>
+</blockquote>
+</blockquote>
+<h4 id="Cryptographic-Primitives"><a href="#Cryptographic-Primitives" class="headerlink" title="Cryptographic Primitives"></a>Cryptographic Primitives</h4><hr>
+<p>這邊定義在PKCS#1的Sec.5。</p>
+<p>這節主要是定義加解密的函數，分別有公私鑰應用在加解密的狀況。</p>
+<p>畢竟PKCS本身就是個大定義，它爲了後面不再敘述這些東西，這些函數就當成一個箱子，東西放進去，結果就出來了。</p>
+<p>在密碼學上面，只要你引用了PKCS，除非你是RSA其中一位，不然這世界上幾乎沒有人可以再質疑你。</p>
+<ul>
+<li>公鑰加密 RSAEP ((n, e), m) </li>
+<li>私鑰解密 RSADP (K, c)</li>
+<li>私鑰簽章 RSASP1 (K, m)</li>
+<li>公鑰驗章 RSAVP1 ((n, e), s)</li>
+</ul>
+<p>其中，m就是message，c就是cipher，K是私鑰，s是signature。</p>
+<p>不過這篇文章只會講加解密，並不會談到簽章的部分。</p>
+<p>那麼，上面有應用到私鑰解密的部分，可以使用中國餘式定理的解法以加速運算。</p>
+<h5 id="中國餘式定理加速運算"><a href="#中國餘式定理加速運算" class="headerlink" title="中國餘式定理加速運算"></a>中國餘式定理加速運算</h5><p>我們知道明文<code>m = c^d mod n</code>，<code>c</code>是密文，<code>d</code>是私鑰組成的其中一個元素，<code>n</code>則是兩個大質數<code>p</code>跟<code>q</code>相乘。</p>
+<p>那麼，我們可以把這個公式依照餘數定理轉換形式得到兩式：</p>
+<blockquote>
+<p>c^d mod p &#x3D; m1 —(1)<br>c^d mod q &#x3D; m2 —(2)</p>
+</blockquote>
+<p>其中，(1)式中的<code>m1</code>可以使用費馬小定理簡化運算，我們把<code>d = d mod (p-1)</code>帶入：</p>
+<blockquote>
+<p>c^(d mod (p-1))  mod p</p>
+</blockquote>
+<p>m2同理。</p>
+<p>接着，我們令一常數爲<code>h</code>，(2)式可以改寫爲<code>c^d = m2 + hq</code>，代入第(1)式：</p>
+<blockquote>
+<p>(m2 + hq) mod p &#x3D; m1<br>→ (m1 - m2) mod p &#x3D; hq</p>
+</blockquote>
+<p>因爲<code>p</code>跟<code>q</code>互質，我們可以將兩邊同乘<code>q</code>的倒數<code>q^(-1)</code>得到：</p>
+<blockquote>
+<p>((m1 - m2 ) q^(-1))  mod p &#x3D; h q q^(-1)<br>-&gt; h &#x3D; ((m1 - m2 ) q^(-1))  mod p</p>
+</blockquote>
+<p>最後，我們知道<code>n=pq</code>，所以可以推得：</p>
+<blockquote>
+<p>m &#x3D; c^d mod n &#x3D; m2 + hq</p>
+</blockquote>
+<p>因爲這邊公式沒有用數學格式表示，可能比較難看，可以參考<span class="exturl" data-url="aHR0cDovL2ppYW5pYXUuYmxvZ3Nwb3QuY29tLzIwMTQvMDUvcnNhLWRlY3J5cHQtd2l0aC1jcnQuaHRtbA==">這邊<i class="fa fa-external-link-alt"></i></span>，會有比較好看的敘述。</p>
+<p>程式上的實作可以參考<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ2Vla3Nmb3JnZWVrcy5vcmcvd2Vhay1yc2EtZGVjcnlwdGlvbi1jaGluZXNlLXJlbWFpbmRlci10aGVvcmVtLw==">這邊<i class="fa fa-external-link-alt"></i></span>，以下是節錄並修改成python3版本的程式碼。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Function to find the gcd of two </span></span><br><span class="line"><span class="comment"># integers using Euclidean algorithm</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gcd</span>(<span class="params">p, q</span>):</span><br><span class="line">    <span class="keyword">if</span> q == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> p</span><br><span class="line">    <span class="keyword">return</span> gcd(q, p % q)</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Function to find the</span></span><br><span class="line"><span class="comment"># lcm of two integers </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lcm</span>(<span class="params">p, q</span>):</span><br><span class="line">    <span class="keyword">return</span> p * q / gcd(p, q)</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Function implementing extended</span></span><br><span class="line"><span class="comment"># euclidean algorithm</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">egcd</span>(<span class="params">e, phi</span>):</span><br><span class="line">    <span class="keyword">if</span> e == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> (phi, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        g, y, x = egcd(phi % e, e)</span><br><span class="line">        <span class="keyword">return</span> (g, x - (phi // e) * y, y)</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Function to compute the modular inverse</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">modinv</span>(<span class="params">e, phi</span>):</span><br><span class="line">    g, x, y = egcd(e, phi)</span><br><span class="line">    <span class="keyword">return</span> x % phi</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Implementation of the Chinese Remainder Theorem</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chineseremaindertheorem</span>(<span class="params">dq, dp, p, q, c</span>):</span><br><span class="line">    m1 = <span class="built_in">pow</span>(c, dp, p) <span class="comment"># Message part 1</span></span><br><span class="line">    m2 = <span class="built_in">pow</span>(c, dq, q) <span class="comment"># Message part 2</span></span><br><span class="line">    qinv = modinv(q, p)</span><br><span class="line">    h = (qinv * (m1 - m2)) % p</span><br><span class="line">    m = m2 + h * q</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Driver Code</span></span><br><span class="line">p = <span class="number">9817</span></span><br><span class="line">q = <span class="number">9907</span></span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">c = <span class="number">36076319</span></span><br><span class="line">d = modinv(e, lcm(p - <span class="number">1</span>, q - <span class="number">1</span>))</span><br><span class="line">  </span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">pow(a, b, c) calculates a raised to power b </span></span><br><span class="line"><span class="string">modulus c, at a much faster rate than pow(a, b) % c</span></span><br><span class="line"><span class="string">Furthermore, we use Chinese Remainder Theorem as it</span></span><br><span class="line"><span class="string">splits the equation such that we have to calculate two</span></span><br><span class="line"><span class="string">values whose equations have smaller moduli and exponent  </span></span><br><span class="line"><span class="string">value, thereby reducing computing time.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">  </span><br><span class="line">dq = <span class="built_in">pow</span>(d, <span class="number">1</span>, q - <span class="number">1</span>)</span><br><span class="line">dp = <span class="built_in">pow</span>(d, <span class="number">1</span>, p - <span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(chineseremaindertheorem(dq, dp, p, q, c))</span><br></pre></td></tr></table></figure>
+
+<h4 id="Encryption-Schemes"><a href="#Encryption-Schemes" class="headerlink" title="Encryption Schemes"></a>Encryption Schemes</h4><hr>
+<p>這個部分來說明Sec.7的內容。</p>
+<p>主要是對於加解密額外過程的解說，也就是加密前的『填充（padding）』部分。</p>
+<p>那爲什麼要padding呢？</p>
+<p>因爲我們知道明文長度不一定與金鑰長度相同，而且區塊加密的狀況，我們必須要將明文切成一塊塊來進行加密。</p>
+<p>但是，就算切成一塊塊還是會有長度不夠的狀況，因此我們還是需要做padding。</p>
+<p>而padding除了能夠增加混淆性外，剛好也能夠把我們是用公鑰還是私鑰加密的資訊包含進去。</p>
+<h5 id="RSAES-PKCS1-V1-5"><a href="#RSAES-PKCS1-V1-5" class="headerlink" title="RSAES-PKCS1-V1_5"></a>RSAES-PKCS1-V1_5</h5><p>在PKCS1-v1_5中定義的加密流程如以下順序：</p>
+<ol>
+<li>原文經過EME-PKCS1-v1_5編碼產生EM（這邊就是所謂的padding了）</li>
+<li>經過OS2IP函數把EM轉成正整數以進行RSA裏面的數學運算</li>
+<li>經過RSAEP的數學運算加密EM</li>
+<li>把剛剛加密的結果經由I2OSP轉成長度爲k的密文C</li>
+</ol>
+<p>很少人會跟你講PKCS#1講得重點是填充，大部分人都會說PKCS#1在說加解密。</p>
+<p>其實也沒有錯，畢竟填充只是其中一個步驟。但個人認爲這才是精髓，因爲沒講誰會知道。</p>
+<p>解密流程就是反過來做，如下：</p>
+<ol>
+<li>密文C經過OS2IP轉成正整數</li>
+<li>把剛剛的正整數經由RSADP解密</li>
+<li>上一步的結果經由I2OSP轉成長度爲k的EM</li>
+<li>根據EME-PKCS1-v1_5解碼EM得到原文M</li>
+</ol>
+<h6 id="EME-PKCS1-v1-5-Encoding-amp-Decoding"><a href="#EME-PKCS1-v1-5-Encoding-amp-Decoding" class="headerlink" title="EME-PKCS1-v1_5 Encoding &amp; Decoding"></a>EME-PKCS1-v1_5 Encoding &amp; Decoding</h6><p>這邊是講解Padding的過程，也就是EME-PKCS1-v1_5如何編碼。</p>
+<p>解碼就不提了，因爲按照步驟倒回來就可以了。</p>
+<p>上面有說到編碼產生<code>EM</code>，那這個<code>EM</code>（Encoded Message）到底是怎麼組成的？</p>
+<p>PKCS裏面是這樣寫的：</p>
+<blockquote>
+<p>EM &#x3D; 00 || BT || PS || 00 || M</p>
+</blockquote>
+<p>裏面的<code>||</code>是分割符號，<code>BT</code>是資料塊的型別（Block Type），<code>PS</code>是填充用字串（Padding String），<code>M</code>是明文資料（Message）。</p>
+<p>根據這個定義拼湊出EM，我們就可以得到一個具有PKCS承認合法的padding格式。</p>
+<p>其中，BT跟PS的用途如以下：</p>
+<ul>
+<li><p>資料塊格式（BT）<br>  用來標示我加密使用的是公鑰還是私鑰。<br>  Private Key：00, 01（00容易混淆，不建議使用）<br>  Public Key：02</p>
+</li>
+<li><p>填充用字串（PS）<br>  用來把整個EM填充成同金鑰長度的資料塊。<br>  長度是金鑰長度-明文長度-前導00的1 octet-BT的1 octet-分割用00的1 octet，    也就是<code>金鑰長度-明文長度-3 octets</code>。</p>
+<p>  如果BT是00，則PS全部填00。（明文開頭是00就完蛋，不建議使用）<br>  如果BT是01，則PS全部填FF。<br>  如果BT是02，則PS用非0的亂數填充。</p>
+</li>
+</ul>
+<p>接下來又到了歡樂問答時間，這邊有三個問題。</p>
+<ol>
+<li><p>爲什麼要前導00？<br> 沒有爲什麼，定義說的就這樣。</p>
+</li>
+<li><p>爲什麼使用私鑰的時候，全部填FF？<br> 有一種說法是因爲安全性。因爲全填FF的話，可以讓值變很大以防止透過運算的方式攻擊。也可能還有其他原因要再想想。</p>
+</li>
+<li><p>亂數看起來比較安全，爲什麼不填充亂數就好？<br> 這邊可以想想看，我們公鑰加密才是填充亂數是爲什麼。主要是目的不同，因爲公鑰加密是爲了在充滿敵人的環境傳遞訊息，所以需要高度的混淆性。<br> 私鑰加密則是一種認可訊息的方式，別人只管驗證就好，也就不需要那麼麻煩。</p>
+</li>
+</ol>
+<p>最後，我們直接看個以OpenSSL實作加密填充的例子。</p>
+<p>這邊是以RSA-2048做例子。</p>
+<ul>
+<li>用私鑰加密前的填充</li>
+</ul>
+<p><img data-src="https://i.imgur.com/XBhWSgm.png" alt="private_key"></p>
+<ul>
+<li>用公鑰加密前的填充</li>
+</ul>
+<p><img data-src="https://i.imgur.com/SxnPfCz.png" alt="public_key"></p>
+<h5 id="RSAES-OAEP"><a href="#RSAES-OAEP" class="headerlink" title="RSAES-OAEP"></a>RSAES-OAEP</h5><p>在RSAES-OAEP中定義的加密流程如以下順序：</p>
+<ol>
+<li>原文經過EME-OAEP編碼產生EM（這邊就是所謂的padding了）</li>
+<li>經過OS2IP函數把EM轉成正整數以進行RSA裏面的數學運算</li>
+<li>經過RSAEP的數學運算加密EM</li>
+<li>把剛剛加密的結果經由I2OSP轉成長度爲k的密文C</li>
+</ol>
+<p>解密流程就是反過來做，如下：</p>
+<ol>
+<li>密文C經過OS2IP轉成正整數</li>
+<li>把剛剛的正整數經由RSADP解密</li>
+<li>上一步的結果經由I2OSP轉成長度爲k的EM</li>
+<li>根據EME-OAEP解碼EM得到原文M</li>
+</ol>
+<p>基本上，步驟跟剛剛的v1_5一模一樣，只是編解碼的方法不一樣而已。</p>
+<h6 id="EME-OAEP-Encoding-amp-Decoding"><a href="#EME-OAEP-Encoding-amp-Decoding" class="headerlink" title="EME-OAEP Encoding &amp; Decoding"></a>EME-OAEP Encoding &amp; Decoding</h6><p>基本上，OAEP的填充流程如下：</p>
+<p><img data-src="https://i.imgur.com/6SV8Vit.png" alt="oaep-flow"></p>
+<p>這個圖是參考PKCS內的流程跟<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NhbXNobzIvYXJ0aWNsZS9kZXRhaWxzLzg0MjU1MTcz">這邊<i class="fa fa-external-link-alt"></i></span>畫的，但是光看圖可能還是會不太明白實際上是怎麼跑的。</p>
+<p>這邊就以例子來演示填充的編碼流程，解碼則是按照步驟倒回來就行了。</p>
+<p><img data-src="https://i.imgur.com/onAOFL3.png" alt="1"></p>
+<p><img data-src="https://i.imgur.com/Ui4NmUh.png" alt="2"></p>
+<p><img data-src="https://i.imgur.com/63qxp8P.png" alt="3"></p>
+<p><img data-src="https://i.imgur.com/qs5M1Jj.png" alt="4"></p>
+<p><img data-src="https://i.imgur.com/7zgvnbW.png" alt="5"></p>
+<p><img data-src="https://i.imgur.com/O2349Yt.png" alt="6"></p>
+<p><img data-src="https://i.imgur.com/FCFlPXi.png" alt="7"></p>
+<p>這邊可能會有兩個問題。</p>
+<ol>
+<li><p><code>Label</code>是什麼？<br> Label通常是空字串（之前有說過空字串也可以雜湊），如果有需要使用的話必須再自行定義。PKCS#1的v2.2裏面有說如果用空字串以外的Label會out of scope。</p>
+</li>
+<li><p><code>MGF</code>是什麼？<br> 全名是Mask generation function。透過MGF，我們可以長度不等的資料用遮罩來罩住，讓它能夠產生一個固定長度的資料以便我們後面做XOR（長度必須相同才能做嘛）。通常是使用雜湊相關的函數如SHA-1後，再做截斷來達成。</p>
+</li>
+</ol>
+<p>到這邊OAEP就結束了，這些也是一般我們做RSA的加解密會常用到的填充編碼。</p>
+<p>那麼，簽驗章的部分也有在PKCS#1中有定義，這邊就不多做說明了。</p>
+<p>詳細可以參考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NhbXNobzIvYXJ0aWNsZS9kZXRhaWxzLzg0MjU1Mzgy">這邊<i class="fa fa-external-link-alt"></i></span>，有更多的圖解，包含MGF也有流程說明。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><hr>
+<p>這一次，我們提到的RSA實際上的加密並非單純數學運算。</p>
+<p>畢竟只有數學運算的話，同樣的明文加密會變成同樣的密文，這樣不用數學，我們使用分析破解，不需要金鑰就可以進行攻擊了。</p>
+<p>所以一開始說的RSA加密必須加料就是填充，而填充的方式就如同上面流程一樣複雜。</p>
+<h2 id="圖片串"><a href="#圖片串" class="headerlink" title="圖片串"></a>圖片串</h2><hr>
+<p>這次用到的圖片都放在Imgur的免空，<span class="exturl" data-url="aHR0cHM6Ly9pbWd1ci5jb20vYS80SXBHbGVZ">這裏<i class="fa fa-external-link-alt"></i></span>。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
+<p>原本沒想把padding的部分寫出來，後來想想還是整理一下好了。</p>
+<p>這些資料或許可以幫助到一些想進入或剛進入這個領域的人。</p>
+<p>真希望當初學習的時候也有這樣的資料可以看 😥</p>
+<p>這種類型的知識討厭的地方除了知道就知道，不知道就真的不知道外，還需要各種通靈當初爲什麼這樣設計，很高機率演變成先射箭再畫靶去解釋原因。</p>
+<p>不過通靈失敗率也很高就是了，畢竟跟程式一樣，文件不完善外，又不是最初的開發者，怎麼可能知道在寫什麼？😥</p>
+<p>如果要轉載，再麻煩標註作者跟網址，謝謝！</p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+    <!-- related posts -->
+    <div class="popular-posts-header">相關文章推薦</div>
+    <ul class="popular-posts">
+        <li class="popular-posts-item">
+        <div class="popular-posts-title"><a href="/Blog/posts/736906820/" rel="bookmark">資安常識(3) - 簽驗章流程與完整憑證解析</a></div>
+        </li>
+        <li class="popular-posts-item">
+        <div class="popular-posts-title"><a href="/Blog/posts/1123965036/" rel="bookmark">資安常識(1) - 公鑰基礎建設（PKI）概念</a></div>
+        </li>
+        <li class="popular-posts-item">
+        <div class="popular-posts-title"><a href="/Blog/posts/1489926540/" rel="bookmark">資安常識(2) - 對稱非對稱加密演算法與雜湊算法</a></div>
+        </li>
+    </ul>
+
+
+<!-- like coin -->
+<div>
+    <script type="text/javascript">
+        document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/natlee_/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+
+
+
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://github.com/Blog/posts/833732900/" title="PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）">https://github.com/Blog/posts/833732900/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/cryptograph/" rel="tag"># cryptograph</a>
+              <a href="/Blog/tags/security/" rel="tag"># security</a>
+              <a href="/Blog/tags/encoding/" rel="tag"># encoding</a>
+              <a href="/Blog/tags/decoding/" rel="tag"># decoding</a>
+              <a href="/Blog/tags/RSA/" rel="tag"># RSA</a>
+              <a href="/Blog/tags/PKCS/" rel="tag"># PKCS</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wpac-rating-container">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/736906820/" rel="prev" title="資安常識(3) - 簽驗章流程與完整憑證解析">
+                  <i class="fa fa-chevron-left"></i> 資安常識(3) - 簽驗章流程與完整憑證解析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/posts/509187850/" rel="next" title="使用docker container建立SSH反向通道穿透內網連接內部裝置">
+                  使用docker container建立SSH反向通道穿透內網連接內部裝置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Symbols count total">85k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:35</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-62060193b1b05aaa" async="async"></script>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+  <script src="https://embed.widgetpack.com/widget.js" async></script>
+  <script class="next-config" data-name="rating" type="application/json">{"enable":true,"id":30696,"color":"#fc6423"}</script>
+  <script src="/Blog/js/third-party/rating.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/833732900/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"40c8ce302fbdeb0433b00dc85f92f529"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

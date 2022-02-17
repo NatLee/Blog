@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.10.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+  <meta name="description" content="前言 我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在群暉Synology NAS DSM7.0上安裝套件管理器">
+<meta property="og:url" content="https://github.com/Blog/posts/53cbcaf3/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言 我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://repository-images.githubusercontent.com/123925061/fe5a0600-f91a-11ea-8914-601e3e722062">
+<meta property="article:published_time" content="2022-02-16T14:15:54.000Z">
+<meta property="article:modified_time" content="2022-02-17T16:07:59.955Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="synology">
+<meta property="article:tag" content="nas">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://repository-images.githubusercontent.com/123925061/fe5a0600-f91a-11ea-8914-601e3e722062">
+
+
+<link rel="canonical" href="https://github.com/Blog/posts/53cbcaf3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/53cbcaf3/","path":"posts/53cbcaf3/","title":"在群暉Synology NAS DSM7.0上安裝套件管理器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在群暉Synology NAS DSM7.0上安裝套件管理器 | Nat's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-66147173-1","only_pageview":false}</script>
+  <script src="/Blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'pub-6070159426076964',
+    enable_page_level_ads: false
+  });
+</script>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NatLee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/NatLee" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/53cbcaf3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在群暉Synology NAS DSM7.0上安裝套件管理器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-16 22:15:54" itemprop="dateCreated datePublished" datetime="2022-02-16T22:15:54+08:00">2022-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-18 00:07:59" itemprop="dateModified" datetime="2022-02-18T00:07:59+08:00">2022-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>4 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img data-src="https://repository-images.githubusercontent.com/123925061/fe5a0600-f91a-11ea-8914-601e3e722062" alt="entware"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西</p>
+<p>但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧</p>
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<blockquote>
+<p><em>WAIT！請注意！直接更改NAS內的檔案都會有風險！</em><br><em>請一定要知道你的每一步操作在做什麼！</em></p>
+</blockquote>
+<p>某次我SSH連線進NAS的時候發現Git沒辦法使用</p>
+<p>而且官方Docker套件又弄得很廢</p>
+<p>於是萌生出有沒有辦法在上面自己安裝套件的想法</p>
+<p>然後我就使用了<code>apt</code>大法</p>
+<p>結果發現 幹！原來OS不是debian系列</p>
+<p>花時間上網搜了一波發現大多資料都是DSM6以前的，DSM7.0以上的資料超級少</p>
+<p>最後找到<span class="exturl" data-url="aHR0cHM6Ly93aW5kaXgubWVkaXVtLmNvbS9pbnN0YWxsLXBhY2thZ2UtdmlhLW9wa2ctZW50d2FyZS1mb3Itc3lub2xvZ3ktZHNtLTctOWI5OTk0NDE1YjJk">這篇文章<i class="fa fa-external-link-alt"></i></span>說可以用<code>opkg</code>來安裝</p>
+<p>我就查一下發現它裏面說的<code>Entware</code>是邊緣嵌入式系統用的套件管理器</p>
+<p>於是跟着連結往深處尋找發現這個安裝流程<a href="https://github.com/Entware/Entware/wiki/Install-on-Synology-NAS">Entware install guide</a></p>
+<p>因爲我NAS的CPU是intel x64，所以我直接執行了這個腳本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - https://bin.entware.net/x64-k3.2/installer/generic.sh | /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>它就會拉下來開始裝一些基本工具，成功會有下面訊息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Info: Congratulations!</span><br><span class="line">Info: If there are no errors above <span class="keyword">then</span> Entware was successfully initialized.</span><br><span class="line">Info: Add /opt/bin &amp; /opt/sbin to <span class="variable">$PATH</span> variable</span><br><span class="line">Info: Add <span class="string">&quot;/opt/etc/init.d/rc.unslung start&quot;</span> to startup script <span class="keyword">for</span> Entware services to start</span><br><span class="line">Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接着用瀏覽器去個人NAS的首頁找到這個地方</p>
+<blockquote>
+<p>設定 -&gt; 服務 -&gt; 任務排程器</p>
+</blockquote>
+<p>按下新增<code>觸發任務</code>裏面的<code>使用者定義程式碼</code></p>
+<p>裏面照着下面填寫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">一般設定</span><br><span class="line"></span><br><span class="line">&gt; 任務名稱：Entware</span><br><span class="line">&gt; 使用者帳號：root</span><br><span class="line">&gt; 事件：開機</span><br><span class="line">&gt; 先行任務：</span><br><span class="line"></span><br><span class="line">[v]已啓動</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接着按上面的<code>任務設定</code>的tab把下面程式碼貼上以確保每次重開機都能夠先載入套件管理的工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mount/Start Entware</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt</span><br><span class="line">mount -o <span class="built_in">bind</span> <span class="string">&quot;/volume1/@Entware/opt&quot;</span> /opt</span><br><span class="line">/opt/etc/init.d/rc.unslung start</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add Entware Profile in Global Profile</span></span><br><span class="line"><span class="keyword">if</span> grep  -qF  <span class="string">&#x27;/opt/etc/profile&#x27;</span> /etc/profile; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;Confirmed: Entware Profile in Global Profile&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;Adding: Entware Profile in Global Profile&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/profile &lt;&lt;<span class="string">&quot;EOF&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load Entware Profile</span></span><br><span class="line">. /opt/etc/profile</span><br><span class="line">EOF</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update Entware List</span></span><br><span class="line">/opt/bin/opkg update</span><br></pre></td></tr></table></figure>
+
+<p>按下確定後就可以重開機了！</p>
+<p>開機完成後，我們可以試試看安裝git</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@Nat-Nas:~<span class="comment"># opkg install git-http</span></span><br><span class="line">Installing git-http (2.33.1-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/git-http_2.33.1-1_x64-3.2.ipk</span><br><span class="line">Installing git (2.33.1-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/git_2.33.1-1_x64-3.2.ipk</span><br><span class="line">Installing ca-bundle (20211016-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/ca-bundle_20211016-1_all.ipk</span><br><span class="line">Installing libcurl (7.80.0-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/libcurl_7.80.0-1_x64-3.2.ipk</span><br><span class="line">Configuring ca-bundle.</span><br><span class="line">Configuring libcurl.</span><br><span class="line">Configuring git.</span><br><span class="line">Configuring git-http.</span><br></pre></td></tr></table></figure>
+
+<p>終於搞定了！</p>
+<p>接下來就可以用GIT去clone一些專案</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
+<p>其實在DSM6的時候，官方套件管理可以安裝Git功能</p>
+<p>甚至是連Gitlab都能在官方套件內安裝</p>
+<p>後來看起來是Synology不想更新這一塊了</p>
+<p>所以乾脆直接把套件抽掉</p>
+<p>好險非官方社群還有人在研究，不然閒置一台機器真的滿浪費的</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<p><a href="https://github.com/Entware/Entware/wiki/Install-on-Synology-NAS">Entware install guide</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+    <!-- related posts -->
+    <div class="popular-posts-header">相關文章推薦</div>
+    <ul class="popular-posts">
+        <li class="popular-posts-item">
+        <div class="popular-posts-title"><a href="/Blog/posts/b87de6f1/" rel="bookmark">Synology NAS Docker更新與遠端控制</a></div>
+        </li>
+        <li class="popular-posts-item">
+        <div class="popular-posts-title"><a href="/Blog/posts/3672378701/" rel="bookmark">解決SynologyNAS上Gitlab發生的502錯誤</a></div>
+        </li>
+        <li class="popular-posts-item">
+        <div class="popular-posts-title"><a href="/Blog/posts/823759430/" rel="bookmark">多版本CUDA及cuDNN管理</a></div>
+        </li>
+    </ul>
+
+
+<!-- like coin -->
+<div>
+    <script type="text/javascript">
+        document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/natlee_/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+
+
+
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://github.com/Blog/posts/53cbcaf3/" title="在群暉Synology NAS DSM7.0上安裝套件管理器">https://github.com/Blog/posts/53cbcaf3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/synology/" rel="tag"># synology</a>
+              <a href="/Blog/tags/nas/" rel="tag"># nas</a>
+              <a href="/Blog/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wpac-rating-container">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/823759430/" rel="prev" title="多版本CUDA及cuDNN管理">
+                  <i class="fa fa-chevron-left"></i> 多版本CUDA及cuDNN管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/posts/b87de6f1/" rel="next" title="Synology NAS Docker更新與遠端控制">
+                  Synology NAS Docker更新與遠端控制 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Symbols count total">85k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:35</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-62060193b1b05aaa" async="async"></script>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+  <script src="https://embed.widgetpack.com/widget.js" async></script>
+  <script class="next-config" data-name="rating" type="application/json">{"enable":true,"id":30696,"color":"#fc6423"}</script>
+  <script src="/Blog/js/third-party/rating.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/53cbcaf3/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"679d0baa935383833fb1c1a64d878634"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
