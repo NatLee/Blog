@@ -4,5 +4,6 @@
   "foldHeading": true,
   "foldIndent": true,
   "showFrontmatter": true,
-  "strictLineBreaks": false
+  "strictLineBreaks": false,
+  "showUnsupportedFiles": true
 }
