@@ -21,12 +21,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.10.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-  <meta name="description" content="前言  一次開發一次爽一直開發一直慘解決環境問題的一種好方法 ── Docker">
+  <meta name="description" content="前言 一次開發一次爽一直開發一直慘解決環境問題的一種好方法 ── Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Container來快速建立開發環境(以python為例)">
 <meta property="og:url" content="https://github.com/Blog/posts/440569875/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="前言  一次開發一次爽一直開發一直慘解決環境問題的一種好方法 ── Docker">
+<meta property="og:description" content="前言 一次開發一次爽一直開發一直慘解決環境問題的一種好方法 ── Docker">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png">
 <meta property="og:image" content="https://i.imgur.com/jGE3rXY.png">
@@ -44,7 +44,7 @@
 <meta property="og:image" content="https://i.imgur.com/Oy6au5Z.png">
 <meta property="og:image" content="https://i.imgur.com/iPFmnXf.png">
 <meta property="article:published_time" content="2021-09-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-17T17:13:01.136Z">
+<meta property="article:modified_time" content="2022-02-17T17:54:50.499Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="docker">
@@ -257,7 +257,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-18 01:13:01" itemprop="dateModified" datetime="2022-02-18T01:13:01+08:00">2022-02-18</time>
+      <time title="Modified: 2022-02-18 01:54:50" itemprop="dateModified" datetime="2022-02-18T01:54:50+08:00">2022-02-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -294,8 +294,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p><img data-src="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png" alt="whale"></p>
+        <p><img data-src="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png" alt="whale"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
 <p>一次開發一次爽<br>一直開發一直慘<br>解決環境問題的一種好方法 ── Docker</p>
 <span id="more"></span>
 
@@ -347,49 +347,32 @@
 
     <footer class="post-footer">
     <!-- related posts -->
-    <div class="popular-posts-header">相關文章推薦</div>
-    <ul class="popular-posts">
-        <li class="popular-posts-item">
-        <div class="popular-posts-title"><a href="/Blog/posts/509187850/" rel="bookmark">使用docker container建立SSH反向通道穿透內網連接內部裝置</a></div>
-        </li>
-        <li class="popular-posts-item">
-        <div class="popular-posts-title"><a href="/Blog/posts/2800319203/" rel="bookmark">使用Django框架建置圖片上傳與展示的平台</a></div>
-        </li>
-        <li class="popular-posts-item">
-        <div class="popular-posts-title"><a href="/Blog/posts/165930856/" rel="bookmark">Python中List的Copy反直覺踩坑</a></div>
-        </li>
-        <li class="popular-posts-item">
-        <div class="popular-posts-title"><a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a></div>
-        </li>
-        <li class="popular-posts-item">
-        <div class="popular-posts-title"><a href="/Blog/posts/b87de6f1/" rel="bookmark">Synology NAS Docker更新與遠端控制</a></div>
-        </li>
-    </ul>
+        <div class="popular-posts-header">相關文章推薦</div>
+        <ul class="popular-posts">
+            <li class="popular-posts-item">
+            <div class="popular-posts-title"><a href="/Blog/posts/509187850/" rel="bookmark">使用docker container建立SSH反向通道穿透內網連接內部裝置</a></div>
+            </li>
+            <li class="popular-posts-item">
+            <div class="popular-posts-title"><a href="/Blog/posts/2800319203/" rel="bookmark">使用Django框架建置圖片上傳與展示的平台</a></div>
+            </li>
+            <li class="popular-posts-item">
+            <div class="popular-posts-title"><a href="/Blog/posts/165930856/" rel="bookmark">Python中List的Copy反直覺踩坑</a></div>
+            </li>
+            <li class="popular-posts-item">
+            <div class="popular-posts-title"><a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a></div>
+            </li>
+            <li class="popular-posts-item">
+            <div class="popular-posts-title"><a href="/Blog/posts/b87de6f1/" rel="bookmark">Synology NAS Docker更新與遠端控制</a></div>
+            </li>
+        </ul>
 
 
 <!-- like coin -->
 <div>
-    <script type="text/javascript">
-        document.write(
-        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/natlee_/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
-    </script>
-</div>
+    <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
+<div>
 
 
-
-<div class="post-end-adsense">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- typeart_post_body_end -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-6070159426076964"
-        data-ad-slot="8435412695"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
 
 
           
@@ -416,11 +399,6 @@
           </div>
 
         
-  <div class="post-widgets">
-    <div class="wpac-rating-container">
-      <div id="wpac-rating"></div>
-    </div>
-  </div>
 
           <div class="post-nav">
             <div class="post-nav-item">
@@ -491,9 +469,6 @@
 <script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
 
   
-  <script src="https://embed.widgetpack.com/widget.js" async></script>
-  <script class="next-config" data-name="rating" type="application/json">{"enable":true,"id":30696,"color":"#fc6423"}</script>
-  <script src="/Blog/js/third-party/rating.js"></script>
 
 
 
