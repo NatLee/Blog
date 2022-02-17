@@ -11,6 +11,69 @@
   </url>
   
   <url>
+    <loc>https://github.com/Blog/about/index.html</loc>
+    
+    <lastmod>2022-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/Blog/archives/index.html</loc>
+    
+    <lastmod>2022-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/Blog/categories/index.html</loc>
+    
+    <lastmod>2022-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/Blog/posts/2264945776/</loc>
+    
+    <lastmod>2022-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/Blog/posts/3977034761/</loc>
+    
+    <lastmod>2022-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/Blog/posts/1497250561/</loc>
+    
+    <lastmod>2022-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/Blog/posts/419938887/</loc>
+    
+    <lastmod>2022-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://github.com/Blog/posts/3907118332/</loc>
     
     <lastmod>2022-02-17</lastmod>
@@ -191,61 +254,7 @@
   </url>
   
   <url>
-    <loc>https://github.com/Blog/about/index.html</loc>
-    
-    <lastmod>2022-02-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.com/Blog/archives/index.html</loc>
-    
-    <lastmod>2022-02-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.com/Blog/categories/index.html</loc>
-    
-    <lastmod>2022-02-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.com/Blog/posts/2264945776/</loc>
-    
-    <lastmod>2022-02-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.com/Blog/posts/3977034761/</loc>
-    
-    <lastmod>2022-02-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.com/Blog/posts/1497250561/</loc>
-    
-    <lastmod>2022-02-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.com/Blog/posts/419938887/</loc>
+    <loc>https://github.com/Blog/posts/a606eb6a/</loc>
     
     <lastmod>2022-02-17</lastmod>
     
@@ -607,6 +616,13 @@
   
   <url>
     <loc>https://github.com/Blog/tags/ubuntu/</loc>
+    <lastmod>2022-02-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.com/Blog/tags/plugin/</loc>
     <lastmod>2022-02-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
