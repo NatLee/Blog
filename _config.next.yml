@@ -38,8 +38,8 @@ custom_file_path:
 # Google AdSense
 google_adsense:
   enable: true
-  google_ad_client_id: pub-6070159426076964 # <client id>
-  enable_page_level_ads: false
+  google_ad_client_id: ca-pub-6070159426076964 # <client id>
+  enable_page_level_ads: true
   ## sidebar_enable
   sidebar_enable: false
   sidebar_data_ad_slot: # <slot id>
@@ -47,8 +47,8 @@ google_adsense:
   postheader_enable: false
   postheader_data_ad_slot: # <slot id>
   ## post footer
-  postfooter_enable: false
-  postfooter_data_ad_slot: # <slot id>
+  postfooter_enable: true
+  postfooter_data_ad_slot: 8435412695 # <slot id>
 
 # like coin
 like_coin:
