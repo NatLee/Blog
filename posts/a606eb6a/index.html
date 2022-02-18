@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言 最近更新了一波Hexo跟NEXT的版本 發現NEXT的『相關文章』插件沒辦法正常顯示">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-02-17T18:41:06.000Z">
-<meta property="article:modified_time" content="2022-02-18T03:57:24.626Z">
+<meta property="article:modified_time" content="2022-02-18T10:29:58.896Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="blog">
@@ -235,7 +235,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-02-18 02:41:06 / Modified: 11:57:24" itemprop="dateCreated datePublished" datetime="2022-02-18T02:41:06+08:00">2022-02-18</time>
+      <time title="Created: 2022-02-18 02:41:06 / Modified: 18:29:58" itemprop="dateCreated datePublished" datetime="2022-02-18T02:41:06+08:00">2022-02-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -278,15 +278,17 @@
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
-<p>把blog的NEXT主題更新到8之後，專案的東西少了很多</p>
-<p>因爲主題可以用npm直接安裝了，而且也支援不修改NEXT的原始碼插入元件</p>
-<p>測試啓動的時候也會吐出炫砲的ANSI圖</p>
+<p>把blog的NEXT主題更新到8之後</p>
+<p>因爲主題可以用npm直接安裝了，專案內的東西少了很多</p>
+<p>甚至還支援不修改NEXT原始碼插入元件的<code>custom file</code>方法</p>
+<p>在測試啓動的時候會吐出炫砲的ANSI圖</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">❯ hexo s</span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  ==================================</span><br><span class="line">  ███╗   ██╗███████╗██╗  ██╗████████╗</span><br><span class="line">  ████╗  ██║██╔════╝╚██╗██╔╝╚══██╔══╝</span><br><span class="line">  ██╔██╗ ██║█████╗   ╚███╔╝    ██║</span><br><span class="line">  ██║╚██╗██║██╔══╝   ██╔██╗    ██║</span><br><span class="line">  ██║ ╚████║███████╗██╔╝ ██╗   ██║</span><br><span class="line">  ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝   ╚═╝</span><br><span class="line">========================================</span><br><span class="line">NexT version 8.10.0</span><br><span class="line">Documentation: https://theme-next.js.org</span><br><span class="line">========================================</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/Blog/ . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
 
 <p>看似一切都很美好，但<a href="https://github.com/tea3/hexo-related-popular-posts">hexo-related-popular-posts</a>，這個插件出了問題</p>
 <p>問題就是它沒有被顯示出來！</p>
-<p>如剛說的，NEXT在v8可以支援非侵入式的修改，所以我們得自行去新增顯示方法</p>
-<p>首先，我們先找到NEXT的設定檔<code>./_config.next.yml</code>，並且把<code>postBodyEnd</code>的註解打開</p>
+<p>如剛說的，NEXT在v8可以支援非侵入式的修改</p>
+<p>所以我們得自行去新增顯示方法</p>
+<p>首先，先找到NEXT的設定檔<code>./_config.next.yml</code>，並且把<code>postBodyEnd</code>的註解打開</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define custom file paths.</span></span><br><span class="line"><span class="comment"># Create your custom files in site directory `source/_data` and uncomment needed files below.</span></span><br><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.njk</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.njk</span></span><br><span class="line">  <span class="comment">#sidebar: source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.njk</span></span><br><span class="line">  <span class="attr">postBodyEnd:</span> <span class="string">source/_data/post-body-end.njk</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.njk</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.njk</span></span><br><span class="line">  <span class="comment">#variable: source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="comment">#style: source/_data/styles.styl</span></span><br></pre></td></tr></table></figure>
 
 <p>按照路徑，我們建立一個資料夾<code>./source/_data</code></p>
@@ -303,7 +305,7 @@
 
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
 <p>我個人覺得新版Hexo跟NEXT比較好管理</p>
-<p>之前用的插件都要侵入式的修改，現在有custom file可以直接設定</p>
+<p>之前用的插件都要侵入式的修改，現在有<code>custom file</code>可以直接設定</p>
 <p>這樣就不會因爲沒有記錄就升級導致某些檔案忘記一起修改</p>
 
     </div>
