@@ -22,11 +22,13 @@ categories: blog
 ## 內容
 ----------
 
-把blog的NEXT主題更新到8之後，專案的東西少了很多
+把blog的NEXT主題更新到8之後
 
-因爲主題可以用npm直接安裝了，而且也支援不修改NEXT的原始碼插入元件
+因爲主題可以用npm直接安裝了，專案內的東西少了很多
 
-測試啓動的時候也會吐出炫砲的ANSI圖
+甚至還支援不修改NEXT原始碼插入元件的`custom file`方法
+
+在測試啓動的時候會吐出炫砲的ANSI圖
 
 ```
 ❯ hexo s
@@ -50,9 +52,11 @@ INFO  Hexo is running at http://localhost:4000/Blog/ . Press Ctrl+C to stop.
 
 問題就是它沒有被顯示出來！
 
-如剛說的，NEXT在v8可以支援非侵入式的修改，所以我們得自行去新增顯示方法
+如剛說的，NEXT在v8可以支援非侵入式的修改
 
-首先，我們先找到NEXT的設定檔`./_config.next.yml`，並且把`postBodyEnd`的註解打開
+所以我們得自行去新增顯示方法
+
+首先，先找到NEXT的設定檔`./_config.next.yml`，並且把`postBodyEnd`的註解打開
 
 ```yml
 # Define custom file paths.
@@ -131,7 +135,6 @@ hexo g && hexo s
 
 我個人覺得新版Hexo跟NEXT比較好管理
 
-之前用的插件都要侵入式的修改，現在有custom file可以直接設定
+之前用的插件都要侵入式的修改，現在有`custom file`可以直接設定
 
 這樣就不會因爲沒有記錄就升級導致某些檔案忘記一起修改
-

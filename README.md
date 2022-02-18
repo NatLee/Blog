@@ -14,5 +14,3 @@ yarn install
 hexo g
 hexo s
 ```
-
-
