@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "_posts/20220217-synology-nas-update-version-of-docker.md",
+            "file": "_posts/20220218-hexo-next-theme-v8-related-posts.md",
             "mode": "source"
           }
         },
@@ -23,7 +23,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "_posts/20220217-synology-nas-update-version-of-docker.md",
+            "file": "_posts/20220218-hexo-next-theme-v8-related-posts.md",
             "mode": "preview"
           }
         },
@@ -67,7 +67,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 291
+    "width": 261
   },
   "right": {
     "id": "78a98ce3c8723450",
@@ -83,7 +83,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/20220217-synology-nas-update-version-of-docker.md",
+                "file": "_posts/20220218-hexo-next-theme-v8-related-posts.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,6 +103,7 @@
   },
   "active": "193aa4a49d560ba8",
   "lastOpenFiles": [
+    "_posts/20220218-hexo-next-theme-v8-related-posts.md",
     "_posts/20220217-synology-nas-update-version-of-docker.md",
     "_posts/20220216-install-a-package-manager-on-synology-nas-dsm-7.md",
     "_posts/20220210-multiple-versions-of-cuda-and-cudnn-management.md",
@@ -111,7 +112,6 @@
     "_posts/20211006-digital-signature.md",
     "_posts/20210906-python-container-environment.md",
     "_posts/20180830-solve-synology-nas-gitlab-502.md",
-    "_posts/20220209-ssh-reverse-tunnel-with-docker-container.md",
-    "_posts/20210930-cryptograph-encryption-hash.md"
+    "_posts/20220209-ssh-reverse-tunnel-with-docker-container.md"
   ]
 }

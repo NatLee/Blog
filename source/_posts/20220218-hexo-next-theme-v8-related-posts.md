@@ -1,5 +1,5 @@
 ---
-title: Hexo NEXT Theme v8.1『相關文章』插件踩坑
+title: Hexo NEXT Theme v8.10『相關文章』插件踩坑
 tags:
   - blog
   - hexo
@@ -50,7 +50,7 @@ INFO  Hexo is running at http://localhost:4000/Blog/ . Press Ctrl+C to stop.
 
 問題就是它沒有被顯示出來！
 
-如剛說的，NEXT支援非侵入式的修改，所以我們得自行去新增顯示方法
+如剛說的，NEXT在v8可以支援非侵入式的修改，所以我們得自行去新增顯示方法
 
 首先，我們先找到NEXT的設定檔`./_config.next.yml`，並且把`postBodyEnd`的註解打開
 
