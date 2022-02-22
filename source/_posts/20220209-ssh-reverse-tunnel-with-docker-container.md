@@ -350,7 +350,7 @@ nat-tunnel-server:~$
 
 這時候看回去container輸出就沒有再跳錯誤了！
 
-這時候，打開目錄中的`./ssh_setting/ssh_host_keys/sshd_config`去把這個設定做更改
+再來是安全問題，我們可以再打開目錄中的`./ssh_setting/ssh_host_keys/sshd_config`去把這個設定做更改
 
 ```
 ChallengeResponseAuthentication no # 安全需求，只開放public key登入
