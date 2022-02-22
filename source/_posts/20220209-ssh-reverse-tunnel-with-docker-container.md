@@ -103,11 +103,13 @@ docker-compose up
 
 我們需要修改openssh-server的設定檔`sshd_config`
 
-打開剛剛指定目錄中的`./ssh_setting/ssh_host_keys/sshd_config`去把這兩個設定改成`yes`
+打開剛剛指定目錄中的`./ssh_setting/ssh_host_keys/sshd_config`去把這三個設定做更改
 
 ```
 AllowTCPForwarding yes # 有些教學沒說要開這個，但不開它就不讓你forwarding了
 GatewayPorts yes # 這個是讓你能夠轉port用的，一定要開
+
+ChallengeResponseAuthentication no # 安全需求，只開放public key登入
 ```
 
 重新執行
@@ -347,6 +349,12 @@ nat-tunnel-server:~$
 ```
 
 這時候看回去container輸出就沒有再跳錯誤了！
+
+這時候，打開目錄中的`./ssh_setting/ssh_host_keys/sshd_config`去把這個設定做更改
+
+```
+ChallengeResponseAuthentication no # 安全需求，只開放public key登入
+```
 
 到這邊內網裝置B已經算是設定完成了
 
