@@ -56,6 +56,63 @@ date: 2022-02-10 00:00:00
 > 1. 不用從CUDA-toolkit裏面安裝驅動程式，請手動額外去安裝最新的驅動
 > 2. 安裝時，請不要選擇建立`symbolic link`
 
+底下是安裝的範例以10.1爲例
+
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run
+sudo sh cuda_10.1.243_418.87.00_linux.run
+```
+
+```bash
+ CUDA Installer
+ - [ ] Driver
+      [ ] 418.87.00
+ + [X] CUDA Toolkit 10.1
+   [X] CUDA Samples 10.1
+   [X] CUDA Demo Suite 10.1
+   [X] CUDA Documentation 10.1
+   Options
+   Install
+```
+
+進去`Options`
+
+```bash
+CUDA Toolkit
+  Change Toolkit Install Path
+  [ ] Create symbolic link from /usr/local/cuda
+- [ ] Create desktop menu shortcuts
+     [ ] All users
+     [ ] Yes
+     [ ] No
+  [X] Install manpage documents to /usr/share/man
+  Done 
+```
+
+最後安裝完成就會吐出Summary
+
+```bash
+===========
+= Summary =
+===========
+
+Driver:   Not Selected
+Toolkit:  Installed in /usr/local/cuda-10.1/
+Samples:  Installed in /home/natlee/, but missing recommended libraries
+
+Please make sure that
+ -   PATH includes /usr/local/cuda-10.1/bin
+ -   LD_LIBRARY_PATH includes /usr/local/cuda-10.1/lib64, or, add /usr/local/cuda-10.1/lib64 to /etc/ld.so.conf and run ldconfig as root
+
+To uninstall the CUDA Toolkit, run cuda-uninstaller in /usr/local/cuda-10.1/bin
+
+Please see CUDA_Installation_Guide_Linux.pdf in /usr/local/cuda-10.1/doc/pdf for detailed information on setting up CUDA.
+***WARNING: Incomplete installation! This installation did not install the CUDA Driver. A driver of version at least 418.00 is required for CUDA 10.1 functionality to work.
+To install the driver using this installer, run the following command, replacing <CudaInstaller> with the name of this run file:
+    sudo <CudaInstaller>.run --silent --driver
+
+Logfile is /var/log/cuda-installer.log
+```
 
 ### Install cuDNN
 
