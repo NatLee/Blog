@@ -45,6 +45,24 @@ date: 2022-02-09 00:00:00
 - 內網跳板裝置 B
 - 透過跳板B連至內網裝置C
 
+步驟簡略來說會長成下面這個樣子：
+
+- 內網的跳板裝置B會透過反向去連接在外網的A（所以B在內網只要可以訪問外網就行了），接著A會使用另外一個port去forward裝置B的SSH port
+
+> A(SSH port) <--- B
+
+這邊有點不太好懂，舉例來說就是假設A的SSH port是1984，除了1984外，我們在路由器上設定開放A裝置的另一個port 1994
+
+那麼，B反向到A的時候，我們可以利用1994這個port去讓別人連接B的SSH port
+
+- 我們透過某一可連外網的裝置（隨便一個都行）去連接A的反向專用port即可到達在內網的裝置B
+
+> 某裝置 ---> A(反向用port) ---> B
+
+- 因爲裝置B在內網，所以我們可以使用B來訪問所有在內網的裝置，例如C
+
+> 某裝置 ---> A(反向用port) ---> B ---> C
+
 
 ### 外網裝置 A
 
@@ -257,16 +275,23 @@ run完會看到它的啓動畫面，然後就跟剛剛一樣生一堆文件出�
 	#!/bin/bash
 	echo "Start AutoSSH"
 	autossh \
-	 -p 1984 \
 	 -M 0 \
-	 -NR '*:1994:localhost:2222' \
-	 natlee@<EXAMPLE_DOMAIN> \
+	 -N \
+	 -o StrictHostKeyChecking=no \ #自動新增known_host，減少麻煩
+	 -o ServerAliveInterval=10 \
+	 -o ServerAliveCountMax=3 \
+	 -o ExitOnForwardFailure=yes \
+	 -t \
+	 -t \
+	 -R *:1994:localhost:2222 \
+	 -p 1984 \
+	 natlee@<YOUR_DOMAIN> \
 	 -i ~/.ssh/id_rsa
 	```
 
 	這邊請把`<EXAMPLE_DOMAIN>`改成你自己連接外網裝置的domain或IP
 
-接着，我們直接
+接着，我們直接再run一次
 
 ```bash
 docker-compose up
@@ -285,18 +310,15 @@ reverse-tunnel-inside-bridge | Host key verification failed.
 
 所以我們得幫他產生一組
 
-我們先別暫停container，而是直接使用這個指令進去container內
+我們先別暫停container，而是直接使用這個指令去生成key pairs
 
 ```bash
-docker exec -it reverse-tunnel-inside-bridge /bin/bash
+docker exec -it reverse-tunnel-inside-bridge ssh-keygen
 ```
 
-然後使用以下指令產生公私鑰對
+然後輸出會長成下面這樣
 
 ```bash
-root@nat-tunnel-inside-bridge:/# ssh-key
-ssh-keygen   ssh-keyscan
-root@nat-tunnel-inside-bridge:/# ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/root/.ssh/id_rsa):
 Enter passphrase (empty for no passphrase):
@@ -319,34 +341,17 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
-我們就可以把公鑰檔案`~/.ssh/id_rsa.pub`的內容複製出來
+但這樣是不夠的，因爲我們外網的裝置只能使用key登入
+
+這時候，我們就必須把公鑰檔案`~/.ssh/id_rsa.pub`的內容複製出來（直接進去用`cat`指令就行了）
 
 ```bash
+docker exec -it reverse-tunnel-inside-bridge /bin/bash
 root@nat-tunnel-inside-bridge:/# cat ~/.ssh/id_rsa.pub
-ssh-rsa AAAAB3NzaC...............bZVysfXr9E= root@nat-tunnel-inside-bridge
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdF4MGnC4XmCPR8QLy0gVJTQb9kf4jM5og0Q1ggO3y8wr8LMTdAufnatfj0mYq/QkCiVCQvfFT+e+f+1AKu0UCCokFehv6etUnyaHqQWDtrcXjT6yxw9N7njCrIv/mFHnttQ1z5Ri2ULOnoWva6hOabvUkabxDwwxz90HWKo94/xbtZsnU1kEmqyMJhJ2exSa+kSxUwKeyLX0HYCmiD5H1X+eqZMVbo3boDID3Pp2NFVFrGDP6NOwmBAVpd2rUHmL2AdKfcefvxmZKSyokp56J8pVg/MgzMEk7sEzZr2uP6klYNWpAsFaBJojrlQuUuGC1nibZmejRIEmuhcD+Wcssls8umB51L+0Hi+nZKU6lQXOZryW1xNXmS3h9DpeZTSNk4lmyJDuQ+r2JVLTNbyt1UvuGUotBuluDnNWwst8KWG8CAPjv+A/qMZ/dU3Rg9PEDQ8hXMccipq9lgq6bxrLXJ2gOKldTYXFhqhnyQs1b4AOXk7pwXaYo8vsWWkiJglU= root@nat-tunnel-inside-bridge
 ```
 
-把公鑰檔案內容複製到我們外網server A的`./ssh_setting/.ssh/authorized_keys`中
-
-再把焦點轉回剛剛的container輸出，還是會有看到錯誤
-
-因爲我們未曾使用這個key連線過
-
-爲了節省麻煩，我們直接進到內網裝置B的container訪問一次server
-
-在B的container內用以下指令訪問一次server，並輸入`yes`去記錄hostname
-
-```bash
-root@nat-tunnel-inside-bridge:/# ssh natlee@<EXAMPLE_DOMAIN> -p 1984
-The authenticity of host '[EXAMPLE_DOMAIN]:1984 ([XXX.XXX.XXX.XXX]:1984)' can't be established.
-ED25519 key fingerprint is SHA256:JNKQF+GwAgca6xPeoz2ROfz6WXe2oo7HepwuemJH58M.
-This key is not known by any other names
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '[EXAMPLE_DOMAIN]:1984' (ED25519) to the list of known hosts.
-Welcome to OpenSSH Server
-
-nat-tunnel-server:~$
-```
+這串長長的公鑰就可以貼到我們外網server A的`./ssh_setting/.ssh/authorized_keys`中
 
 這時候看回去container輸出就沒有再跳錯誤了！
 
@@ -358,13 +363,9 @@ ChallengeResponseAuthentication no # 安全需求，只開放public key登入
 
 到這邊內網裝置B已經算是設定完成了
 
-接下來，我們把自己第三方位置的PC公鑰複製到內網裝置B的`ssh_setting/.ssh/authorized_keys`後，重新執行
+接下來，我們把自己第三方位置的PC公鑰複製到內網裝置B的`ssh_setting/.ssh/authorized_keys`後
 
-```
-docker-compose up --force-recreate
-```
-
-再來，我們從PC端使用SSH連接server的另外一個port `1994`去做測試
+我們從PC端使用SSH連接一開始有提到外網裝置多開的另外一個port `1994`去做測試
 
 ```bash
 ❯ ssh natlee@<EXAMPLE_DOMAIN> -p 1994
@@ -373,7 +374,7 @@ Welcome to OpenSSH Server
 nat-tunnel-inside-bridge:~$
 ```
 
-連到裝置B，也就是成功打洞進到內網了！
+成功連到裝置B，也就是完美穿透防火牆，直接成功打洞進到內網了！
 
 
 ### 透過跳板B連至內網裝置C
