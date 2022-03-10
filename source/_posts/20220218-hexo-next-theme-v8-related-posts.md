@@ -1,12 +1,12 @@
 ---
 title: Hexo NEXT Theme v8.10『相關文章』插件踩坑
+categories: blog
 tags:
   - blog
   - hexo
   - plugin
 abbrlink: a606eb6a
 date: 2022-02-18 02:41:06
-categories: blog
 ---
 
 
