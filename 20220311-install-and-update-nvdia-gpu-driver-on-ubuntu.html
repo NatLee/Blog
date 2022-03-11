@@ -21,31 +21,33 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.10.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-  <meta name="description" content="前言 WIP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="在SSD上爲Raspberry pi 4B安裝64-bit的作業系統">
-<meta property="og:url" content="https://github.com/Blog/posts/1b65ee94/index.html">
+  <meta name="description" content="前言 最近搞一波模型升級，結果部署的機器顯卡驅動程式太舊 導致沒辦法成功載入模型，只好升級一下 但根據經驗，之前踩過太多坑，記錄一下避免後來又掉進來">
+<meta property="og:type" content="website">
+<meta property="og:title" content="在Ubuntu上更新NVIDIA GPU驅動程式">
+<meta property="og:url" content="https://github.com/Blog/20220311-install-and-update-nvdia-gpu-driver-on-ubuntu.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="前言 WIP">
+<meta property="og:description" content="前言 最近搞一波模型升級，結果部署的機器顯卡驅動程式太舊 導致沒辦法成功載入模型，只好升級一下 但根據經驗，之前踩過太多坑，記錄一下避免後來又掉進來">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2022-03-10T03:58:39.000Z">
+<meta property="article:published_time" content="2022-03-11T04:28:45.000Z">
 <meta property="article:modified_time" content="2022-03-11T07:37:11.231Z">
 <meta property="article:author" content="Nat Lee">
-<meta property="article:tag" content="raspberry">
-<meta property="article:tag" content="pi">
-<meta property="article:tag" content="lunux">
-<meta property="article:tag" content="os">
+<meta property="article:tag" content="nvidia">
+<meta property="article:tag" content="cuda">
+<meta property="article:tag" content="driver">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://github.com/Blog/posts/1b65ee94/">
+<link rel="canonical" href="https://github.com/Blog/20220311-install-and-update-nvdia-gpu-driver-on-ubuntu">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/1b65ee94/","path":"posts/1b65ee94/","title":"在SSD上爲Raspberry pi 4B安裝64-bit的作業系統"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/20220311-install-and-update-nvdia-gpu-driver-on-ubuntu.html","path":"20220311-install-and-update-nvdia-gpu-driver-on-ubuntu.html","title":"在Ubuntu上更新NVIDIA GPU驅動程式"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>在SSD上爲Raspberry pi 4B安裝64-bit的作業系統 | Nat's Blog</title>
+<title>在Ubuntu上更新NVIDIA GPU驅動程式 | Nat's Blog
+</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-66147173-1","only_pageview":false}</script>
@@ -139,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.1.</span> <span class="nav-text">安裝步驟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%8D%E5%A4%96%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.2.</span> <span class="nav-text">額外步驟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -200,154 +202,87 @@
 </noscript>
 
 
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
+    <div class="main-inner page posts-expand">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/1b65ee94/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
-      <meta itemprop="name" content="Nat Lee">
-      <meta itemprop="description" content="">
-    </span>
+    
+    
+    
+    <div class="post-block" lang="zh-tw"><header class="post-header">
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nat's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          在SSD上爲Raspberry pi 4B安裝64-bit的作業系統
-        </h1>
+<h1 class="post-title" itemprop="name headline">在Ubuntu上更新NVIDIA GPU驅動程式
+</h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-10 11:58:39" itemprop="dateCreated datePublished" datetime="2022-03-10T11:58:39+08:00">2022-03-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-11 15:37:11" itemprop="dateModified" datetime="2022-03-11T15:37:11+08:00">2022-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>16</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
+<div class="post-meta-container">
 </div>
 
-        </div>
-      </header>
+</header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>WIP</p>
+      
+      
+      <div class="post-body">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>最近搞一波模型升級，結果部署的機器顯卡驅動程式太舊</p>
+<p>導致沒辦法成功載入模型，只好升級一下</p>
+<p>但根據經驗，之前踩過太多坑，記錄一下避免後來又掉進來</p>
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<p>我們都知道有個指令叫<code>nvidia-smi</code>，可以看到顯卡驅動的版本</p>
+<blockquote>
+<p>NVIDIA-SMI 465.19.01<br>Driver Version: 465.19.01<br>CUDA Version: 11.3</p>
+</blockquote>
+<blockquote>
+<p>注意上面的CUDA版本並非你實際使用的版本</p>
+</blockquote>
+<p>我們另外可以透過<code>sudo lshw -C display</code>去看到顯示卡更詳細的資訊</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*-display                 </span><br><span class="line">     description: VGA compatible controller</span><br><span class="line">     product: NVIDIA Corporation</span><br><span class="line">     vendor: NVIDIA Corporation</span><br><span class="line">     physical id: 0</span><br><span class="line">     bus info: pci@0000:01:00.0</span><br><span class="line">     version: a1</span><br><span class="line">     width: 64 bits</span><br><span class="line">     clock: 33MHz</span><br><span class="line">     capabilities: pm msi pciexpress vga_controller bus_master cap_list rom</span><br><span class="line">     configuration: driver=nvidia latency=0</span><br><span class="line">     resources: irq:16 memory:a3000000-a3ffffff memory:90000000-9fffffff memory:a0000000-a1ffffff ioport:3000(size=128) memory:c0000-dffff</span><br></pre></td></tr></table></figure>
 
+<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><p>接下來，進入主題</p>
+<p>我們要安裝 &#x2F; 更新顯卡的驅動程式可以依照以下步驟去操作</p>
+<p>首先，起手式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意，Upgrade的時候，可能會提示你重開機，照着它操作就行了</p>
+</blockquote>
+<p>接着，我們要查看目前有哪些<code>nvidia</code>的驅動能用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-cache search nvidia-driver</span><br></pre></td></tr></table></figure>
+
+<p>以下列出找到的部分結果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nvidia-384 - Transitional package for nvidia-driver-390</span><br><span class="line">nvidia-384-dev - Transitional package for nvidia-driver-390</span><br><span class="line">nvidia-driver-390 - NVIDIA driver metapackage</span><br><span class="line">nvidia-headless-390 - NVIDIA headless metapackage</span><br><span class="line">nvidia-headless-no-dkms-390 - NVIDIA headless metapackage - no DKMS</span><br><span class="line">...</span><br><span class="line">nvidia-driver-495 - Transitional package for nvidia-driver-510</span><br><span class="line">nvidia-driver-510 - NVIDIA driver metapackage</span><br></pre></td></tr></table></figure>
+
+<p>如果這邊遇到找不到的問題，可以嘗試添加其他顯卡驅動package的來源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:graphics-drivers/ppa</span><br><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<p>假設我今天選定了<code>nvidia-470</code>這個版本，就可以直接使用下面的指令安裝</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nvidia-470</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果有舊的驅動，系統會提示說安裝前會把舊版驅動移除</p>
+</blockquote>
+<p>安裝完成後，重新開機輸入就能<code>nvidia-smi</code>就能看到新版驅動了</p>
+<h3 id="額外步驟"><a href="#額外步驟" class="headerlink" title="額外步驟"></a>額外步驟</h3><p>有時候我們安裝最新的驅動，會遇到一些問題</p>
+<p>可以使用下面這個指令去移除它</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge nvidia*</span><br></pre></td></tr></table></figure>
+
+<p>如果想要移除剛剛有新增的額外來源，可以使用這個指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-add-repository --remove ppa:graphics-drivers/ppa</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3liZXJjaXRpLmJpei9mYXEvdWJ1bnR1LWxpbnV4LWluc3RhbGwtbnZpZGlhLWRyaXZlci1sYXRlc3QtcHJvcHJpZXRhcnktZHJpdmVyLw==">Ubuntu Linux Install Nvidia Driver (Latest Proprietary Driver)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzEyNjMwNDcxLzM3MDU4MzM=">ubuntu系统安装nvidia驱动<i class="fa fa-external-link-alt"></i></span></p>
+
+      </div>
+      
+      
+      
     </div>
 
     
     
-    
-      
-
-
-    <footer class="post-footer">
-    <!-- related posts -->
-
-
-<!-- like coin -->
-<div>
-    <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
-<div>
-
-
-
-
-          
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>Post author:  </strong>Nat Lee
-  </li>
-  <li class="post-copyright-link">
-      <strong>Post link: </strong>
-      <a href="https://github.com/Blog/posts/1b65ee94/" title="在SSD上爲Raspberry pi 4B安裝64-bit的作業系統">https://github.com/Blog/posts/1b65ee94/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
-  </li>
-</ul>
-</div>
-
-          <div class="post-tags">
-              <a href="/Blog/tags/raspberry/" rel="tag"># raspberry</a>
-              <a href="/Blog/tags/pi/" rel="tag"># pi</a>
-              <a href="/Blog/tags/lunux/" rel="tag"># lunux</a>
-              <a href="/Blog/tags/os/" rel="tag"># os</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/Blog/posts/5a40e3d8/" rel="prev" title="Ubuntu與Windows使用SSH金鑰快速登入的方法">
-                  <i class="fa fa-chevron-left"></i> Ubuntu與Windows使用SSH金鑰快速登入的方法
-                </a>
-            </div>
-            <div class="post-nav-item">
-            </div>
-          </div>
-    </footer>
-  </article>
-</div>
-
-
-
-
 
 
     <div class="comments gitalk-container"></div>
@@ -409,11 +344,11 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/1b65ee94/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/20220311-install-and-update-nvdia-gpu-driver-on-ubuntu.html"}</script>
   <script src="/Blog/js/third-party/quicklink.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"829572eac972c5b601806c135b2382a1"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"2f284e4c4a6d44957298f920df804583"}</script>
 <script src="/Blog/js/third-party/comments/gitalk.js"></script>
 
 </body>
