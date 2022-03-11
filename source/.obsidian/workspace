@@ -104,6 +104,7 @@
   "active": "193aa4a49d560ba8",
   "lastOpenFiles": [
     "_posts/20220310-raspberry-pi-4b-install-64bit-os-on-ssd.md",
+    "20220311-install-and-update-nvdia-gpu-driver-on-ubuntu.md",
     "_posts/20220310-ubuntu-and-windows-ssh-add-public-key-to-remote.md",
     "_posts/20220216-install-a-package-manager-on-synology-nas-dsm-7.md",
     "_posts/20220218-hexo-next-theme-v8-related-posts.md",
@@ -111,7 +112,6 @@
     "_posts/20210722-blog-upgraded.md",
     "_posts/20220210-multiple-versions-of-cuda-and-cudnn-management.md",
     "_posts/20220217-synology-nas-update-version-of-docker.md",
-    "templates/post.md",
-    "_posts/20190805-python-multithread-and-multiprocessing.md"
+    "templates/post.md"
   ]
 }
