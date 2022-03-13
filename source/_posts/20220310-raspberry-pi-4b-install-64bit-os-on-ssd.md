@@ -1,4 +1,3 @@
-
 ---
 title: 在SSD上爲Raspberry Pi 4B安裝64-bit的作業系統
 categories: dev
