@@ -271,25 +271,25 @@ run完會看到它的啓動畫面，然後就跟剛剛一樣生一堆文件出�
 
 	使用`sudo nano ./ssh_setting/custom-services.d/autossh.sh`將以下內容貼上
 
-	```bash
-	#!/bin/bash
-	echo "Start AutoSSH"
-	autossh \
-	 -M 0 \
-	 -N \
-	 -o StrictHostKeyChecking=no \ #自動新增known_host，減少麻煩
-	 -o ServerAliveInterval=10 \
-	 -o ServerAliveCountMax=3 \
-	 -o ExitOnForwardFailure=yes \
-	 -t \
-	 -t \
-	 -R *:1994:localhost:2222 \
-	 -p 1984 \
-	 natlee@<YOUR_DOMAIN> \
-	 -i ~/.ssh/id_rsa
-	```
+  ```bash
+  #!/bin/bash
 
-	這邊請把`<EXAMPLE_DOMAIN>`改成你自己連接外網裝置的domain或IP
+  echo "Start AutoSSH"
+
+  /usr/bin/autossh \
+      -M 6767 \
+      -o "StrictHostKeyChecking=no" \
+      -o "ServerAliveInterval 15" \
+      -o "ServerAliveCountMax 3" \
+      -p 1984 \
+      -NR '*:1994:localhost:2222' \
+      natlee@<YOUR_DOMAIN> \
+      -i ~/.ssh/id_rsa
+  ```
+
+  > 這邊請把`<EXAMPLE_DOMAIN>`改成你自己連接外網裝置的domain或IP
+  > 其中，`StrictHostKeyChecking`用來自動新增`known_host`，避免要手動連接一次A
+
 
 接着，我們直接再run一次
 
