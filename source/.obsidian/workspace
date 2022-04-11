@@ -4,30 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "193aa4a49d560ba8",
+        "id": "d73e922a8f59352f",
         "type": "leaf",
-        "dimension": 38.22273961971285,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "_posts/20220310-ubuntu-and-windows-ssh-add-public-key-to-remote.md",
+            "file": "_posts/20220406-import-notes-with-python-notion-api.md",
             "mode": "source"
           }
-        },
-        "group": "db5c071ffe9884d8"
-      },
-      {
-        "id": "783693a58e6ca350",
-        "type": "leaf",
-        "dimension": 61.77726038028716,
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "_posts/20220310-ubuntu-and-windows-ssh-add-public-key-to-remote.md",
-            "mode": "preview"
-          }
-        },
-        "group": "db5c071ffe9884d8"
+        }
       }
     ],
     "direction": "vertical"
@@ -67,7 +52,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 261
+    "width": 249
   },
   "right": {
     "id": "78a98ce3c8723450",
@@ -83,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/20220310-ubuntu-and-windows-ssh-add-public-key-to-remote.md",
+                "file": "_posts/20220406-import-notes-with-python-notion-api.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,17 +86,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "193aa4a49d560ba8",
+  "active": "d73e922a8f59352f",
   "lastOpenFiles": [
+    "_posts/20220406-import-notes-with-python-notion-api.md",
     "_posts/20220310-ubuntu-and-windows-ssh-add-public-key-to-remote.md",
-    "_posts/20220310-raspberry-pi-4b-install-64bit-os-on-ssd.md",
     "_posts/20220311-install-and-update-nvdia-gpu-driver-on-ubuntu.md",
-    "_posts/20220210-multiple-versions-of-cuda-and-cudnn-management.md",
-    "_posts/20220216-install-a-package-manager-on-synology-nas-dsm-7.md",
     "_posts/20220217-synology-nas-update-version-of-docker.md",
-    "_posts/20220218-hexo-next-theme-v8-related-posts.md",
-    "未命名.md",
     "_posts/20220209-ssh-reverse-tunnel-with-docker-container.md",
-    "_posts/20210722-blog-upgraded.md"
+    "_posts/20220218-hexo-next-theme-v8-related-posts.md",
+    "_posts/20220310-raspberry-pi-4b-install-64bit-os-on-ssd.md",
+    "未命名.md",
+    "舊模型架構.md",
+    "uploads/422c11bed7836a62ce2191490f794183/image.png.md"
   ]
 }
