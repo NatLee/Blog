@@ -21,31 +21,33 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.10.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="前言 最近發現有些東西還是得線上搞會比較方便 所以從Obsidian轉到Notion 但我又不想一篇篇手動匯入，於是使用了Notion的API WIP">
+    <meta name="description" content="前言 最近發現有些東西還是得線上搞會比較方便 所以從Obsidian轉到Notion 但我又不想一篇篇手動匯入，於是使用了Notion的API">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Python Notion API來匯入筆記">
-<meta property="og:url" content="https://github.com/Blog/posts/ea277e95/index.html">
+<meta property="og:title" content="使用Python Notion API來自動匯入筆記">
+<meta property="og:url" content="https://github.com/Blog/posts/e55783e1/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="前言 最近發現有些東西還是得線上搞會比較方便 所以從Obsidian轉到Notion 但我又不想一篇篇手動匯入，於是使用了Notion的API WIP">
+<meta property="og:description" content="前言 最近發現有些東西還是得線上搞會比較方便 所以從Obsidian轉到Notion 但我又不想一篇篇手動匯入，於是使用了Notion的API">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://user-images.githubusercontent.com/10178964/160292037-a2d80819-1889-4e29-b98b-0180365e84c1.png">
 <meta property="article:published_time" content="2022-04-06T01:58:00.000Z">
-<meta property="article:modified_time" content="2022-04-11T01:51:36.744Z">
+<meta property="article:modified_time" content="2022-04-21T04:02:28.007Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="blog">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="notion">
 <meta property="article:tag" content="api">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/10178964/160292037-a2d80819-1889-4e29-b98b-0180365e84c1.png">
 
 
-<link rel="canonical" href="https://github.com/Blog/posts/ea277e95/">
+<link rel="canonical" href="https://github.com/Blog/posts/e55783e1/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/ea277e95/","path":"posts/ea277e95/","title":"使用Python Notion API來匯入筆記"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/e55783e1/","path":"posts/e55783e1/","title":"使用Python Notion API來自動匯入筆記"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>使用Python Notion API來匯入筆記 | Nat's Blog</title>
+<title>使用Python Notion API來自動匯入筆記 | Nat's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-66147173-1","only_pageview":false}</script>
@@ -211,7 +213,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/ea277e95/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/e55783e1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -224,12 +226,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="使用Python Notion API來匯入筆記 | Nat's Blog">
+      <meta itemprop="name" content="使用Python Notion API來自動匯入筆記 | Nat's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          使用Python Notion API來匯入筆記
+          使用Python Notion API來自動匯入筆記
         </h1>
 
         <div class="post-meta-container">
@@ -247,7 +249,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-04-11 09:51:36" itemprop="dateModified" datetime="2022-04-11T09:51:36+08:00">2022-04-11</time>
+      <time title="Modified: 2022-04-21 12:02:28" itemprop="dateModified" datetime="2022-04-21T12:02:28+08:00">2022-04-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -266,14 +268,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.1k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>2 mins.</span>
+      <span>3 mins.</span>
     </span>
 </div>
 
@@ -288,15 +290,28 @@
 <p>最近發現有些東西還是得線上搞會比較方便</p>
 <p>所以從Obsidian轉到Notion</p>
 <p>但我又不想一篇篇手動匯入，於是使用了Notion的API</p>
-<p>WIP</p>
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> notion_client <span class="keyword">import</span> Client</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://github.com/ramnes/notion-sdk-py/discussions/121</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize the client</span></span><br><span class="line">notion = Client(auth=NOTION_TOKEN)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">insert_to_notion</span>(<span class="params">date: <span class="built_in">str</span>, content: <span class="built_in">str</span>, title=<span class="string">&quot;Work note&quot;</span>, tag=<span class="string">&quot;work&quot;</span></span>):</span><br><span class="line">    notion.pages.create(</span><br><span class="line">        **&#123;</span><br><span class="line">            <span class="string">&quot;parent&quot;</span>: &#123;<span class="string">&quot;database_id&quot;</span>: DATABASE_ID&#125;,</span><br><span class="line">            <span class="string">&quot;properties&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;title&quot;</span>: &#123;<span class="string">&quot;title&quot;</span>: [&#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;text&quot;</span>, <span class="string">&quot;text&quot;</span>: &#123;<span class="string">&quot;content&quot;</span>: title&#125;&#125;]&#125;,</span><br><span class="line">                <span class="string">&quot;Tags&quot;</span>: &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;multi_select&quot;</span>, <span class="string">&quot;multi_select&quot;</span>: [&#123;<span class="string">&quot;name&quot;</span>: tag&#125;]&#125;,</span><br><span class="line">                <span class="string">&quot;Created&quot;</span>: &#123;<span class="string">&quot;date&quot;</span>: &#123;<span class="string">&quot;start&quot;</span>: date&#125;&#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;children&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;object&quot;</span>: <span class="string">&quot;block&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;paragraph&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;paragraph&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;rich_text&quot;</span>: [&#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;text&quot;</span>, <span class="string">&quot;text&quot;</span>: &#123;<span class="string">&quot;content&quot;</span>: content&#125;&#125;]</span><br><span class="line">                    &#125;,</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Notion幾乎所有的功能都能通過送request來達成</p>
+<p>網路上也有javascript的API版本，但我選擇使用非官方的Python API <a href="https://github.com/ramnes/notion-sdk-py">Notion SDK in Python</a></p>
+<p>文件方面，我參考了官方的<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLm5vdGlvbi5jb20vcmVmZXJlbmNlL2ludHJv">API文件<i class="fa fa-external-link-alt"></i></span></p>
+<p>裏面寫得非常詳盡，但看得出來疏於更新跟細節不完整</p>
+<p>所以整個使用過程不是很舒服，我還詢問Notion官方人員跟非官方的SDK開發者進行payload的調整</p>
+<p>我直接在repo發文 <a href="#Reference">Reference</a> XD</p>
+<p>最後終於弄出來能夠自動新增page並帶有預設值的腳本</p>
+<p>以我的需求來說，必須要可以自動填入標題跟內文，最好是屬性也可以帶入</p>
+<p>大概會長這樣</p>
+<p><img data-src="https://user-images.githubusercontent.com/10178964/160292037-a2d80819-1889-4e29-b98b-0180365e84c1.png" alt="image"></p>
+<p>以下是我自動匯入的code</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> notion_client <span class="keyword">import</span> Client</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize the client</span></span><br><span class="line"><span class="comment"># 取得token的方法，可以參考官方文件這邊 https://developers.notion.com/docs/getting-started</span></span><br><span class="line">notion = Client(auth=NOTION_TOKEN)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">insert_to_notion</span>(<span class="params">date: <span class="built_in">str</span>, content: <span class="built_in">str</span>, title=<span class="string">&quot;Work note&quot;</span>, tag=<span class="string">&quot;work&quot;</span></span>):</span><br><span class="line">    <span class="comment"># 這邊需要`DATABASE_ID`，可以在網頁版Notion點選page後，網址最後會有一個id，可以在這邊抓取</span></span><br><span class="line">    <span class="comment"># 例如 https://www.notion.so/natlee/test-4f3f55661c333e5585660c4c35e10533</span></span><br><span class="line">    <span class="comment"># 這邊的DATABASE_ID就是`4f3f55661c333e5585660c4c35e10533`</span></span><br><span class="line"></span><br><span class="line">    notion.pages.create(</span><br><span class="line">        **&#123;</span><br><span class="line">            <span class="string">&quot;parent&quot;</span>: &#123;<span class="string">&quot;database_id&quot;</span>: DATABASE_ID&#125;,</span><br><span class="line">            <span class="string">&quot;properties&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;title&quot;</span>: &#123;<span class="string">&quot;title&quot;</span>: [&#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;text&quot;</span>, <span class="string">&quot;text&quot;</span>: &#123;<span class="string">&quot;content&quot;</span>: title&#125;&#125;]&#125;, <span class="comment"># 標題的屬性跟標題是什麼</span></span><br><span class="line">                <span class="string">&quot;Tags&quot;</span>: &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;multi_select&quot;</span>, <span class="string">&quot;multi_select&quot;</span>: [&#123;<span class="string">&quot;name&quot;</span>: tag&#125;]&#125;, <span class="comment"># 標籤的屬性跟標籤是什麼</span></span><br><span class="line">                <span class="string">&quot;Created&quot;</span>: &#123;<span class="string">&quot;date&quot;</span>: &#123;<span class="string">&quot;start&quot;</span>: date&#125;&#125;, <span class="comment"># 建立時間，我的例子是使用像這樣的資料 `2022-04-21`</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;children&quot;</span>: [ <span class="comment"># 這邊比較麻煩，要指定內容是哪種屬性，例如paragraph</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;object&quot;</span>: <span class="string">&quot;block&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;paragraph&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;paragraph&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;rich_text&quot;</span>: [&#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;text&quot;</span>, <span class="string">&quot;text&quot;</span>: &#123;<span class="string">&quot;content&quot;</span>: content&#125;&#125;] <span class="comment"># 內文的屬性跟內容</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-
+<p>最後我們就可以用這個腳本批量匯入筆記了</p>
+<p>整個過程包含跟官方來回，花了快五天</p>
+<p>不過我的例子是，我有五百多篇格式化的筆記要把它們匯入到Notion上</p>
+<p>手動太麻煩，這樣就直接搞定了（至少我知道手動一定會超過五天XD）</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<p><a href="https://github.com/ramnes/notion-sdk-py/discussions/121">How can I create new page with some contents of text</a></p>
 
     </div>
 
@@ -345,7 +360,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://github.com/Blog/posts/ea277e95/" title="使用Python Notion API來匯入筆記">https://github.com/Blog/posts/ea277e95/</a>
+      <a href="https://github.com/Blog/posts/e55783e1/" title="使用Python Notion API來自動匯入筆記">https://github.com/Blog/posts/e55783e1/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
@@ -401,13 +416,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">96k</span>
+    <span title="Symbols count total">97k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:55</span>
+    <span title="Reading time total">2:56</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
@@ -439,11 +454,11 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/ea277e95/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/e55783e1/"}</script>
   <script src="/Blog/js/third-party/quicklink.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"cfeec28c16204a76563505cd7d55f1c7"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"c539c8c38b977dbdf045acfc1dd13ac3"}</script>
 <script src="/Blog/js/third-party/comments/gitalk.js"></script>
 
 </body>
