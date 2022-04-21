@@ -1,6 +1,6 @@
 
 ---
-title: 使用Python Notion API來匯入筆記
+title: 使用Python Notion API來自動匯入筆記
 categories: blog
 tags:
   - blog
@@ -20,37 +20,60 @@ date: 2022-04-06 09:58:00
 
 但我又不想一篇篇手動匯入，於是使用了Notion的API
 
-WIP
-
 <!--more-->
 
 ## 內容
 ----------
 
+Notion幾乎所有的功能都能通過送request來達成
+
+網路上也有javascript的API版本，但我選擇使用非官方的Python API [Notion SDK in Python](https://github.com/ramnes/notion-sdk-py)
+
+文件方面，我參考了官方的[API文件](https://developers.notion.com/reference/intro)
+
+裏面寫得非常詳盡，但看得出來疏於更新跟細節不完整
+
+所以整個使用過程不是很舒服，我還詢問Notion官方人員跟非官方的SDK開發者進行payload的調整
+
+我直接在repo發文 [Reference](#Reference) XD
+
+最後終於弄出來能夠自動新增page並帶有預設值的腳本
+
+以我的需求來說，必須要可以自動填入標題跟內文，最好是屬性也可以帶入
+
+大概會長這樣
+
+![image](https://user-images.githubusercontent.com/10178964/160292037-a2d80819-1889-4e29-b98b-0180365e84c1.png)
+
+以下是我自動匯入的code
+
 ```python
 from notion_client import Client
 
-# https://github.com/ramnes/notion-sdk-py/discussions/121
-
 # Initialize the client
+# 取得token的方法，可以參考官方文件這邊 https://developers.notion.com/docs/getting-started
 notion = Client(auth=NOTION_TOKEN)
 
 
 def insert_to_notion(date: str, content: str, title="Work note", tag="work"):
+    # 這邊需要`DATABASE_ID`，可以在網頁版Notion點選page後，網址最後會有一個id，可以在這邊抓取
+    # 例如 https://www.notion.so/natlee/test-4f3f55661c333e5585660c4c35e10533
+    # 這邊的DATABASE_ID就是`4f3f55661c333e5585660c4c35e10533`
+
     notion.pages.create(
         **{
             "parent": {"database_id": DATABASE_ID},
             "properties": {
-                "title": {"title": [{"type": "text", "text": {"content": title}}]},
-                "Tags": {"type": "multi_select", "multi_select": [{"name": tag}]},
-                "Created": {"date": {"start": date}},
+                "title": {"title": [{"type": "text", "text": {"content": title}}]}, # 標題的屬性跟標題是什麼
+                "Tags": {"type": "multi_select", "multi_select": [{"name": tag}]}, # 標籤的屬性跟標籤是什麼
+                "Created": {"date": {"start": date}}, # 建立時間，我的例子是使用像這樣的資料 `2022-04-21`
             },
-            "children": [
+            "children": [ # 這邊比較麻煩，要指定內容是哪種屬性，例如paragraph
                 {
                     "object": "block",
                     "type": "paragraph",
                     "paragraph": {
-                        "rich_text": [{"type": "text", "text": {"content": content}}]
+                        "rich_text": [{"type": "text", "text": {"content": content}}] # 內文的屬性跟內容
                     },
                 }
             ],
@@ -59,7 +82,15 @@ def insert_to_notion(date: str, content: str, title="Work note", tag="work"):
 
 ```
 
+最後我們就可以用這個腳本批量匯入筆記了
 
+整個過程包含跟官方來回，花了快五天
+
+不過我的例子是，我有五百多篇格式化的筆記要把它們匯入到Notion上
+
+手動太麻煩，這樣就直接搞定了（至少我知道手動一定會超過五天XD）
 
 ## Reference
 ----------
+
+[How can I create new page with some contents of text](https://github.com/ramnes/notion-sdk-py/discussions/121)
