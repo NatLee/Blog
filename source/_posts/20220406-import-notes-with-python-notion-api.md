@@ -90,6 +90,57 @@ def insert_to_notion(date: str, content: str, title="Work note", tag="work"):
 
 手動太麻煩，這樣就直接搞定了（至少我知道手動一定會超過五天XD）
 
+順帶一提，怕的話可以考慮先用curl測試一筆看看
+
+```zsh
+#!/bin/zsh
+
+curl --location --request POST 'https://api.notion.com/v1/pages' \
+--header 'Content-Type: application/json' \
+--header 'Notion-Version: 2022-02-22' \
+--header 'Authorization: Bearer <YOUR_NOTION_AUTH_TOKEN>' \
+--data-raw '{
+    "parent": {
+        "database_id": "<YOUR_DATABASE_ID>"
+    },
+    "properties": {
+        "title": {
+            "title": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "test_title"
+                    }
+                }
+            ]
+        },
+        "Tags": {"type": "multi_select", "multi_select": [{"name": "Daily"}]},
+        "Created": {"date": {"start": "2022-03-28"}}
+    },
+    "children": [
+        {
+            "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "Yo I am here!"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}'
+```
+
+使用後，大概會長這樣
+
+![image](https://user-images.githubusercontent.com/10178964/160533403-96b10da6-99f2-4650-9426-0cf387e6bbc6.png)
+
+
 ## Reference
 ----------
 
