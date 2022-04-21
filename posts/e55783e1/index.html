@@ -29,8 +29,9 @@
 <meta property="og:description" content="前言 最近發現有些東西還是得線上搞會比較方便 所以從Obsidian轉到Notion 但我又不想一篇篇手動匯入，於是使用了Notion的API">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://user-images.githubusercontent.com/10178964/160292037-a2d80819-1889-4e29-b98b-0180365e84c1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/10178964/160533403-96b10da6-99f2-4650-9426-0cf387e6bbc6.png">
 <meta property="article:published_time" content="2022-04-06T01:58:00.000Z">
-<meta property="article:modified_time" content="2022-04-21T04:02:28.007Z">
+<meta property="article:modified_time" content="2022-04-21T04:07:15.104Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="blog">
 <meta property="article:tag" content="python">
@@ -249,7 +250,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-04-21 12:02:28" itemprop="dateModified" datetime="2022-04-21T12:02:28+08:00">2022-04-21</time>
+      <time title="Modified: 2022-04-21 12:07:15" itemprop="dateModified" datetime="2022-04-21T12:07:15+08:00">2022-04-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,14 +269,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.8k</span>
+      <span>3.1k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>3 mins.</span>
+      <span>6 mins.</span>
     </span>
 </div>
 
@@ -310,6 +311,11 @@
 <p>整個過程包含跟官方來回，花了快五天</p>
 <p>不過我的例子是，我有五百多篇格式化的筆記要把它們匯入到Notion上</p>
 <p>手動太麻煩，這樣就直接搞定了（至少我知道手動一定會超過五天XD）</p>
+<p>順帶一提，怕的話可以考慮先用curl測試一筆看看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/zsh</span><br><span class="line"></span><br><span class="line">curl --location --request POST &#x27;https://api.notion.com/v1/pages&#x27; \</span><br><span class="line">--header &#x27;Content-Type: application/json&#x27; \</span><br><span class="line">--header &#x27;Notion-Version: 2022-02-22&#x27; \</span><br><span class="line">--header &#x27;Authorization: Bearer &lt;YOUR_NOTION_AUTH_TOKEN&gt;&#x27; \</span><br><span class="line">--data-raw &#x27;&#123;</span><br><span class="line">    &quot;parent&quot;: &#123;</span><br><span class="line">        &quot;database_id&quot;: &quot;&lt;YOUR_DATABASE_ID&gt;&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;title&quot;: &#123;</span><br><span class="line">            &quot;title&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;type&quot;: &quot;text&quot;,</span><br><span class="line">                    &quot;text&quot;: &#123;</span><br><span class="line">                        &quot;content&quot;: &quot;test_title&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Tags&quot;: &#123;&quot;type&quot;: &quot;multi_select&quot;, &quot;multi_select&quot;: [&#123;&quot;name&quot;: &quot;Daily&quot;&#125;]&#125;,</span><br><span class="line">        &quot;Created&quot;: &#123;&quot;date&quot;: &#123;&quot;start&quot;: &quot;2022-03-28&quot;&#125;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;children&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;object&quot;: &quot;block&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;paragraph&quot;,</span><br><span class="line">            &quot;paragraph&quot;: &#123;</span><br><span class="line">                &quot;rich_text&quot;: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;type&quot;: &quot;text&quot;,</span><br><span class="line">                        &quot;text&quot;: &#123;</span><br><span class="line">                            &quot;content&quot;: &quot;Yo I am here!&quot;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>使用後，大概會長這樣</p>
+<p><img data-src="https://user-images.githubusercontent.com/10178964/160533403-96b10da6-99f2-4650-9426-0cf387e6bbc6.png" alt="image"></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
 <p><a href="https://github.com/ramnes/notion-sdk-py/discussions/121">How can I create new page with some contents of text</a></p>
 
@@ -416,13 +422,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">97k</span>
+    <span title="Symbols count total">98k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">2:58</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
