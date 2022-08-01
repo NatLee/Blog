@@ -6,6 +6,7 @@ tags:
   - pi
   - lunux
   - os
+abbrlink: 21d73346
 date: 2022-03-10 11:58:39
 ---
 

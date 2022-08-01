@@ -1,4 +1,3 @@
-
 ---
 title: 使用Python Notion API來自動匯入筆記
 categories: blog
@@ -7,37 +6,39 @@ tags:
   - notion
   - python
   - api
+abbrlink: e55783e1
 date: 2022-04-06 09:58:00
 ---
 
-
 ## 前言
-----------
+
+---
 
 最近發現有些東西還是得線上搞會比較方便
 
-所以從Obsidian轉到Notion
+所以從 Obsidian 轉到 Notion
 
-但我又不想一篇篇手動匯入，於是使用了Notion的API
+但我又不想一篇篇手動匯入，於是使用了 Notion 的 API
 
 <!--more-->
 
 ## 內容
-----------
 
-Notion幾乎所有的功能都能通過送request來達成
+---
 
-網路上也有javascript的API版本，但我選擇使用非官方的Python API [Notion SDK in Python](https://github.com/ramnes/notion-sdk-py)
+Notion 幾乎所有的功能都能通過送 request 來達成
 
-文件方面，我參考了官方的[API文件](https://developers.notion.com/reference/intro)
+網路上也有 javascript 的 API 版本，但我選擇使用非官方的 Python API [Notion SDK in Python](https://github.com/ramnes/notion-sdk-py)
+
+文件方面，我參考了官方的[API 文件](https://developers.notion.com/reference/intro)
 
 裏面寫得非常詳盡，但看得出來疏於更新跟細節不完整
 
-所以整個使用過程不是很舒服，我還詢問Notion官方人員跟非官方的SDK開發者進行payload的調整
+所以整個使用過程不是很舒服，我還詢問 Notion 官方人員跟非官方的 SDK 開發者進行 payload 的調整
 
-我直接在repo發文 [Reference](#Reference) XD
+我直接在 repo 發文 [Reference](#Reference) XD
 
-最後終於弄出來能夠自動新增page並帶有預設值的腳本
+最後終於弄出來能夠自動新增 page 並帶有預設值的腳本
 
 以我的需求來說，必須要可以自動填入標題跟內文，最好是屬性也可以帶入
 
@@ -45,7 +46,7 @@ Notion幾乎所有的功能都能通過送request來達成
 
 ![image](https://user-images.githubusercontent.com/10178964/160292037-a2d80819-1889-4e29-b98b-0180365e84c1.png)
 
-以下是我自動匯入的code
+以下是我自動匯入的 code
 
 ```python
 from notion_client import Client
@@ -86,11 +87,11 @@ def insert_to_notion(date: str, content: str, title="Work note", tag="work"):
 
 整個過程包含跟官方來回，花了快五天
 
-不過我的例子是，我有五百多篇格式化的筆記要把它們匯入到Notion上
+不過我的例子是，我有五百多篇格式化的筆記要把它們匯入到 Notion 上
 
-手動太麻煩，這樣就直接搞定了（至少我知道手動一定會超過五天XD）
+手動太麻煩，這樣就直接搞定了（至少我知道手動一定會超過五天 XD）
 
-順帶一提，怕的話可以考慮先用curl測試一筆看看
+順帶一提，怕的話可以考慮先用 curl 測試一筆看看
 
 ```zsh
 #!/bin/zsh
@@ -140,8 +141,8 @@ curl --location --request POST 'https://api.notion.com/v1/pages' \
 
 ![image](https://user-images.githubusercontent.com/10178964/160533403-96b10da6-99f2-4650-9426-0cf387e6bbc6.png)
 
-
 ## Reference
-----------
+
+---
 
 [How can I create new page with some contents of text](https://github.com/ramnes/notion-sdk-py/discussions/121)
