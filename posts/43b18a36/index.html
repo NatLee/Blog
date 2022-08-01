@@ -21,33 +21,32 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.10.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="*為美好的世界獻上祝福*   前言 趁還有一點點時間來清裡長滿蜘蛛網的Blog。然後加一些功能，順便記錄一下以免以後忘記。">
+    <meta name="description" content="前言 記錄一下，免得有時候忘記 畢竟鑰匙通常只會產生一次">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Blog近代化改修">
-<meta property="og:url" content="https://github.com/Blog/posts/3907118332/index.html">
+<meta property="og:title" content="使用OpenSSH來生成公私鑰">
+<meta property="og:url" content="https://github.com/Blog/posts/43b18a36/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="*為美好的世界獻上祝福*   前言 趁還有一點點時間來清裡長滿蜘蛛網的Blog。然後加一些功能，順便記錄一下以免以後忘記。">
+<meta property="og:description" content="前言 記錄一下，免得有時候忘記 畢竟鑰匙通常只會產生一次">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="http://i.imgur.com/x3aK407.jpg">
-<meta property="og:image" content="http://i.imgur.com/QAnIoWi.jpg">
-<meta property="og:image" content="http://i.imgur.com/fGXnfga.jpg">
-<meta property="og:image" content="http://i.imgur.com/66iLHqa.jpg">
-<meta property="article:published_time" content="2016-01-27T16:00:00.000Z">
+<meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-08-01T15:55:31.816Z">
 <meta property="article:author" content="Nat Lee">
-<meta property="article:tag" content="blog">
+<meta property="article:tag" content="cryptograph">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="RSA">
+<meta property="article:tag" content="openssh">
+<meta property="article:tag" content="ECC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://i.imgur.com/x3aK407.jpg">
 
 
-<link rel="canonical" href="https://github.com/Blog/posts/3907118332/">
+<link rel="canonical" href="https://github.com/Blog/posts/43b18a36/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/3907118332/","path":"posts/3907118332/","title":"Blog近代化改修"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/43b18a36/","path":"posts/43b18a36/","title":"使用OpenSSH來生成公私鑰"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Blog近代化改修 | Nat's Blog</title>
+<title>使用OpenSSH來生成公私鑰 | Nat's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-66147173-1","only_pageview":false}</script>
@@ -141,7 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%91%E4%BB%A3%E5%8C%96%E6%94%B9%E4%BF%AE"><span class="nav-number">2.</span> <span class="nav-text">近代化改修</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E5%8F%B3%E4%B8%8B%E5%A4%9A%E5%8A%9F%E8%83%BD%E9%8D%B5"><span class="nav-number">2.1.</span> <span class="nav-text">增加右下多功能鍵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0404%E9%A0%81%E9%9D%A2"><span class="nav-number">2.2.</span> <span class="nav-text">增加404頁面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E9%87%91%E9%91%B0%E5%B0%8D"><span class="nav-number">2.1.</span> <span class="nav-text">建立金鑰對</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A4%87%E8%A3%BD%E5%85%AC%E9%91%B0%E5%88%B0%E7%9B%AE%E6%A8%99%E6%A9%9F%E5%99%A8%E4%B8%8A"><span class="nav-number">2.2.</span> <span class="nav-text">複製公鑰到目標機器上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A3%9C%E5%85%85"><span class="nav-number">2.3.</span> <span class="nav-text">其他補充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -213,7 +212,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/3907118332/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/43b18a36/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -226,12 +225,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Blog近代化改修 | Nat's Blog">
+      <meta itemprop="name" content="使用OpenSSH來生成公私鑰 | Nat's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Blog近代化改修
+          使用OpenSSH來生成公私鑰
         </h1>
 
         <div class="post-meta-container">
@@ -242,7 +241,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2016-01-28 00:00:00" itemprop="dateCreated datePublished" datetime="2016-01-28T00:00:00+08:00">2016-01-28</time>
+      <time title="Created: 2022-07-01 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-01T00:00:00+08:00">2022-07-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -257,7 +256,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
         </span>
     </span>
 
@@ -268,14 +267,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.9k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>3 mins.</span>
+      <span>5 mins.</span>
     </span>
 </div>
 
@@ -286,71 +285,64 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img data-src="http://i.imgur.com/x3aK407.jpg" alt="何等鬼畜的行為"></p>
-<center>*為美好的世界獻上祝福*</center>
-
-
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>趁還有一點點時間來清裡長滿蜘蛛網的Blog。<br>然後加一些功能，順便記錄一下以免以後忘記。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>記錄一下，免得有時候忘記</p>
+<p>畢竟鑰匙通常只會產生一次</p>
 <span id="more"></span>
 
-<h2 id="近代化改修"><a href="#近代化改修" class="headerlink" title="近代化改修"></a>近代化改修</h2><hr>
-<h3 id="增加右下多功能鍵"><a href="#增加右下多功能鍵" class="headerlink" title="增加右下多功能鍵"></a>增加右下多功能鍵</h3><blockquote>
-<p><strong><font color="red">※ 此篇是基於nexT主題的改修</font></strong></p>
-</blockquote>
-<p>首先抓住<strong>藏在themes&#x2F;next&#x2F;layout底下的小傢伙</strong></p>
-<blockquote>
-<p>_layout.swig</p>
-</blockquote>
-<p>摸了一下發現這玩意掌管整個Blog的布局<br>幾乎每個頁面都靠它插html進去</p>
-<p>然後找到footer裡面跟原生theme界面很要好的那個置頂功能物件<br>先把原本的功能註解掉</p>
-<pre><code>&lt;!--&lt;div class=&quot;back-to-top&quot;&gt;&lt;/div&gt;--&gt;
-</code></pre>
-<p>接下來把我們要的東西加上去</p>
-<pre><code>&lt;div id=&#39;ukagaka_panel&#39;&gt;&lt;/div&gt;
-</code></pre>
-<p>不過這樣還不夠，再來找到body底端把重要的心臟<strong>css跟javascript</strong>放上去</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&#x27;http://code.jquery.com/ui/jquery-ui-git.js&#x27;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;/Blog/css/ukagaka/ukagaka.css&quot;&gt;</span><br><span class="line">&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;/Blog/css/ukagaka/simpleFontawesome.css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;/Blog/js/ukagaka/jquery.morris.ukagaka.resource.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;/Blog/js/ukagaka/typed.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  $(&#x27;#ukagaka_panel&#x27;).ukagaka();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<h3 id="建立金鑰對"><a href="#建立金鑰對" class="headerlink" title="建立金鑰對"></a>建立金鑰對</h3><p>使用指令可以直接生成 Key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>這邊不放jquery是因為<strong>venders.swig</strong>裡面已經有了<br><code>jquery_lazyload/jquery.lazyload.js?v=1.9.7</code><br>如果放了版本不相容會造成方法衝突</p>
-</blockquote>
-<p>最後把上面所需的js跟css放到網頁底下就大功告成了</p>
-<hr>
-<h3 id="增加404頁面"><a href="#增加404頁面" class="headerlink" title="增加404頁面"></a>增加404頁面</h3><blockquote>
-<p>不過實用度高嗎？</p>
-</blockquote>
-<p><img data-src="http://i.imgur.com/QAnIoWi.jpg" alt="這問題有回答的必要嗎"></p>
-<center>*夢幻之星2*</center>
+<p>填入 key 要存的位置，例如我填入<code>test_rsa</code></p>
+<p>它就會在當前目錄產生兩個檔案</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">(base) PS C:\Users\NatLee&gt; ssh-keygen</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\NatLee/.ssh/id_rsa): test_rsa</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved <span class="keyword">in</span> test_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> test_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:pCx0UfAKJhPGD7W5rZ/O1zE9fFjenAGTdFI7GS7I4+w natlee@Nat-PC</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+---[RSA 3072]----+</span></span><br><span class="line"><span class="string">| .o.. oo.   .oo+ |</span></span><br><span class="line"><span class="string">| .o. o o  . .++ +|</span></span><br><span class="line"><span class="string">|  oo* . o  + .o= |</span></span><br><span class="line"><span class="string">|   =.* +  o . o..|</span></span><br><span class="line"><span class="string">|    o = S  = + oo|</span></span><br><span class="line"><span class="string">|     o    + = o.o|</span></span><br><span class="line"><span class="string">|    .    . E o   |</span></span><br><span class="line"><span class="string">|     o .. .      |</span></span><br><span class="line"><span class="string">|     .=.         |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br></pre></td></tr></table></figure>
 
+<p>一個是公鑰帶有<code>.pub</code>，另一個則是私鑰</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-a---          2022/8/1  下午 10:24     2.54KB test_rsa</span><br><span class="line">-a---          2022/8/1  下午 10:24      568   test_rsa.pub</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>首先直接在站點的source下新增一個<strong>404.html</strong><br>首先直接在站點的source下新增一個<strong>404.html</strong><br>首先直接在站點的source下新增一個<strong>404.html</strong></p>
-</blockquote>
-<p>這很重要，一定要講三次<br>再按照自己所需去修改css跟在網站底下放置所需的檔案<br>似乎這樣就完成了</p>
-<p>我Github的Blog不是在帳號的最上層網域<br>所以一開始卡在不知道404頁面要放在哪裡</p>
-<blockquote><p>Create a new HTML file named <code>404.html</code>—or a new Markdown file named <code>404.md</code>, with <code>permalink: /404.html</code> in its YAML front matter— at the root level of your GitHub Pages repository.</p>
-<footer><strong>Github</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9oZWxwLmdpdGh1Yi5jb20vYXJ0aWNsZXMvY3VzdG9tLTQwNC1wYWdlcy8=">Custom 404 Pages<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+<p>其他自定義的生成方法，範例如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096</span><br><span class="line">ssh-keygen -t dsa</span><br><span class="line">ssh-keygen -t ecdsa -b 521</span><br><span class="line">ssh-keygen -t ed25519</span><br></pre></td></tr></table></figure>
 
-<p>看了官方文件也沒看懂哪個方法才要在root level上面<br>然後查了網上也滿多人說要在root level才能自己建404</p>
-<p><img data-src="http://i.imgur.com/fGXnfga.jpg" alt="別給我滿嘴開火車"></p>
-<center>*夢幻之星2*</center>
+<p>使用<code>-t</code>可以指令加密類型，<code>-b</code>則是 bit 長度</p>
+<p>如果想要在建立鑰匙時直接指定名稱，可以使用<code>-f</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -f ./test -t ecdsa -b 521</span><br></pre></td></tr></table></figure>
 
-<p>原本準備要放棄洗洗睡，但不知為何又燃起一種再試試看的決心<br>試了一段時間發現，果然真的要講三次<br>真的只要在站點的source下新增一個<strong>404.html</strong>就行了</p>
-<p><span class="exturl" data-url="aHR0cDovL25hdGxlZS5naXRodWIuaW8vRVJST1I=">首頁的404<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL25hdGxlZS5naXRodWIuaW8vQmxvZy9FUlJPUg==">Blog的404<i class="fa fa-external-link-alt"></i></span></p>
-<p>終於弄完才發現這個404的功用好像也只有現在打打文章可以用到<br>一般瀏覽Blog的時候也不會特別發生或去點到404…<br>但還是補充一下，雖然都是直接加<strong>404.html</strong><br>Hexo的404會自動嵌到Blog的網頁框框內<br>我覺得這樣的確是還滿不錯的</p>
-<p><img data-src="http://i.imgur.com/66iLHqa.jpg" alt="這裡也有一個麻煩的傢伙啊"></p>
-<center>*為美好的世界獻上祝福*</center>
+<p>這樣就會在當前目錄建立名稱爲<code>test</code>的金鑰對</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-a---          2022/8/1  下午 10:30      736   <span class="built_in">test</span></span><br><span class="line">-a---          2022/8/1  下午 10:30      268   test.pub</span><br></pre></td></tr></table></figure>
 
+<h3 id="複製公鑰到目標機器上"><a href="#複製公鑰到目標機器上" class="headerlink" title="複製公鑰到目標機器上"></a>複製公鑰到目標機器上</h3><p>使用以下指令可以複製<code>指定</code>金鑰到目標機器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i ~/.ssh/tatu-key-ecdsa user@host</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>最後，這邊推荐兩個不錯又實用的網站</p>
-<p><span class="exturl" data-url="aHR0cDovL2h0bWw1dXAubmV0Lw==">Html5up<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy53aWJpYmkuY29tLw==">Wibibi<i class="fa fa-external-link-alt"></i></span></p>
-<p>第一個裡面有現成的HTML5素材可以拿來參考或使用<br>第二個裡面有很多CSS的範例也是可以拿來參考或使用</p>
-<p>總之Blog更新先到這邊<br>以後有時間再來研究一下</p>
-<p>對了，覺得404畫面的人物滿可愛的話(?)<br>可以這邊請</p>
-<p><span class="exturl" data-url="aHR0cDovL2xpbmUubWUvUy9zdGlja2VyLzEyMjY5Mzg=">Line貼圖 - Lovely Blond Hair Girl<i class="fa fa-external-link-alt"></i></span></p>
-<p>謝謝大家，祝 <strong>新年快樂</strong></p>
+<p>這邊的<code>-i</code>是指定要複製的金鑰，<code>tatu-key-ecdsa</code>是指定的金鑰名稱</p>
+<p>但是這個指令 windows 上面沒有</p>
+<p>先前的文章有提到如何在透過 powershell 指令的方式將金鑰複製到目標機器</p>
+<h3 id="其他補充"><a href="#其他補充" class="headerlink" title="其他補充"></a>其他補充</h3><p>這邊是節錄參考的內容，裏面詳細說明每個 flag 的用途</p>
+<p>Here’s a summary of commonly used options to the keygen tool:</p>
+<ul>
+<li><strong>b</strong> “Bits” This option specifies the number of bits in the key. The regulations that govern the use case for SSH may require a specific key length to be used. In general, 2048 bits is considered to be sufficient for RSA keys.</li>
+<li><strong>e</strong> “Export” This option allows reformatting of existing keys between the OpenSSH key file format and the format documented in <strong><span class="exturl" data-url="aHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzQ3MTY=">RFC 4716<i class="fa fa-external-link-alt"></i></span></strong>, “SSH Public Key File Format”.</li>
+<li><strong>p</strong> “Change the passphrase” This option allows changing the passphrase of a private key file with <strong><code>[-P old_passphrase]</code></strong> and <strong><code>[-N new_passphrase]</code></strong>, <strong><code>[-f keyfile]</code></strong>.</li>
+<li><strong>t</strong> “Type” This option specifies the type of key to be created. Commonly used values are: <strong>rsa</strong> for <strong><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvUlNBXyhjcnlwdG9zeXN0ZW0p">RSA<i class="fa fa-external-link-alt"></i></span></strong> keys <strong>dsa</strong> for <strong><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRGlnaXRhbF9TaWduYXR1cmVfQWxnb3JpdGht">DSA<i class="fa fa-external-link-alt"></i></span></strong> keys <strong>ecdsa</strong> for <strong><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRWxsaXB0aWNfQ3VydmVfRGlnaXRhbF9TaWduYXR1cmVfQWxnb3JpdGht">elliptic curve DSA<i class="fa fa-external-link-alt"></i></span></strong> keys</li>
+<li><strong>i</strong> “Input” When <em>ssh-keygen</em> is required to access an existing key, this option designates the file.</li>
+<li><strong>f</strong> “File” Specifies name of the file in which to store the created key.</li>
+<li><strong>N</strong> “New” Provides a new passphrase for the key.</li>
+<li><strong>P</strong> “Passphrase” Provides the (old) passphrase when reading a key.</li>
+<li><strong>c</strong> “Comment” Changes the comment for a keyfile.</li>
+<li><strong>p</strong> Change the passphrase of a private key file.</li>
+<li><strong>q</strong> Silence ssh-keygen.</li>
+<li><strong>v</strong> Verbose mode.</li>
+<li><strong>l</strong> “Fingerprint” Print the fingerprint of the specified public key.</li>
+<li><strong>B</strong> “Bubble babble” Shows a “bubble babble” (Tectia format) fingerprint of a keyfile.</li>
+<li><strong>F</strong> Search for a specified hostname in a known_hosts file.</li>
+<li><strong>R</strong> Remove all keys belonging to a hostname from a known_hosts file.</li>
+<li><strong>y</strong> Read a private OpenSSH format file and print an OpenSSH public key to stdout.</li>
+</ul>
+<p>This only listed the most commonly used options. For full usage, including the more exotic and special-purpose options, use the <code>man ssh-keygen</code> command.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuc3NoLmNvbS9hY2FkZW15L3NzaC9rZXlnZW4=">How to use ssh-keygen to generate a new SSH key<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
 
     </div>
 
@@ -365,19 +357,16 @@
         <div class="popular-posts-header">相關文章推薦</div>
         <ul class="popular-posts">
             <li class="popular-posts-item">
-            <div class="popular-posts-title"><a href="/Blog/posts/2264945776/" rel="bookmark">Hexo在Windows上的安裝心得</a></div>
+            <div class="popular-posts-title"><a href="/Blog/posts/833732900/" rel="bookmark">PKCS#1中RSA的加解密填充圖解（v1_5跟OAEP）</a></div>
             </li>
             <li class="popular-posts-item">
-            <div class="popular-posts-title"><a href="/Blog/posts/3924355189/" rel="bookmark">以 Google 表單做資料庫使用方法</a></div>
+            <div class="popular-posts-title"><a href="/Blog/posts/1123965036/" rel="bookmark">資安常識(1) - 公鑰基礎建設（PKI）概念</a></div>
             </li>
             <li class="popular-posts-item">
-            <div class="popular-posts-title"><a href="/Blog/posts/1950864450/" rel="bookmark">Blog Upgraded</a></div>
+            <div class="popular-posts-title"><a href="/Blog/posts/1489926540/" rel="bookmark">資安常識(2) - 對稱非對稱加密演算法與雜湊算法</a></div>
             </li>
             <li class="popular-posts-item">
-            <div class="popular-posts-title"><a href="/Blog/posts/a606eb6a/" rel="bookmark">Hexo NEXT Theme v8.10『相關文章』插件踩坑</a></div>
-            </li>
-            <li class="popular-posts-item">
-            <div class="popular-posts-title"><a href="/Blog/posts/e55783e1/" rel="bookmark">使用Python Notion API來自動匯入筆記</a></div>
+            <div class="popular-posts-title"><a href="/Blog/posts/736906820/" rel="bookmark">資安常識(3) - 簽驗章流程與完整憑證解析</a></div>
             </li>
         </ul>
 
@@ -399,7 +388,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://github.com/Blog/posts/3907118332/" title="Blog近代化改修">https://github.com/Blog/posts/3907118332/</a>
+      <a href="https://github.com/Blog/posts/43b18a36/" title="使用OpenSSH來生成公私鑰">https://github.com/Blog/posts/43b18a36/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
@@ -408,20 +397,24 @@
 </div>
 
           <div class="post-tags">
-              <a href="/Blog/tags/blog/" rel="tag"># blog</a>
+              <a href="/Blog/tags/cryptograph/" rel="tag"># cryptograph</a>
+              <a href="/Blog/tags/security/" rel="tag"># security</a>
+              <a href="/Blog/tags/RSA/" rel="tag"># RSA</a>
+              <a href="/Blog/tags/openssh/" rel="tag"># openssh</a>
+              <a href="/Blog/tags/ECC/" rel="tag"># ECC</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Blog/posts/419938887/" rel="prev" title="Matlab 取代語法">
-                  <i class="fa fa-chevron-left"></i> Matlab 取代語法
+                <a href="/Blog/posts/e55783e1/" rel="prev" title="使用Python Notion API來自動匯入筆記">
+                  <i class="fa fa-chevron-left"></i> 使用Python Notion API來自動匯入筆記
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Blog/posts/3382314989/" rel="next" title="修改Windows的登入密碼">
-                  修改Windows的登入密碼 <i class="fa fa-chevron-right"></i>
+                <a href="/Blog/posts/7a79e2e1/" rel="next" title="在Ubuntu系統建立使用者">
+                  在Ubuntu系統建立使用者 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -493,11 +486,11 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/3907118332/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/43b18a36/"}</script>
   <script src="/Blog/js/third-party/quicklink.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"1f4a52d79575e9a3f04d4c4b7983fbc5"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"0ec3a049e849fdfd9c5b98d40c29ead2"}</script>
 <script src="/Blog/js/third-party/comments/gitalk.js"></script>
 
 </body>
