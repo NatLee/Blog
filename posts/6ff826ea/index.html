@@ -29,8 +29,10 @@
 <meta property="og:description" content="前言 最近搞一波模型升級，結果部署的機器顯卡驅動程式太舊 導致沒辦法成功載入模型，只好升級一下 但根據經驗，之前踩過太多坑，記錄一下避免後來又掉進來">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/drivers/cut-graphics/nvidia-geforce-drivers-meta-image-1200x627.jpg">
+<meta property="og:image" content="https://i.imgur.com/ecANLXb.png">
+<meta property="og:image" content="https://i.imgur.com/3xcZt7S.png">
 <meta property="article:published_time" content="2022-03-11T04:28:45.000Z">
-<meta property="article:modified_time" content="2022-08-01T09:02:50.601Z">
+<meta property="article:modified_time" content="2022-08-01T15:49:41.715Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cuda">
 <meta property="article:tag" content="linux">
@@ -142,7 +144,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.1.</span> <span class="nav-text">安裝步驟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%8D%E5%A4%96%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.2.</span> <span class="nav-text">額外步驟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.1.</span> <span class="nav-text">安裝步驟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%8D%E5%A4%96%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.2.</span> <span class="nav-text">額外步驟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -157,7 +159,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/Blog/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -168,7 +170,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -250,7 +252,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-08-01 17:02:50" itemprop="dateModified" datetime="2022-08-01T17:02:50+08:00">2022-08-01</time>
+      <time title="Modified: 2022-08-01 23:49:41" itemprop="dateModified" datetime="2022-08-01T23:49:41+08:00">2022-08-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -269,14 +271,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.6k</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>3 mins.</span>
+      <span>4 mins.</span>
     </span>
 </div>
 
@@ -300,45 +302,80 @@
 <p>NVIDIA-SMI 465.19.01<br>Driver Version: 465.19.01<br>CUDA Version: 11.3</p>
 </blockquote>
 <blockquote>
-<p>注意上面的CUDA版本並非你實際使用的版本</p>
+<p>注意上面的 CUDA 版本並非你實際使用的版本</p>
 </blockquote>
 <p>我們另外可以透過<code>sudo lshw -C display</code>去看到顯示卡更詳細的資訊</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*-display                 </span><br><span class="line">     description: VGA compatible controller</span><br><span class="line">     product: NVIDIA Corporation</span><br><span class="line">     vendor: NVIDIA Corporation</span><br><span class="line">     physical id: 0</span><br><span class="line">     bus info: pci@0000:01:00.0</span><br><span class="line">     version: a1</span><br><span class="line">     width: 64 bits</span><br><span class="line">     clock: 33MHz</span><br><span class="line">     capabilities: pm msi pciexpress vga_controller bus_master cap_list rom</span><br><span class="line">     configuration: driver=nvidia latency=0</span><br><span class="line">     resources: irq:16 memory:a3000000-a3ffffff memory:90000000-9fffffff memory:a0000000-a1ffffff ioport:3000(size=128) memory:c0000-dffff</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*-display</span><br><span class="line">     description: VGA compatible controller</span><br><span class="line">     product: NVIDIA Corporation</span><br><span class="line">     vendor: NVIDIA Corporation</span><br><span class="line">     physical <span class="built_in">id</span>: 0</span><br><span class="line">     bus info: pci@0000:01:00.0</span><br><span class="line">     version: a1</span><br><span class="line">     width: 64 bits</span><br><span class="line">     clock: 33MHz</span><br><span class="line">     capabilities: pm msi pciexpress vga_controller bus_master cap_list rom</span><br><span class="line">     configuration: driver=nvidia latency=0</span><br><span class="line">     resources: irq:16 memory:a3000000-a3ffffff memory:90000000-9fffffff memory:a0000000-a1ffffff ioport:3000(size=128) memory:c0000-dffff</span><br></pre></td></tr></table></figure>
 
-<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><p>接下來，進入主題</p>
-<p>我們要安裝 &#x2F; 更新顯卡的驅動程式可以依照以下步驟去操作</p>
-<p>首先，起手式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+<p>或是我們也可以使用<span class="exturl" data-url="aHR0cHM6Ly9hc2t1YnVudHUuY29tL3F1ZXN0aW9ucy83Mjc2Ni9ob3ctZG8taS1maW5kLW91dC10aGUtbW9kZWwtb2YtbXktZ3JhcGhpY3MtY2FyZA==">這個指令<i class="fa fa-external-link-alt"></i></span>去看到顯卡是哪張</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lspci | grep VGA</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>注意，Upgrade的時候，可能會提示你重開機，照着它操作就行了</p>
+<p>01:00.0 VGA compatible controller: NVIDIA Corporation GP104 [GeForce GTX 1070 Ti] (rev a1)</p>
+</blockquote>
+<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><p>接下來，進入主題</p>
+<p>我們有兩種方式可以安裝 NVIDIA 的驅動程式</p>
+<p>一種是直接使用<code>apt</code>指令，另一種是從官網下載驅動程式</p>
+<ul>
+<li><p>直接使用<code>apt</code>指令安裝</p>
+<p>我們要安裝 &#x2F; 更新顯卡的驅動程式可以依照以下步驟去操作</p>
+<p>首先，起手式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意，Upgrade 的時候，可能會提示你重開機，照着它操作就行了</p>
 </blockquote>
 <p>接着，我們要查看目前有哪些<code>nvidia</code>的驅動能用</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-cache search nvidia-driver</span><br></pre></td></tr></table></figure>
 
 <p>以下列出找到的部分結果</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nvidia-384 - Transitional package for nvidia-driver-390</span><br><span class="line">nvidia-384-dev - Transitional package for nvidia-driver-390</span><br><span class="line">nvidia-driver-390 - NVIDIA driver metapackage</span><br><span class="line">nvidia-headless-390 - NVIDIA headless metapackage</span><br><span class="line">nvidia-headless-no-dkms-390 - NVIDIA headless metapackage - no DKMS</span><br><span class="line">...</span><br><span class="line">nvidia-driver-495 - Transitional package for nvidia-driver-510</span><br><span class="line">nvidia-driver-510 - NVIDIA driver metapackage</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nvidia-384 - Transitional package <span class="keyword">for</span> nvidia-driver-390</span><br><span class="line">nvidia-384-dev - Transitional package <span class="keyword">for</span> nvidia-driver-390</span><br><span class="line">nvidia-driver-390 - NVIDIA driver metapackage</span><br><span class="line">nvidia-headless-390 - NVIDIA headless metapackage</span><br><span class="line">nvidia-headless-no-dkms-390 - NVIDIA headless metapackage - no DKMS</span><br><span class="line">...</span><br><span class="line">nvidia-driver-495 - Transitional package <span class="keyword">for</span> nvidia-driver-510</span><br><span class="line">nvidia-driver-510 - NVIDIA driver metapackage</span><br></pre></td></tr></table></figure>
 
-<p>如果這邊遇到找不到的問題，可以嘗試添加其他顯卡驅動package的來源</p>
+<p>如果這邊遇到找不到的問題，可以嘗試添加其他顯卡驅動 package 的來源</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:graphics-drivers/ppa</span><br><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
 
-<p>假設我今天選定了<code>nvidia-470</code>這個版本，就可以直接使用下面的指令安裝</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nvidia-470</span><br></pre></td></tr></table></figure>
+<p>假設我今天選定了<code>nvidia-430</code>這個版本，就可以直接使用下面的指令安裝</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nvidia-430</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>如果有舊的驅動，系統會提示說安裝前會把舊版驅動移除</p>
+<p>如果有舊的驅動，系統會提示說安裝前會把舊版驅動移除<br>若驅動版本比較新，請手動移除<br>用指令 <code>sudo apt list --installed | grep nvidia</code> 可以查詢已安裝的驅動版本</p>
 </blockquote>
 <p>安裝完成後，重新開機輸入就能<code>nvidia-smi</code>就能看到新版驅動了</p>
-<h3 id="額外步驟"><a href="#額外步驟" class="headerlink" title="額外步驟"></a>額外步驟</h3><p>有時候我們安裝最新的驅動，會遇到一些問題</p>
-<p>可以使用下面這個指令去移除它</p>
+</li>
+<li><p>從官網下載安裝包</p>
+</li>
+</ul>
+<p>我們要從官網下載驅動程式，可以從<span class="exturl" data-url="aHR0cHM6Ly93d3cubnZpZGlhLmNvbS9Eb3dubG9hZC9pbmRleC5hc3B4">下載頁面<i class="fa fa-external-link-alt"></i></span>找到選項</p>
+<p>這邊可以依照剛剛一開始找到的顯卡資訊填入，之後按下 SEARCH 按鈕就可以下載驅動程式了</p>
+<p><img data-src="https://i.imgur.com/ecANLXb.png" alt="下載選項"></p>
+<blockquote>
+<p>LINUX X64 (AMD64&#x2F;EM64T) DISPLAY DRIVER<br>Version: 515.57<br>Release Date: 2022.6.28<br>Operating System: Linux 64-bit<br>Language: English (US)<br>File Size: 346.53 MB</p>
+</blockquote>
+<p>接着把驅動程式上傳到目標電腦後，使用以下指令去安裝驅動程式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bash NVIDIA-Linux-x86_64-515.57.run</span><br></pre></td></tr></table></figure>
+
+<p>安裝完後，重新開機輸入就能<code>nvidia-smi</code>就能看到新版驅動了</p>
+<p><img data-src="https://i.imgur.com/3xcZt7S.png" alt="driver"></p>
+<h3 id="額外步驟"><a href="#額外步驟" class="headerlink" title="額外步驟"></a>額外步驟</h3><p>假設安裝最新的驅動，遇到了一些問題</p>
+<p>可以使用下面這個指令去移除舊版驅動</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge nvidia*</span><br></pre></td></tr></table></figure>
 
-<p>如果想要移除剛剛有新增的額外來源，可以使用這個指令</p>
+<p>如果想要移除新增的額外來源，可以使用這個指令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-add-repository --remove ppa:graphics-drivers/ppa</span><br></pre></td></tr></table></figure>
 
-
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>上面說明了兩種安裝方式</p>
+<p>我個人覺得第二種比較好裝，畢竟就下載，然後丟上去一次到位</p>
+<p>第一種則是牽扯到系統套件的相依性，可能會有其他衍生問題</p>
+<p>不過第一種方式能夠包含 debug 把整個流程安裝完的話，功力也會提高吧 XD</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3liZXJjaXRpLmJpei9mYXEvdWJ1bnR1LWxpbnV4LWluc3RhbGwtbnZpZGlhLWRyaXZlci1sYXRlc3QtcHJvcHJpZXRhcnktZHJpdmVyLw==">Ubuntu Linux Install Nvidia Driver (Latest Proprietary Driver)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzEyNjMwNDcxLzM3MDU4MzM=">ubuntu系统安装nvidia驱动<i class="fa fa-external-link-alt"></i></span></p>
+<ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3liZXJjaXRpLmJpei9mYXEvdWJ1bnR1LWxpbnV4LWluc3RhbGwtbnZpZGlhLWRyaXZlci1sYXRlc3QtcHJvcHJpZXRhcnktZHJpdmVyLw==">Ubuntu Linux Install Nvidia Driver (Latest Proprietary Driver)<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS91XzEyNjMwNDcxLzM3MDU4MzM=">ubuntu 系统安装 nvidia 驱动<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9saW51eGNvbmZpZy5vcmcvaG93LXRvLWluc3RhbGwtdGhlLWxhdGVzdC1udmlkaWEtZHJpdmVycy1vbi11YnVudHUtMTYtMDQteGVuaWFsLXhlcnVz">How to install the latest Nvidia drivers on Ubuntu 16.04 Xenial Xerus<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
 
     </div>
 
@@ -357,6 +394,9 @@
             </li>
             <li class="popular-posts-item">
             <div class="popular-posts-title"><a href="/Blog/posts/5a40e3d8/" rel="bookmark">Ubuntu與Windows使用SSH金鑰快速登入的方法</a></div>
+            </li>
+            <li class="popular-posts-item">
+            <div class="popular-posts-title"><a href="/Blog/posts/7a79e2e1/" rel="bookmark">在Ubuntu系統建立使用者</a></div>
             </li>
             <li class="popular-posts-item">
             <div class="popular-posts-title"><a href="/Blog/posts/53cbcaf3/" rel="bookmark">在群暉Synology NAS DSM7.0上安裝套件管理器</a></div>
@@ -444,13 +484,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">98k</span>
+    <span title="Symbols count total">102k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:58</span>
+    <span title="Reading time total">3:05</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
