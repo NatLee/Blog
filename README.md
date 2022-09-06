@@ -11,6 +11,5 @@ brew install node
 brew install yarn
 yarn global add hexo-cli
 yarn install
-hexo g
-hexo s
+yarn -m hexo build && yarn -m hexo server
 ```
