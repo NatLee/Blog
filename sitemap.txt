@@ -1,4 +1,14 @@
 https://github.com/Blog/tags/index.html
+https://github.com/Blog/posts/3478006693/
+https://github.com/Blog/posts/3924355189/
+https://github.com/Blog/posts/2800319203/
+https://github.com/Blog/posts/3672378701/
+https://github.com/Blog/posts/165930856/
+https://github.com/Blog/posts/4162982688/
+https://github.com/Blog/posts/1950864450/
+https://github.com/Blog/posts/440569875/
+https://github.com/Blog/posts/4239708371/
+https://github.com/Blog/posts/1123965036/
 https://github.com/Blog/posts/1489926540/
 https://github.com/Blog/posts/736906820/
 https://github.com/Blog/posts/833732900/
@@ -13,6 +23,7 @@ https://github.com/Blog/posts/6ff826ea/
 https://github.com/Blog/posts/e55783e1/
 https://github.com/Blog/posts/43b18a36/
 https://github.com/Blog/posts/7a79e2e1/
+https://github.com/Blog/posts/7b4d3a0f/
 https://github.com/Blog/about/index.html
 https://github.com/Blog/archives/index.html
 https://github.com/Blog/categories/index.html
@@ -23,16 +34,6 @@ https://github.com/Blog/posts/419938887/
 https://github.com/Blog/posts/3907118332/
 https://github.com/Blog/posts/3382314989/
 https://github.com/Blog/posts/3012259224/
-https://github.com/Blog/posts/3478006693/
-https://github.com/Blog/posts/3924355189/
-https://github.com/Blog/posts/2800319203/
-https://github.com/Blog/posts/3672378701/
-https://github.com/Blog/posts/165930856/
-https://github.com/Blog/posts/4162982688/
-https://github.com/Blog/posts/1950864450/
-https://github.com/Blog/posts/440569875/
-https://github.com/Blog/posts/4239708371/
-https://github.com/Blog/posts/1123965036/
 https://github.com/Blog
 https://github.com/Blog/tags/hexo/
 https://github.com/Blog/tags/windows/
@@ -95,6 +96,7 @@ https://github.com/Blog/tags/notion/
 https://github.com/Blog/tags/api/
 https://github.com/Blog/tags/openssh/
 https://github.com/Blog/tags/ECC/
+https://github.com/Blog/tags/life/
 https://github.com/Blog/categories/blog/
 https://github.com/Blog/categories/android/
 https://github.com/Blog/categories/develop/
@@ -102,3 +104,4 @@ https://github.com/Blog/categories/windows/
 https://github.com/Blog/categories/study/
 https://github.com/Blog/categories/gitlab/
 https://github.com/Blog/categories/dev/
+https://github.com/Blog/categories/life/
