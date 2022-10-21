@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://i.imgur.com/7w9laRD.jpg">
 <meta property="og:image" content="http://i.imgur.com/wbFo504.png">
 <meta property="article:published_time" content="2019-08-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-21T00:03:21.262Z">
+<meta property="article:modified_time" content="2022-10-21T00:03:33.379Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="multithread">
@@ -244,7 +244,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-21 08:03:21" itemprop="dateModified" datetime="2022-10-21T08:03:21+08:00">2022-10-21</time>
+      <time title="Modified: 2022-10-21 08:03:33" itemprop="dateModified" datetime="2022-10-21T08:03:33+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -354,24 +354,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Multiprocessing using pool took 15.129114151000977 seconds</span><br></pre></td></tr></table></figure>
 
 <p>我們把結果統整成表格</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Baseline</th>
-<th>Multithread</th>
-<th>Multiprocessing</th>
-<th>Multiprocessing using pool</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Time(s)</td>
-<td>50.022</td>
-<td>5.007</td>
-<td>5.031</td>
-<td>15.129</td>
-</tr>
-</tbody></table>
+<p>|         	| Baseline 	| Multithread 	| Multiprocessing 	| Multiprocessing using pool 	|<br>|———	|———-	|————-	|—————–	|—————————	|<br>| Time(s) 	| 50.022   	| 5.007       	| 5.031           	| 15.129                     	|</p>
 <p>由表格中，我們可以發現在Python中多執行緒不一定是只使用單顆CPU執行，因為多程序與多執行緒結果差不多</p>
 <p>但令人意外的是使用pool來分配的多程序執行相比一般多程序卻會花較多時間</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
