@@ -1607,11 +1607,6 @@ hexo-log@^3.0.0, hexo-log@^3.2.0:
   dependencies:
     picocolors "^1.0.0"
 
-hexo-pagination@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/hexo-pagination/-/hexo-pagination-1.0.0.tgz#c9c0ca3665267b9e9d0a89fc3edcaf3276907dc1"
-  integrity sha512-miEVFgxchPr2qNWxw0JWpJ9R/Yaf7HjHBZVjvCCcqfbsLyYtCvIfJDxcEwz1sDOC/fLzYPqNnhUI73uNxBHRSA==
-
 hexo-pagination@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/hexo-pagination/-/hexo-pagination-3.0.0.tgz#b98b050bbddff25ae646e3d00ad607ac6ae77ea7"
@@ -1683,10 +1678,10 @@ hexo-theme-landscape@^0.0.3:
   resolved "https://registry.yarnpkg.com/hexo-theme-landscape/-/hexo-theme-landscape-0.0.3.tgz#87d1f4d613da9be5245dad0d4b80479eab70d386"
   integrity sha512-b0Di+TUVs4ESrNX4ULEh9uQmADpO6kr10rIJ2OGZM8suNQNFKdxn+vJUjnLfKkCPJAfVmS7/S83KCNYe4tpoNw==
 
-hexo-theme-next@^8.13.1:
-  version "8.13.1"
-  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.13.1.tgz#39b7557f88a79312d99549a0ba88f56956803611"
-  integrity sha512-Qn6MAB3+f65gvXOeBnM1awZbpVPlBE/Qnx4e19J5h2llZkIi9J4t0PHcuQY1pLKoAbDJ6NmGM660ugVJG15DtA==
+hexo-theme-next@^8.13.2:
+  version "8.13.2"
+  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.13.2.tgz#10f92e66529a158cdfa3def0eb8e95df3bbb6840"
+  integrity sha512-OcR76Kmi2g2426VGla+VV+g0qzTsozSjMcsBcFeaKomv8BiPycMknillGF/R4Od+vAHde8h9uZvlRIA51+4+7A==
 
 hexo-util@1.9.0:
   version "1.9.0"
@@ -1704,7 +1699,7 @@ hexo-util@1.9.0:
     strip-indent "^3.0.0"
     striptags "^3.1.1"
 
-hexo-util@^2.0.0, hexo-util@^2.1.0, hexo-util@^2.6.1, hexo-util@^2.7.0:
+hexo-util@^2.0.0, hexo-util@^2.1.0, hexo-util@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/hexo-util/-/hexo-util-2.7.0.tgz#13d09292e79d260db35399710b3e19f3995443a3"
   integrity sha512-hQM3h34nhDg0bSe/Tg1lnpODvNkz7h2u0+lZGzlKL0Oufp+5KCAEUX9wal7/xC7ax3/cwEn8IuoU75kNpZLpJQ==
