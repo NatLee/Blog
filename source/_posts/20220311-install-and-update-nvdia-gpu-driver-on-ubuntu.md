@@ -70,81 +70,81 @@ lspci | grep VGA
 
 一種是直接使用`apt`指令，另一種是從官網下載驅動程式
 
-- 直接使用`apt`指令安裝
+1. 方法一：直接使用`apt`指令安裝
 
-  我們要安裝 / 更新顯卡的驅動程式可以依照以下步驟去操作
+   我們要安裝 / 更新顯卡的驅動程式可以依照以下步驟去操作
 
-  首先，起手式
+   首先，起手式
 
-  ```bash
-  sudo apt update
-  sudo apt upgrade
-  ```
+   ```bash
+   sudo apt update
+   sudo apt upgrade
+   ```
 
-  > 注意，Upgrade 的時候，可能會提示你重開機，照着它操作就行了
+   > 注意，Upgrade 的時候，可能會提示你重開機，照着它操作就行了
 
-  接着，我們要查看目前有哪些`nvidia`的驅動能用
+   接着，我們要查看目前有哪些`nvidia`的驅動能用
 
-  ```bash
-  sudo apt-cache search nvidia-driver
-  ```
+   ```bash
+   sudo apt-cache search nvidia-driver
+   ```
 
-  以下列出找到的部分結果
+   以下列出找到的部分結果
 
-  ```bash
-  nvidia-384 - Transitional package for nvidia-driver-390
-  nvidia-384-dev - Transitional package for nvidia-driver-390
-  nvidia-driver-390 - NVIDIA driver metapackage
-  nvidia-headless-390 - NVIDIA headless metapackage
-  nvidia-headless-no-dkms-390 - NVIDIA headless metapackage - no DKMS
-  ...
-  nvidia-driver-495 - Transitional package for nvidia-driver-510
-  nvidia-driver-510 - NVIDIA driver metapackage
-  ```
+   ```bash
+   nvidia-384 - Transitional package for nvidia-driver-390
+   nvidia-384-dev - Transitional package for nvidia-driver-390
+   nvidia-driver-390 - NVIDIA driver metapackage
+   nvidia-headless-390 - NVIDIA headless metapackage
+   nvidia-headless-no-dkms-390 - NVIDIA headless metapackage - no DKMS
+   ...
+   nvidia-driver-495 - Transitional package for nvidia-driver-510
+   nvidia-driver-510 - NVIDIA driver metapackage
+   ```
 
-  如果這邊遇到找不到的問題，可以嘗試添加其他顯卡驅動 package 的來源
+   如果這邊遇到找不到的問題，可以嘗試添加其他顯卡驅動 package 的來源
 
-  ```bash
-  sudo add-apt-repository ppa:graphics-drivers/ppa
-  sudo apt update
-  ```
+   ```bash
+   sudo add-apt-repository ppa:graphics-drivers/ppa
+   sudo apt update
+   ```
 
-  假設我今天選定了`nvidia-430`這個版本，就可以直接使用下面的指令安裝
+   假設我今天選定了`nvidia-430`這個版本，就可以直接使用下面的指令安裝
 
-  ```bash
-  sudo apt install nvidia-430
-  ```
+   ```bash
+   sudo apt install nvidia-430
+   ```
 
-  > 如果有舊的驅動，系統會提示說安裝前會把舊版驅動移除
-  > 若驅動版本比較新，請手動移除
-  > 用指令 `sudo apt list --installed | grep nvidia` 可以查詢已安裝的驅動版本
+   > 如果有舊的驅動，系統會提示說安裝前會把舊版驅動移除
+   > 若驅動版本比較新，請手動移除
+   > 用指令 `sudo apt list --installed | grep nvidia` 可以查詢已安裝的驅動版本
 
-  安裝完成後，重新開機輸入就能`nvidia-smi`就能看到新版驅動了
+   安裝完成後，重新開機輸入就能`nvidia-smi`就能看到新版驅動了
 
-- 從官網下載安裝包
+2. 方法二：從官網下載安裝包
 
-我們要從官網下載驅動程式，可以從[下載頁面](https://www.nvidia.com/Download/index.aspx)找到選項
+   我們要從官網下載驅動程式，可以從[下載頁面](https://www.nvidia.com/Download/index.aspx)找到選項
 
-這邊可以依照剛剛一開始找到的顯卡資訊填入，之後按下 SEARCH 按鈕就可以下載驅動程式了
+   這邊可以依照剛剛一開始找到的顯卡資訊填入，之後按下 SEARCH 按鈕就可以下載驅動程式了
 
-![下載選項](https://i.imgur.com/ecANLXb.png)
+   ![下載選項](https://i.imgur.com/ecANLXb.png)
 
-> LINUX X64 (AMD64/EM64T) DISPLAY DRIVER
-> Version: 515.57
-> Release Date: 2022.6.28
-> Operating System: Linux 64-bit
-> Language: English (US)
-> File Size: 346.53 MB
+   > LINUX X64 (AMD64/EM64T) DISPLAY DRIVER
+   > Version: 515.57
+   > Release Date: 2022.6.28
+   > Operating System: Linux 64-bit
+   > Language: English (US)
+   > File Size: 346.53 MB
 
-接着把驅動程式上傳到目標電腦後，使用以下指令去安裝驅動程式
+   接着把驅動程式上傳到目標電腦後，使用以下指令去安裝驅動程式
 
-```bash
-sudo bash NVIDIA-Linux-x86_64-515.57.run
-```
+   ```bash
+   sudo bash NVIDIA-Linux-x86_64-515.57.run
+   ```
 
-安裝完後，重新開機輸入就能`nvidia-smi`就能看到新版驅動了
+   安裝完後，重新開機輸入就能`nvidia-smi`就能看到新版驅動了
 
-![driver](https://i.imgur.com/3xcZt7S.png)
+   ![driver](https://i.imgur.com/3xcZt7S.png)
 
 ### 額外步驟
 
