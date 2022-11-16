@@ -20,29 +20,35 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.13.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="前言 Git 常用指令 123git statusgit branch -avvgit remote show origin">
+    <meta name="description" content="前言最近又送了一次羅技(Logitech)產品的 RMA 對，爲什麼我會說又">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 筆記">
-<meta property="og:url" content="https://github.com/Blog/posts/4239708371/index.html">
+<meta property="og:title" content="羅技滑鼠鍵盤的RMA心得">
+<meta property="og:url" content="https://github.com/Blog/posts/4a6b712b/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="前言 Git 常用指令 123git statusgit branch -avvgit remote show origin">
+<meta property="og:description" content="前言最近又送了一次羅技(Logitech)產品的 RMA 對，爲什麼我會說又">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-09-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-16T13:38:32.983Z">
+<meta property="og:image" content="https://i.imgur.com/FMEEkFV.png">
+<meta property="og:image" content="https://i.imgur.com/nJ8R4QN.png">
+<meta property="og:image" content="https://i.imgur.com/t7tcuxW.jpg">
+<meta property="og:image" content="https://i.imgur.com/xpPwXOI.png">
+<meta property="og:image" content="https://i.imgur.com/3HYE6Lk.jpg">
+<meta property="og:image" content="https://i.imgur.com/plTNmk5.jpg">
+<meta property="article:published_time" content="2022-11-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-11-16T13:38:32.987Z">
 <meta property="article:author" content="Nat Lee">
-<meta property="article:tag" content="develop">
-<meta property="article:tag" content="git">
+<meta property="article:tag" content="life">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/FMEEkFV.png">
 
 
-<link rel="canonical" href="https://github.com/Blog/posts/4239708371/">
+<link rel="canonical" href="https://github.com/Blog/posts/4a6b712b/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/4239708371/","path":"posts/4239708371/","title":"Git 筆記"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://github.com/Blog/posts/4a6b712b/","path":"posts/4a6b712b/","title":"羅技滑鼠鍵盤的RMA心得"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Git 筆記 | Nat's Blog</title>
+<title>羅技滑鼠鍵盤的RMA心得 | Nat's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-66147173-1","only_pageview":false}</script>
@@ -129,7 +135,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pull-fetch-and-push"><span class="nav-number">2.1.</span> <span class="nav-text">Pull, fetch and push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-current-repository-status"><span class="nav-number">2.2.</span> <span class="nav-text">Show current repository status</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-all-branch-with-upstream"><span class="nav-number">2.3.</span> <span class="nav-text">Show all branch with upstream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-remote-informations"><span class="nav-number">2.4.</span> <span class="nav-text">Show remote informations</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1-RMA-%E7%B6%93%E9%A9%97"><span class="nav-number">2.1.</span> <span class="nav-text">第一次 RMA 經驗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1-RMA-%E7%B6%93%E9%A9%97"><span class="nav-number">2.2.</span> <span class="nav-text">第二次 RMA 經驗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -202,7 +208,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/4239708371/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Blog/posts/4a6b712b/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
@@ -215,12 +221,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Git 筆記 | Nat's Blog">
+      <meta itemprop="name" content="羅技滑鼠鍵盤的RMA心得 | Nat's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Git 筆記
+          羅技滑鼠鍵盤的RMA心得
         </h1>
 
         <div class="post-meta-container">
@@ -230,15 +236,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-09-07 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-07T00:00:00+08:00">2021-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-16 21:38:32" itemprop="dateModified" datetime="2022-11-16T21:38:32+08:00">2022-11-16</time>
+      <time title="Created: 2022-11-16 00:00:00 / Modified: 21:38:32" itemprop="dateCreated datePublished" datetime="2022-11-16T00:00:00+08:00">2022-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -246,7 +246,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/develop/" itemprop="url" rel="index"><span itemprop="name">develop</span></a>
+          <a href="/Blog/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
         </span>
     </span>
 
@@ -258,7 +258,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>1.8k</span>
+      <span>1.4k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -276,37 +276,83 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>Git 常用指令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">git branch -avv</span><br><span class="line">git remote show origin</span><br></pre></td></tr></table></figure>
-
-
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近又送了一次羅技(Logitech)產品的 RMA</p>
+<p>對，爲什麼我會說又</p>
+<hr>
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
-<h3 id="Pull-fetch-and-push"><a href="#Pull-fetch-and-push" class="headerlink" title="Pull, fetch and push"></a>Pull, fetch and push</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line">git add .</span><br><span class="line">git commit -m &lt;COMMIT_MESSAGE&gt;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-
-<h3 id="Show-current-repository-status"><a href="#Show-current-repository-status" class="headerlink" title="Show current repository status"></a>Show current repository status</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-
-<p>Sample Result (No changed files):</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">On branch master</span><br><span class="line">Your branch is up to <span class="built_in">date</span> with &#x27;origin/master&#x27;.</span><br><span class="line"></span><br><span class="line">nothing to commit, working <span class="built_in">tree</span> clean </span><br></pre></td></tr></table></figure>
-
-<p>Sample Result (With uncommitted changes)</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">On branch master</span><br><span class="line">Your branch is up to <span class="built_in">date</span> with &#x27;origin/master&#x27;.</span><br><span class="line"></span><br><span class="line">Changes <span class="keyword">not</span> staged <span class="keyword">for</span> commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git <span class="built_in">restore</span> &lt;file&gt;...&quot; to discard changes <span class="keyword">in</span> working directory)</span><br><span class="line"><span class="function">        modified:   <span class="title">source</span>/.<span class="title">obsidian</span>/<span class="title">workspace</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Untracked</span> <span class="title">files</span>:</span></span><br><span class="line"><span class="function">  (<span class="title">use</span> &quot;<span class="title">git</span> <span class="title">add</span> &lt;<span class="title">file</span>&gt;...&quot; <span class="title">to</span> <span class="title">include</span> <span class="title">in</span> <span class="title">what</span> <span class="title">will</span> <span class="title">be</span> <span class="title">committed</span>)</span></span><br><span class="line"><span class="function">        <span class="title">source</span>/<span class="title">_posts</span>/20210907-<span class="title">git</span>-<span class="title">cheat</span>-<span class="title">table.md</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">no</span> <span class="title">changes</span> <span class="title">added</span> <span class="title">to</span> <span class="title">commit</span> (<span class="title">use</span> &quot;<span class="title">git</span> <span class="title">add</span>&quot; <span class="title">and</span>/<span class="title">or</span> &quot;<span class="title">git</span> <span class="title">commit</span> -<span class="title">a</span>&quot;)</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Show-all-branch-with-upstream"><a href="#Show-all-branch-with-upstream" class="headerlink" title="Show all branch with upstream"></a>Show all branch with upstream</h3><p>Using command with following.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">git branch -avv</span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">Sample Result</span><br><span class="line"></span><br><span class="line">```cmd</span><br><span class="line">* master                                                            944c6b6 [origin/master] Update</span><br><span class="line">  remotes/origin/HEAD                                               -&gt; origin/master</span><br><span class="line">  remotes/origin/dependabot/npm_and_yarn/hexo-renderer-marked-4.1.0 33e72a0 Bump hexo-renderer-marked from 4.0.0 to 4.1.0</span><br><span class="line">  remotes/origin/gh-pages                                           a0c1163 Deploy NatLee/Blog to github.com/NatLee/Blog.git:gh-pages</span><br><span class="line">  remotes/origin/master                                             944c6b6 Update</span><br></pre></td></tr></table></figure>
-
-<p>The branch of result</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* master            <span class="number">944</span>c6b6    [origin/master]   Update</span><br><span class="line">    ↑                  ↑             ↑             ↑</span><br><span class="line">Current branch      Revision      Upstream       Commit message</span><br></pre></td></tr></table></figure>
-
-<p><code>Upstream branches</code> are local branches that have a direct relationship to a remote branch.</p>
-<h3 id="Show-remote-informations"><a href="#Show-remote-informations" class="headerlink" title="Show remote informations"></a>Show remote informations</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote show origin</span><br></pre></td></tr></table></figure>
-
-<p>Sample result:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">* remote origin</span><br><span class="line">  Fetch URL: https://github.com/NatLee/Blog.git</span><br><span class="line">  Push  URL: https://github.com/NatLee/Blog.git</span><br><span class="line">  HEAD branch: master</span><br><span class="line">  Remote branches:</span><br><span class="line">    dependabot/npm_and_yarn/hexo-renderer-marked-<span class="number">4</span>.<span class="number">1</span>.<span class="number">0</span> tracked</span><br><span class="line">    gh-pages                                           tracked</span><br><span class="line">    master                                             tracked</span><br><span class="line">  Local branch configured <span class="keyword">for</span> &#x27;git pull&#x27;:</span><br><span class="line">    master merges with remote master</span><br><span class="line">  Local ref configured <span class="keyword">for</span> &#x27;git push&#x27;:</span><br><span class="line">    master pushes to master (up to <span class="built_in">date</span>)</span><br></pre></td></tr></table></figure>
-
-
+<p>我已經用了 L 家產品好多年</p>
+<p>先來一張人權圖</p>
+<p><img data-src="https://i.imgur.com/FMEEkFV.png" alt="G Hub"></p>
+<p>尤其是 G502，我從它第一代產品（只有藍光的版本）用到現在 RGB 無線版本</p>
+<p>爲什麼會一直選羅技，其實也是有原因的（這篇不是業配）</p>
+<p>我單純覺得它們的售後服務做得不錯</p>
+<p>我使用過兩次羅技產品的客戶支援服務</p>
+<p>一次是使用電話，另一次使用線上客服</p>
+<h3 id="第一次-RMA-經驗"><a href="#第一次-RMA-經驗" class="headerlink" title="第一次 RMA 經驗"></a>第一次 RMA 經驗</h3><p>這次的主角是羅技的初代 G502</p>
+<p><img data-src="https://i.imgur.com/nJ8R4QN.png" alt="G502"></p>
+<p>這支滑鼠在當初真的非常好用，雖然沒有炫砲的 RGB</p>
+<p>但在當初可以用砝碼調控重量已經算是滿時尚了</p>
+<p>我當時年少輕狂覺得想要一隻猛鼠，於是就在 2015-05-28 那天在 X 價屋購買</p>
+<p>不過也好險是三年保固，<del>不然我現在可能是羅技黑</del></p>
+<p>用了兩年多，2017-07-26 終於出狀況，滑鼠發生左鍵連點</p>
+<p>按一下變兩下，而且是每次按下都會發生</p>
+<p>於是我就上網找送保的方法，結果就看到官方好像有提供 RMA 服務</p>
+<p>我就打電話過去，接聽的人是中國人</p>
+<p>那位客服人員很有耐心的幫我一步步排錯</p>
+<p>從軟體檢查到換電腦測試，可惜還是有問題</p>
+<p>於是，他就幫我申請了 RMA 服務</p>
+<p>這個時候他告知我說，因爲這支滑鼠已經停產沒貨了</p>
+<p>所以會送第二代滑鼠給我，也就是有 RGB 的版本</p>
+<p>直到 2017-09-17，歷經將近兩個月，新的滑鼠終於寄到了</p>
+<p>這邊就不放滑鼠圖片了（畢竟那支也壞了 XD）</p>
+<p>等待的期間，我去查貨物的 tracking ID</p>
+<p>發現這支滑鼠在中國內瘋狂轉機，還一度被寄到韓國 😂</p>
+<p>有趣的是拿到的時候，我還收到了一張 invoice（可能敏感資訊就碼掉）</p>
+<p><img data-src="https://i.imgur.com/t7tcuxW.jpg" alt="invoice"></p>
+<p>這支滑鼠羅技付了 <code>1092.87 USD</code> 的費用（可能是運費？）</p>
+<p>整體下來，RMA 的服務品質在那個年代還算不錯</p>
+<p>一定有人會好奇這段期間我沒滑鼠要怎麼用電腦</p>
+<p>我跑去買一支跟他寄來一樣的滑鼠用 😂</p>
+<h3 id="第二次-RMA-經驗"><a href="#第二次-RMA-經驗" class="headerlink" title="第二次 RMA 經驗"></a>第二次 RMA 經驗</h3><p>2022-08-03，我在良 X APP 購物買了 G913 TKL</p>
+<p><img data-src="https://i.imgur.com/xpPwXOI.png" alt="G913"></p>
+<p>身爲工程師，怎麼可能只有一把鍵盤</p>
+<p>當時是聽說羅技家的無線鍵盤連線延遲很低</p>
+<p>又看到有我喜歡用的紅軸，所以想體驗看看</p>
+<p>直到購買當天，看到良 X APP 突然傳送通知說這鍵盤特價</p>
+<p>抱著猶豫就會敗北的心態馬上下單</p>
+<p>用了一陣子，發現鍵盤的 <code>i</code> 鍵在按到底的時候會觸發兩次</p>
+<p>當下覺得很怪，直到 2022-11-13 終於受不了</p>
+<p>我就跑去線上客服申請保固支援</p>
+<p>這邊不得不說，羅技線上服務的網頁做得真的很爛</p>
+<p>羅技也算是做週邊產品的跨國大公司，網站回應速度居然超慢</p>
+<p>我猜是成本考量不使用線上雲端服務或是服務的串接沒做好</p>
+<p>一切都是 cut price 的結果 🥺</p>
+<p>抱怨歸抱怨，但還是聯繫上線上客服人員</p>
+<p>不過對方是英文翻譯成中文，其實都看不太懂在說什麼</p>
+<p>爲了避免對方也靠中翻英導致溝通障礙，我只好全用英文回覆（場面一時混亂）</p>
+<p>客服解說完又是一陣檢測（下載軟體檢查、各種硬體交叉測試）</p>
+<p>就是有問題才來尋求保固支援，所以當然這些測試也沒解決問題</p>
+<p>這時，客服也很爽快的幫我申請 RMA</p>
+<p>這次不一樣的是，RMA 的鍵盤很快就送來了</p>
+<p>也就是今天，2022-11-16</p>
+<p>僅僅隔三天的時間，我心想這次效率也太好了吧</p>
+<p>看了一下發貨地點，原來貨品就在臺灣，所以是直接寄過來</p>
+<p><img data-src="https://i.imgur.com/3HYE6Lk.jpg" alt="new"></p>
+<p>上面還有一張小卡寫敬請期待 2.0</p>
+<p>也就是 G913 貌似會有下一代</p>
+<p><img data-src="https://i.imgur.com/plTNmk5.jpg" alt="new vs old"></p>
+<p>拍了一張新舊鍵盤合照</p>
+<p>舊鍵盤除了<code>i</code>鍵以外，其他功能都正常</p>
+<p>RGB 還是滿漂亮的（大概只能當備用或裝飾了）</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><hr>
+<p>這篇其實是用剛拿到的鍵盤打的</p>
+<p>順便測試一下有沒有問題</p>
+<p>畢竟是同一個型號的鍵盤，手感跟敲擊聲都一樣 XD</p>
+<p>不過既然能正常的打完這篇文章</p>
+<p>應該可以相信這把 RMA 回來的鍵盤沒有連點的狀況（吧）</p>
+<p>不然我又要去找客服支援了 😂</p>
 
     </div>
 
@@ -322,7 +368,7 @@
         <ul class="popular-posts">
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
-                            <a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a>
+                            <a href="/Blog/posts/7b4d3a0f/" rel="bookmark">市面上常見的四種線材收納盒評測</a>
                         </div>
                     </li>
             </ul>
@@ -354,7 +400,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://github.com/Blog/posts/4239708371/" title="Git 筆記">https://github.com/Blog/posts/4239708371/</a>
+      <a href="https://github.com/Blog/posts/4a6b712b/" title="羅技滑鼠鍵盤的RMA心得">https://github.com/Blog/posts/4a6b712b/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
@@ -363,22 +409,18 @@
 </div>
 
           <div class="post-tags">
-              <a href="/Blog/tags/develop/" rel="tag"># develop</a>
-              <a href="/Blog/tags/git/" rel="tag"># git</a>
+              <a href="/Blog/tags/life/" rel="tag"># life</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Blog/posts/440569875/" rel="prev" title="使用Container來快速建立開發環境(以python為例)">
-                  <i class="fa fa-chevron-left"></i> 使用Container來快速建立開發環境(以python為例)
+                <a href="/Blog/posts/7b4d3a0f/" rel="prev" title="市面上常見的四種線材收納盒評測">
+                  <i class="fa fa-chevron-left"></i> 市面上常見的四種線材收納盒評測
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Blog/posts/1123965036/" rel="next" title="資安常識(1) - 公鑰基礎建設（PKI）概念">
-                  資安常識(1) - 公鑰基礎建設（PKI）概念 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -449,11 +491,11 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/4239708371/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://github.com/Blog/posts/4a6b712b/"}</script>
   <script src="/Blog/js/third-party/quicklink.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"4456b9f4e0d2e59698b757a4fdb8117e"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"2b20e3ef511d48c2db761728693bec93"}</script>
 <script src="/Blog/js/third-party/comments/gitalk.js"></script>
 
 </body>
