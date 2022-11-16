@@ -20,16 +20,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.13.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="前言 我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧">
+    <meta name="description" content="前言 我們都知道 S 社的 DSM 是一個難搞的東西，強制佔用又鎖 port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連 git 都沒辦法用吧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在群暉Synology NAS DSM7.0上安裝套件管理器">
 <meta property="og:url" content="https://github.com/Blog/posts/53cbcaf3/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="前言 我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧">
+<meta property="og:description" content="前言 我們都知道 S 社的 DSM 是一個難搞的東西，強制佔用又鎖 port，還會擋東擋西 但物盡其用，我還是想在上面裝套件，至少不要連 git 都沒辦法用吧">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://repository-images.githubusercontent.com/123925061/fe5a0600-f91a-11ea-8914-601e3e722062">
 <meta property="article:published_time" content="2022-02-16T14:15:54.000Z">
-<meta property="article:modified_time" content="2022-11-16T13:53:21.738Z">
+<meta property="article:modified_time" content="2022-11-16T16:03:34.708Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="synology">
 <meta property="article:tag" content="nas">
@@ -244,7 +244,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-16 21:53:21" itemprop="dateModified" datetime="2022-11-16T21:53:21+08:00">2022-11-16</time>
+      <time title="Modified: 2022-11-17 00:03:34" itemprop="dateModified" datetime="2022-11-17T00:03:34+08:00">2022-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -284,30 +284,30 @@
     <div class="post-body" itemprop="articleBody">
         <p><img data-src="https://repository-images.githubusercontent.com/123925061/fe5a0600-f91a-11ea-8914-601e3e722062" alt="entware"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西</p>
-<p>但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧</p>
+<p>我們都知道 S 社的 DSM 是一個難搞的東西，強制佔用又鎖 port，還會擋東擋西</p>
+<p>但物盡其用，我還是想在上面裝套件，至少不要連 git 都沒辦法用吧</p>
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
 <blockquote>
-<p><em>WAIT！請注意！直接更改NAS內的檔案都會有風險！</em><br><em>請一定要知道你的每一步操作在做什麼！</em></p>
+<p><em>WAIT！請注意！直接更改 NAS 內的檔案都會有風險！</em> &gt; <em>請一定要知道你的每一步操作在做什麼！</em></p>
 </blockquote>
-<p>某次我SSH連線進NAS的時候發現Git沒辦法使用</p>
-<p>而且官方Docker套件又弄得很廢</p>
+<p>某次我 SSH 連線進 NAS 的時候發現 Git 沒辦法使用</p>
+<p>而且官方 Docker 套件又弄得很廢</p>
 <p>於是萌生出有沒有辦法在上面自己安裝套件的想法</p>
 <p>然後我就使用了<code>apt</code>大法</p>
-<p>結果發現 幹！原來OS不是debian系列</p>
-<p>花時間上網搜了一波發現大多資料都是DSM6以前的，DSM7.0以上的資料超級少</p>
+<p>結果發現 幹！原來 OS 不是 debian 系列</p>
+<p>花時間上網搜了一波發現大多資料都是 DSM6 以前的，DSM7.0 以上的資料超級少</p>
 <p>最後找到<span class="exturl" data-url="aHR0cHM6Ly93aW5kaXgubWVkaXVtLmNvbS9pbnN0YWxsLXBhY2thZ2UtdmlhLW9wa2ctZW50d2FyZS1mb3Itc3lub2xvZ3ktZHNtLTctOWI5OTk0NDE1YjJk">這篇文章<i class="fa fa-external-link-alt"></i></span>說可以用<code>opkg</code>來安裝</p>
 <p>我就查一下發現它裏面說的<code>Entware</code>是邊緣嵌入式系統用的套件管理器</p>
 <p>於是跟着連結往深處尋找發現這個安裝流程<a href="https://github.com/Entware/Entware/wiki/Install-on-Synology-NAS">Entware install guide</a></p>
-<p>因爲我NAS的CPU是intel x64，所以我直接執行了這個腳本</p>
+<p>因爲我 NAS 的 CPU 是 intel x64，所以我直接執行了這個腳本</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - https://bin.entware.net/x64-k3.2/installer/generic.sh | /bin/sh</span><br></pre></td></tr></table></figure>
 
 <p>它就會拉下來開始裝一些基本工具，成功會有下面訊息</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Info: Congratulations!</span><br><span class="line">Info: If there are no errors above <span class="keyword">then</span> Entware was successfully initialized.</span><br><span class="line">Info: Add /opt/bin &amp; /opt/sbin to <span class="variable">$PATH</span> variable</span><br><span class="line">Info: Add <span class="string">&quot;/opt/etc/init.d/rc.unslung start&quot;</span> to startup script <span class="keyword">for</span> Entware services to start</span><br><span class="line">Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>接着用瀏覽器去個人NAS的首頁找到這個地方</p>
+<p>接着用瀏覽器去個人 NAS 的首頁找到這個地方</p>
 <blockquote>
 <p>設定 -&gt; 服務 -&gt; 任務排程器</p>
 </blockquote>
@@ -315,23 +315,26 @@
 <p>裏面照着下面填寫</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">一般設定</span><br><span class="line"></span><br><span class="line">&gt; 任務名稱：Entware</span><br><span class="line">&gt; 使用者帳號：root</span><br><span class="line">&gt; 事件：開機</span><br><span class="line">&gt; 先行任務：</span><br><span class="line"></span><br><span class="line">[v]已啓動</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>接着按上面的<code>任務設定</code>的tab把下面程式碼貼上以確保每次重開機都能夠先載入套件管理的工具</p>
+<p>接着按上面的<code>任務設定</code>的 tab 把下面程式碼貼上以確保每次重開機都能夠先載入套件管理的工具</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mount/Start Entware</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt</span><br><span class="line">mount -o <span class="built_in">bind</span> <span class="string">&quot;/volume1/@Entware/opt&quot;</span> /opt</span><br><span class="line">/opt/etc/init.d/rc.unslung start</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add Entware Profile in Global Profile</span></span><br><span class="line"><span class="keyword">if</span> grep  -qF  <span class="string">&#x27;/opt/etc/profile&#x27;</span> /etc/profile; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;Confirmed: Entware Profile in Global Profile&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;Adding: Entware Profile in Global Profile&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/profile &lt;&lt;<span class="string">&quot;EOF&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load Entware Profile</span></span><br><span class="line">. /opt/etc/profile</span><br><span class="line">EOF</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update Entware List</span></span><br><span class="line">/opt/bin/opkg update</span><br></pre></td></tr></table></figure>
 
 <p>按下確定後就可以重開機了！</p>
-<p>開機完成後，我們可以試試看安裝git</p>
+<p>開機完成後，我們可以試試看安裝 git</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@Nat-Nas:~<span class="comment"># opkg install git-http</span></span><br><span class="line">Installing git-http (2.33.1-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/git-http_2.33.1-1_x64-3.2.ipk</span><br><span class="line">Installing git (2.33.1-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/git_2.33.1-1_x64-3.2.ipk</span><br><span class="line">Installing ca-bundle (20211016-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/ca-bundle_20211016-1_all.ipk</span><br><span class="line">Installing libcurl (7.80.0-1) to root...</span><br><span class="line">Downloading http://bin.entware.net/x64-k3.2/libcurl_7.80.0-1_x64-3.2.ipk</span><br><span class="line">Configuring ca-bundle.</span><br><span class="line">Configuring libcurl.</span><br><span class="line">Configuring git.</span><br><span class="line">Configuring git-http.</span><br></pre></td></tr></table></figure>
 
 <p>終於搞定了！</p>
-<p>接下來就可以用GIT去clone一些專案</p>
+<p>接下來就可以用 GIT 去 clone 一些專案</p>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
-<p>其實在DSM6的時候，官方套件管理可以安裝Git功能</p>
-<p>甚至是連Gitlab都能在官方套件內安裝</p>
-<p>後來看起來是Synology不想更新這一塊了</p>
+<p>其實在 DSM6 的時候，官方套件管理可以安裝 Git 功能</p>
+<p>甚至是連 Gitlab 都能在官方套件內安裝</p>
+<p>後來看起來是 Synology 不想更新這一塊了</p>
 <p>所以乾脆直接把套件抽掉</p>
 <p>好險非官方社群還有人在研究，不然閒置一台機器真的滿浪費的</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
 <p><a href="https://github.com/Entware/Entware/wiki/Install-on-Synology-NAS">Entware install guide</a></p>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfLyVFNSU4OSU4RCVFOCVBOCU4MC1mZTYwZDAzZGYyMWE=">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
@@ -463,7 +466,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:10</span>
+    <span title="Reading time total">3:11</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>

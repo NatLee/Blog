@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言 最近復現別人 deep learning 相關的專案 常常會遇到不同專案有不同 CUDA 版本的問題 還有 package 相依問題也很麻煩 所以非常需要一個有效管理多 CUDA 版本的方法">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-02-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-16T13:53:21.738Z">
+<meta property="article:modified_time" content="2022-11-16T16:03:34.708Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="cuda">
 <meta property="article:tag" content="cudnn">
@@ -245,7 +245,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-16 21:53:21" itemprop="dateModified" datetime="2022-11-16T21:53:21+08:00">2022-11-16</time>
+      <time title="Modified: 2022-11-17 00:03:34" itemprop="dateModified" datetime="2022-11-17T00:03:34+08:00">2022-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -265,7 +265,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>3.2k</span>
+      <span>3.3k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -335,7 +335,7 @@
 
 <p>改完記得<code>source</code>一下</p>
 <p>它只要輸入版本號就能使用，裏面會自動幫你切換目前使用 CUDA 的路徑</p>
-<p>例如： <code>_switch_cuda 10.1</code>.</p>
+<p>例如： <code>_switch_cuda 10.1</code></p>
 </li>
 <li><p>最後，可以確認看看<code>/usr/local</code>中的 CUDA 版本</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ tree -L 1 /usr/local</span><br><span class="line">.</span><br><span class="line">├── bin</span><br><span class="line">├── cuda-10.0</span><br><span class="line">├── cuda-10.1</span><br><span class="line">├── cuda-10.2</span><br><span class="line">├── cuda-9.0</span><br><span class="line">├── cuda-9.1</span><br><span class="line">├── cuda-9.2</span><br><span class="line">├── etc</span><br><span class="line">├── games</span><br><span class="line">├── include</span><br><span class="line">├── lib</span><br><span class="line">├── man -&gt; share/man</span><br><span class="line">├── sbin</span><br><span class="line">├── share</span><br><span class="line">├── src</span><br><span class="line">└── texlive</span><br><span class="line"></span><br><span class="line">16 directories, 0 files</span><br></pre></td></tr></table></figure></li>
@@ -345,6 +345,9 @@
 <p>整個開發環境都變舒服了</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
 <p><span class="exturl" data-url="aHR0cHM6Ly9ub3Rlc2J5YWlyLmdpdGh1Yi5pby9ibG9nL2NzLzIwMjAtMDUtMjYtaW5zdGFsbGluZy1tdWx0aXBsZS12ZXJzaW9ucy1vZi1jdWRhLWN1ZG5uLw==">Installing multiple versions of cuda cudnn<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfLyVFNSVBNCU5QSVFNyU4OSU4OCVFNiU5QyVBQ2N1ZGElRTUlOEYlOEFjdWRubiVFNyVBRSVBMSVFNyU5MCU4Ni1lOGYwZjNjMjc1ODM=">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
@@ -375,12 +378,12 @@
                     </li>
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
-                            <a href="/Blog/posts/b87de6f1/" rel="bookmark">Synology NAS Docker更新與遠端控制</a>
+                            <a href="/Blog/posts/53cbcaf3/" rel="bookmark">在群暉Synology NAS DSM7.0上安裝套件管理器</a>
                         </div>
                     </li>
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
-                            <a href="/Blog/posts/53cbcaf3/" rel="bookmark">在群暉Synology NAS DSM7.0上安裝套件管理器</a>
+                            <a href="/Blog/posts/b87de6f1/" rel="bookmark">Synology NAS Docker更新與遠端控制</a>
                         </div>
                     </li>
             </ul>
@@ -479,7 +482,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:10</span>
+    <span title="Reading time total">3:11</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>

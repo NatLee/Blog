@@ -20,16 +20,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.13.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="前言 之前一直很想寫反向通道的流程，但過程很難描述 剛好最近在docker上看到好用的openssh-server的image 結果一試就上手，於是就有這篇文章了">
+    <meta name="description" content="前言 之前一直很想寫反向通道(reverse tunnel)的流程，但過程很難描述 剛好最近在 docker 上看到好用的 openssh-server 的 image 結果一試就上手，於是就有這篇文章了">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用docker container建立SSH反向通道穿透內網連接內部裝置">
 <meta property="og:url" content="https://github.com/Blog/posts/509187850/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="前言 之前一直很想寫反向通道的流程，但過程很難描述 剛好最近在docker上看到好用的openssh-server的image 結果一試就上手，於是就有這篇文章了">
+<meta property="og:description" content="前言 之前一直很想寫反向通道(reverse tunnel)的流程，但過程很難描述 剛好最近在 docker 上看到好用的 openssh-server 的 image 結果一試就上手，於是就有這篇文章了">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png">
 <meta property="article:published_time" content="2022-02-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-16T13:53:21.738Z">
+<meta property="article:modified_time" content="2022-11-16T16:03:34.708Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="container">
@@ -133,7 +133,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F%E8%AA%AA%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">步驟說明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E7%B6%B2%E8%A3%9D%E7%BD%AE-A"><span class="nav-number">2.1.</span> <span class="nav-text">外網裝置 A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Extra-Step"><span class="nav-number">2.1.1.</span> <span class="nav-text">Extra Step</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A7%E7%B6%B2%E8%B7%B3%E6%9D%BF%E8%A3%9D%E7%BD%AE-B"><span class="nav-number">2.2.</span> <span class="nav-text">內網跳板裝置 B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E9%81%8E%E8%B7%B3%E6%9D%BFB%E9%80%A3%E8%87%B3%E5%85%A7%E7%B6%B2%E8%A3%9D%E7%BD%AEC"><span class="nav-number">2.3.</span> <span class="nav-text">透過跳板B連至內網裝置C</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F%E8%AA%AA%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">步驟說明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E7%B6%B2%E8%A3%9D%E7%BD%AE-A"><span class="nav-number">2.1.</span> <span class="nav-text">外網裝置 A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Extra-Step"><span class="nav-number">2.1.1.</span> <span class="nav-text">Extra Step</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A7%E7%B6%B2%E8%B7%B3%E6%9D%BF%E8%A3%9D%E7%BD%AE-B"><span class="nav-number">2.2.</span> <span class="nav-text">內網跳板裝置 B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E9%81%8E%E8%B7%B3%E6%9D%BF-B-%E9%80%A3%E8%87%B3%E5%85%A7%E7%B6%B2%E8%A3%9D%E7%BD%AE-C"><span class="nav-number">2.3.</span> <span class="nav-text">透過跳板 B 連至內網裝置 C</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -245,7 +245,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-16 21:53:21" itemprop="dateModified" datetime="2022-11-16T21:53:21+08:00">2022-11-16</time>
+      <time title="Modified: 2022-11-17 00:03:34" itemprop="dateModified" datetime="2022-11-17T00:03:34+08:00">2022-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -265,14 +265,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>8.5k</span>
+      <span>8.6k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>15 mins.</span>
+      <span>16 mins.</span>
     </span>
 </div>
 
@@ -285,67 +285,66 @@
     <div class="post-body" itemprop="articleBody">
         <p><img data-src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>之前一直很想寫反向通道的流程，但過程很難描述</p>
-<p>剛好最近在docker上看到好用的openssh-server的image</p>
+<p>之前一直很想寫反向通道(reverse tunnel)的流程，但過程很難描述</p>
+<p>剛好最近在 docker 上看到好用的 openssh-server 的 image</p>
 <p>結果一試就上手，於是就有這篇文章了</p>
 <span id="more"></span>
-
 
 <h2 id="步驟說明"><a href="#步驟說明" class="headerlink" title="步驟說明"></a>步驟說明</h2><hr>
 <blockquote>
 <p>首先，你需要一個<code>位於外網且可以透過SSH連線的裝置</code></p>
 <p>如果沒有，請按上一頁</p>
 </blockquote>
-<p>我今天看到一個image <span class="exturl" data-url="aHR0cHM6Ly9odWIuZG9ja2VyLmNvbS9yL2xpbnV4c2VydmVyL29wZW5zc2gtc2VydmVy">linuxserver&#x2F;openssh-server<i class="fa fa-external-link-alt"></i></span></p>
-<p>它把openssh-server的部分都做好了</p>
-<p>所以我們可以直接用這個image去run一個container</p>
-<p>也就是寫一份docker-compose的文件就搞定了</p>
+<p>我今天看到一個 image <span class="exturl" data-url="aHR0cHM6Ly9odWIuZG9ja2VyLmNvbS9yL2xpbnV4c2VydmVyL29wZW5zc2gtc2VydmVy">linuxserver&#x2F;openssh-server<i class="fa fa-external-link-alt"></i></span></p>
+<p>它把 openssh-server 的部分都做好了</p>
+<p>所以我們可以直接用這個 image 去 run 一個 container</p>
+<p>也就是寫一份 docker-compose 的文件就搞定了</p>
 <p>接下來，我們會分別討論三個裝置上的設定</p>
 <ul>
 <li>外網裝置 A</li>
 <li>內網跳板裝置 B</li>
-<li>透過跳板B連至內網裝置C</li>
+<li>透過跳板 B 連至內網裝置 C</li>
 </ul>
 <p>步驟簡略來說會長成下面這個樣子：</p>
 <ul>
-<li>內網的跳板裝置B會透過反向去連接在外網的A（所以B在內網只要可以訪問外網就行了），接著A會使用另外一個port去forward裝置B的SSH port</li>
+<li>內網的跳板裝置 B 會透過反向去連接在外網的 A（所以 B 在內網只要可以訪問外網就行了），接著 A 會使用另外一個 port 去 forward 裝置 B 的 SSH port</li>
 </ul>
 <blockquote>
 <p>A(SSH port) &lt;— B</p>
 </blockquote>
-<p>這邊有點不太好懂，舉例來說就是假設A的SSH port是1984，除了1984外，我們在路由器上設定開放A裝置的另一個port 1994</p>
-<p>那麼，B反向到A的時候，我們可以利用1994這個port去讓別人連接B的SSH port</p>
+<p>這邊有點不太好懂，舉例來說就是假設 A 的 SSH port 是 1984，除了 1984 外，我們在路由器上設定開放 A 裝置的另一個 port 1994</p>
+<p>那麼，B 反向到 A 的時候，我們可以利用 1994 這個 port 去讓別人連接 B 的 SSH port</p>
 <ul>
-<li>我們透過某一可連外網的裝置（隨便一個都行）去連接A的反向專用port即可到達在內網的裝置B</li>
+<li>我們透過某一可連外網的裝置（隨便一個都行）去連接 A 的反向專用 port 即可到達在內網的裝置 B</li>
 </ul>
 <blockquote>
-<p>某裝置 —&gt; A(反向用port) —&gt; B</p>
+<p>某裝置 —&gt; A(反向用 port) —&gt; B</p>
 </blockquote>
 <ul>
-<li>因爲裝置B在內網，所以我們可以使用B來訪問所有在內網的裝置，例如C</li>
+<li>因爲裝置 B 在內網，所以我們可以使用 B 來訪問所有在內網的裝置，例如 C</li>
 </ul>
 <blockquote>
-<p>某裝置 —&gt; A(反向用port) —&gt; B —&gt; C</p>
+<p>某裝置 —&gt; A(反向用 port) —&gt; B —&gt; C</p>
 </blockquote>
-<h3 id="外網裝置-A"><a href="#外網裝置-A" class="headerlink" title="外網裝置 A"></a>外網裝置 A</h3><p>首先，我們先在外網的機器A先佈置能能夠進行被反向連接的server</p>
-<p>我們基於docker hub上面官方的文件做修改</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openssh-server:</span></span><br><span class="line">   <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">   <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/openssh-server</span></span><br><span class="line">   <span class="attr">container_name:</span> <span class="string">reverse-tunnel-outside-server</span></span><br><span class="line">   <span class="attr">hostname:</span> <span class="string">nat-tunnel-outside-server</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">TZ=Asia/Taipei</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY=yourpublickey #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_FILE=/path/to/file #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_DIR=/config/.ssh #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_URL=https://github.com/username.keys #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">SUDO_ACCESS=true</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="comment">#- PASSWORD_ACCESS=false #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD=password #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD_FILE=/path/to/file #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">USER_NAME=natlee</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./ssh_setting:/config</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./root_ssh_setting:/root/.ssh</span></span><br><span class="line">   <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">1984</span><span class="string">:2222</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">1994</span><span class="string">:1994</span></span><br></pre></td></tr></table></figure>
+<h3 id="外網裝置-A"><a href="#外網裝置-A" class="headerlink" title="外網裝置 A"></a>外網裝置 A</h3><p>首先，我們先在外網的機器 A 先佈置能能夠進行被反向連接的 server</p>
+<p>我們基於 docker hub 上面官方的文件做修改</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openssh-server:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/openssh-server</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">reverse-tunnel-outside-server</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">nat-tunnel-outside-server</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Taipei</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY=yourpublickey #optional</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY_FILE=/path/to/file #optional</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY_DIR=/config/.ssh #optional</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY_URL=https://github.com/username.keys #optional</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SUDO_ACCESS=true</span> <span class="comment">#optional</span></span><br><span class="line">      <span class="comment">#- PASSWORD_ACCESS=false #optional</span></span><br><span class="line">      <span class="comment">#- USER_PASSWORD=password #optional</span></span><br><span class="line">      <span class="comment">#- USER_PASSWORD_FILE=/path/to/file #optional</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_NAME=natlee</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./ssh_setting:/config</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./root_ssh_setting:/root/.ssh</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">1984</span><span class="string">:2222</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">1994</span><span class="string">:1994</span></span><br></pre></td></tr></table></figure>
 
 <p>主要比較有意義的改動是<code>volumes</code>跟<code>port</code></p>
 <blockquote>
-<p>有些版本的docker會出現無法binding volumes的問題，可以先自己用<code>mkdir</code>建立資料夾</p>
+<p>有些版本的 docker 會出現無法 binding volumes 的問題，可以先自己用<code>mkdir</code>建立資料夾</p>
 </blockquote>
-<p>因爲它的image包好的SSH port是<code>2222</code>，那麼我們把外部<code>1984</code>對應進去</p>
-<p>另外，我們需要多開一個port讓內網裏面做反向的裝置能夠連到這臺server</p>
-<p>所以多開了一個port <code>1994</code></p>
+<p>因爲它的 image 包好的 SSH port 是<code>2222</code>，那麼我們把外部<code>1984</code>對應進去</p>
+<p>另外，我們需要多開一個 port 讓內網裏面做反向的裝置能夠連到這臺 server</p>
+<p>所以多開了一個 port <code>1994</code></p>
 <blockquote>
-<p>這邊記得在路由器幫這兩個port做forwarding，建議內外相同port就行了</p>
+<p>這邊記得在路由器幫這兩個 port 做 forwarding，建議內外相同 port 就行了</p>
 </blockquote>
 <p>接着，我們就執行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
 
-<p>記得，這邊沒有使用<code>-d</code>去做背景執行是因爲等等debug比較方便</p>
-<p>我們需要修改openssh-server的設定檔<code>sshd_config</code></p>
+<p>記得，這邊沒有使用<code>-d</code>去做背景執行是因爲等等 debug 比較方便</p>
+<p>我們需要修改 openssh-server 的設定檔<code>sshd_config</code></p>
 <p>打開剛剛指定目錄中的<code>./ssh_setting/ssh_host_keys/sshd_config</code>去把這三個設定做更改</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AllowTCPForwarding yes # 有些教學沒說要開這個，但不開它就不讓你forwarding了</span><br><span class="line">GatewayPorts yes # 這個是讓你能夠轉port用的，一定要開</span><br><span class="line"></span><br><span class="line">ChallengeResponseAuthentication no # 安全需求，只開放public key登入</span><br></pre></td></tr></table></figure>
 
@@ -353,109 +352,111 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate</span><br></pre></td></tr></table></figure>
 
 <p>完成這個步驟後</p>
-<p>我們就可以放著不管，用背景執行這個container了</p>
+<p>我們就可以放著不管，用背景執行這個 container 了</p>
 <h4 id="Extra-Step"><a href="#Extra-Step" class="headerlink" title="Extra Step"></a>Extra Step</h4><p>這邊是額外的連線測試，不做也不影響後面的流程</p>
-<p>可以使用local做連線測試</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984                          </span><br><span class="line">The authenticity of host <span class="string">&#x27;[localhost]:2000 ([::1]:1984)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:g73WW30kTFqdUvi/mCbIgrW4dnadPiW7ipopK9h6/zk.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[localhost]:1984<span class="string">&#x27; (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">natlee@localhost: Permission denied (publickey,keyboard-interactive).</span></span><br></pre></td></tr></table></figure>
+<p>可以使用 local 做連線測試</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984</span><br><span class="line">The authenticity of host <span class="string">&#x27;[localhost]:2000 ([::1]:1984)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:g73WW30kTFqdUvi/mCbIgrW4dnadPiW7ipopK9h6/zk.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[localhost]:1984<span class="string">&#x27; (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">natlee@localhost: Permission denied (publickey,keyboard-interactive).</span></span><br></pre></td></tr></table></figure>
 
-<p>於是，失敗了，因爲我們只能用key進行連線！</p>
+<p>於是，失敗了，因爲我們只能用 key 進行連線！</p>
 <p>那麼要如何測試連線呢？</p>
 <p>我們先找一對金鑰（如果沒有的話，可以用<code>ssh-keygen</code>生成）</p>
 <p>再把剛找的公鑰（通常預設會在<code>~/.ssh/id_rsa.pub</code>）放到<code>./ssh_setting/.ssh/authorized_keys</code>內</p>
 <p>內容類似長這樣的東西：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDs13dOFtSQ8OJjIIZiVKWTIUbEvy+ZIcswOiXCb4q4nIK80yNyuDOVcbzQyyS0Q0z0UUTpf+TR5Rs4Ox0B8baffTC0CvFHQhwqpgvz/8d179fmUCyDb9yrdgdhSlN4zkMdw8A2P8SQ+3cc+gIQBvj/jo414kynz4zaoGseFxBOpVKc+dW1Y8m3G4wfBB0QpcyxYZ9vkAhrIYyPrIK9EP7LXTlJyQ7gMadJ4eUkMiBSnqfJYxPcYDIeK/uHYyGgpsJQUaxZ8JIqkD2kdmBPX8NHGA1O2VF2UyiJKuRVJEg/oW7YoCJHs81Gj+bl9HdnBC5CEMWckLPLRtfFkW3u9F6PNto9fs48L1dU8MGm6KAirX2GPydmwRS6yh9i32NT5J70izi28cX1IhJn2PtY75aZAPuU2NspsJ1cy4cbd35tJLB0H0= root@test</span><br></pre></td></tr></table></figure>
 
-<p>再用SSH連線一次！</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984                      </span><br><span class="line">Welcome to OpenSSH Server</span><br><span class="line"></span><br><span class="line">nat-tunnel-outside-server:~$</span><br></pre></td></tr></table></figure>
+<p>再用 SSH 連線一次！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@localhost -p 1984</span><br><span class="line">Welcome to OpenSSH Server</span><br><span class="line"></span><br><span class="line">nat-tunnel-outside-server:~$</span><br></pre></td></tr></table></figure>
 
 <p>到這邊算是外網機器佈置成功了！</p>
 <p>執行中的時候，資料夾內的內容物長這樣</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">├── root_ssh_setting</span><br><span class="line">└── ssh_setting</span><br><span class="line">    ├── custom-cont-init.d</span><br><span class="line">    ├── custom-services.d</span><br><span class="line">    ├── logs</span><br><span class="line">    │   ├── loginfo.txt</span><br><span class="line">    │   └── openssh</span><br><span class="line">    │       ├── current</span><br><span class="line">    │       ├── lock</span><br><span class="line">    │       └── state</span><br><span class="line">    ├── sshd.pid</span><br><span class="line">    └── ssh_host_keys</span><br><span class="line">        ├── sshd_config</span><br><span class="line">        ├── ssh_host_dsa_key</span><br><span class="line">        ├── ssh_host_dsa_key.pub</span><br><span class="line">        ├── ssh_host_ecdsa_key</span><br><span class="line">        ├── ssh_host_ecdsa_key.pub</span><br><span class="line">        ├── ssh_host_ed25519_key</span><br><span class="line">        ├── ssh_host_ed25519_key.pub</span><br><span class="line">        ├── ssh_host_rsa_key</span><br><span class="line">        └── ssh_host_rsa_key.pub</span><br><span class="line"></span><br><span class="line">7 directories, 15 files</span><br></pre></td></tr></table></figure>
 
-
 <h3 id="內網跳板裝置-B"><a href="#內網跳板裝置-B" class="headerlink" title="內網跳板裝置 B"></a>內網跳板裝置 B</h3><p>內網裝置需要的東西就比較多了</p>
-<p>但還是老樣子，我們在內網裝置上起一個openssh-server</p>
-<p>基於docker hub上面官方的文件做修改</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openssh-server:</span></span><br><span class="line">   <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">   <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/openssh-server</span></span><br><span class="line">   <span class="attr">container_name:</span> <span class="string">reverse-tunnel-inside-bridge</span></span><br><span class="line">   <span class="attr">hostname:</span> <span class="string">nat-tunnel-inside-bridge</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">environment:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">TZ=Asia/Taipei</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY=yourpublickey #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_FILE=/path/to/file #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_DIR=/config/.ssh #optional</span></span><br><span class="line">    <span class="comment">#- PUBLIC_KEY_URL=https://github.com/username.keys #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">SUDO_ACCESS=true</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="comment">#- PASSWORD_ACCESS=false #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD=password #optional</span></span><br><span class="line">    <span class="comment">#- USER_PASSWORD_FILE=/path/to/file #optional</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">USER_NAME=natlee</span> <span class="comment">#optional</span></span><br><span class="line">   <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./ssh_setting:/config</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">./root_ssh_setting:/root/.ssh</span></span><br></pre></td></tr></table></figure>
+<p>但還是老樣子，我們在內網裝置上起一個 openssh-server</p>
+<p>基於 docker hub 上面官方的文件做修改</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openssh-server:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/openssh-server</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">reverse-tunnel-inside-bridge</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">nat-tunnel-inside-bridge</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Taipei</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY=yourpublickey #optional</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY_FILE=/path/to/file #optional</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY_DIR=/config/.ssh #optional</span></span><br><span class="line">      <span class="comment">#- PUBLIC_KEY_URL=https://github.com/username.keys #optional</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SUDO_ACCESS=true</span> <span class="comment">#optional</span></span><br><span class="line">      <span class="comment">#- PASSWORD_ACCESS=false #optional</span></span><br><span class="line">      <span class="comment">#- USER_PASSWORD=password #optional</span></span><br><span class="line">      <span class="comment">#- USER_PASSWORD_FILE=/path/to/file #optional</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_NAME=natlee</span> <span class="comment">#optional</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./ssh_setting:/config</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./root_ssh_setting:/root/.ssh</span></span><br></pre></td></tr></table></figure>
 
-<p>改完之後直接run一波</p>
+<p>改完之後直接 run 一波</p>
 <blockquote>
-<p>有些版本的docker會出現無法binding volumes的問題，可以先自己用<code>mkdir</code>建立資料夾</p>
+<p>有些版本的 docker 會出現無法 binding volumes 的問題，可以先自己用<code>mkdir</code>建立資料夾</p>
 </blockquote>
-<p>內網的裝置就不用給ports，給了也只有內網電腦能連進去</p>
+<p>內網的裝置就不用給 ports，給了也只有內網電腦能連進去</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
 
-<p>run完會看到它的啓動畫面，然後就跟剛剛一樣生一堆文件出來</p>
-<p>我們接下來要配置一些文件讓它能夠連到server且斷線後能夠重連</p>
+<p>run 完會看到它的啓動畫面，然後就跟剛剛一樣生一堆文件出來</p>
+<p>我們接下來要配置一些文件讓它能夠連到 server 且斷線後能夠重連</p>
 <ul>
-<li><p>建立安裝autossh的腳本</p>
-<p>  使用<code>sudo nano ./ssh_setting/custom-cont-init.d/install.sh</code>將以下內容貼上</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk add --no-cache autossh</span><br></pre></td></tr></table></figure>
+<li><p>建立安裝 autossh 的腳本</p>
+<p>使用<code>sudo nano ./ssh_setting/custom-cont-init.d/install.sh</code>將以下內容貼上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk add --no-cache autossh</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>建立啓動autossh的腳本</p>
-<p>  使用<code>sudo nano ./ssh_setting/custom-services.d/autossh.sh</code>將以下內容貼上</p>
+<li><p>建立啓動 autossh 的腳本</p>
+<p>使用<code>sudo nano ./ssh_setting/custom-services.d/autossh.sh</code>將以下內容貼上</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Start AutoSSH&quot;</span></span><br><span class="line"></span><br><span class="line">/usr/bin/autossh \</span><br><span class="line">    -M 6767 \</span><br><span class="line">    -o <span class="string">&quot;StrictHostKeyChecking=no&quot;</span> \</span><br><span class="line">    -o <span class="string">&quot;ServerAliveInterval 15&quot;</span> \</span><br><span class="line">    -o <span class="string">&quot;ServerAliveCountMax 3&quot;</span> \</span><br><span class="line">    -p 1984 \</span><br><span class="line">    -NR <span class="string">&#x27;*:1994:localhost:2222&#x27;</span> \</span><br><span class="line">    natlee@&lt;YOUR_DOMAIN&gt; \</span><br><span class="line">    -i ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>這邊請把<code>&lt;EXAMPLE_DOMAIN&gt;</code>改成你自己連接外網裝置的domain或IP<br>其中，<code>StrictHostKeyChecking</code>用來自動新增<code>known_host</code>，避免要手動連接一次A</p>
+<p>這邊請把<code>&lt;EXAMPLE_DOMAIN&gt;</code>改成你自己連接外網裝置的 domain 或 IP<br>其中，<code>StrictHostKeyChecking</code>用來自動新增<code>known_host</code>，避免要手動連接一次 A</p>
 </blockquote>
 </li>
 </ul>
-<p>接着，我們直接再run一次</p>
+<p>接着，我們直接再 run 一次</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
 
 <p>然後就噴錯了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reverse-tunnel-inside-bridge | Warning: Identity file /root/.ssh/id_rsa not accessible: No such file or directory.</span><br><span class="line">reverse-tunnel-inside-bridge | Host key verification failed.</span><br></pre></td></tr></table></figure>
 
 <p>爲什麼它會說無法存取<code>/root/.ssh/id_rsa</code>？</p>
-<p>因爲它必須要靠key來連到server，但它並沒有key pairs</p>
+<p>因爲它必須要靠 key 來連到 server，但它並沒有 key pairs</p>
 <p>所以我們得幫他產生一組</p>
-<p>我們先別暫停container，而是直接使用這個指令去生成key pairs</p>
+<p>我們先別暫停 container，而是直接使用這個指令去生成 key pairs</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it reverse-tunnel-inside-bridge ssh-keygen</span><br></pre></td></tr></table></figure>
 
 <p>然後輸出會長成下面這樣</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:YYaMzm7rD4dAQlREdwzOMufrbe5KLwc1z554ePFIvsc root@nat-tunnel-inside-bridge</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+---[RSA 3072]----+</span></span><br><span class="line"><span class="string">|.o++ oo.         |</span></span><br><span class="line"><span class="string">|.   +o.o         |</span></span><br><span class="line"><span class="string">|. .o.+o +        |</span></span><br><span class="line"><span class="string">| o o=  = .       |</span></span><br><span class="line"><span class="string">|  . o.. S        |</span></span><br><span class="line"><span class="string">|   o o.  =       |</span></span><br><span class="line"><span class="string">|    =oo * *      |</span></span><br><span class="line"><span class="string">|   .o=o= B E     |</span></span><br><span class="line"><span class="string">|   .o+O=o.o      |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br></pre></td></tr></table></figure>
 
-<p>但這樣是不夠的，因爲我們外網的裝置只能使用key登入</p>
+<p>但這樣是不夠的，因爲我們外網的裝置只能使用 key 登入</p>
 <p>這時候，我們就必須把公鑰檔案<code>~/.ssh/id_rsa.pub</code>的內容複製出來（直接進去用<code>cat</code>指令就行了）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it reverse-tunnel-inside-bridge /bin/bash</span><br><span class="line">root@nat-tunnel-inside-bridge:/<span class="comment"># cat ~/.ssh/id_rsa.pub</span></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdF4MGnC4XmCPR8QLy0gVJTQb9kf4jM5og0Q1ggO3y8wr8LMTdAufnatfj0mYq/QkCiVCQvfFT+e+f+1AKu0UCCokFehv6etUnyaHqQWDtrcXjT6yxw9N7njCrIv/mFHnttQ1z5Ri2ULOnoWva6hOabvUkabxDwwxz90HWKo94/xbtZsnU1kEmqyMJhJ2exSa+kSxUwKeyLX0HYCmiD5H1X+eqZMVbo3boDID3Pp2NFVFrGDP6NOwmBAVpd2rUHmL2AdKfcefvxmZKSyokp56J8pVg/MgzMEk7sEzZr2uP6klYNWpAsFaBJojrlQuUuGC1nibZmejRIEmuhcD+Wcssls8umB51L+0Hi+nZKU6lQXOZryW1xNXmS3h9DpeZTSNk4lmyJDuQ+r2JVLTNbyt1UvuGUotBuluDnNWwst8KWG8CAPjv+A/qMZ/dU3Rg9PEDQ8hXMccipq9lgq6bxrLXJ2gOKldTYXFhqhnyQs1b4AOXk7pwXaYo8vsWWkiJglU= root@nat-tunnel-inside-bridge</span><br></pre></td></tr></table></figure>
 
-<p>這串長長的公鑰就可以貼到我們外網server A的<code>./ssh_setting/.ssh/authorized_keys</code>中</p>
-<p>這時候看回去container輸出就沒有再跳錯誤了！</p>
+<p>這串長長的公鑰就可以貼到我們外網 server A 的<code>./ssh_setting/.ssh/authorized_keys</code>中</p>
+<p>這時候看回去 container 輸出就沒有再跳錯誤了！</p>
 <p>再來是安全問題，我們可以再打開目錄中的<code>./ssh_setting/ssh_host_keys/sshd_config</code>去把這個設定做更改</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ChallengeResponseAuthentication no # 安全需求，只開放public key登入</span><br></pre></td></tr></table></figure>
 
-<p>到這邊內網裝置B已經算是設定完成了</p>
-<p>接下來，我們把自己第三方位置的PC公鑰複製到內網裝置B的<code>ssh_setting/.ssh/authorized_keys</code>後</p>
-<p>我們從PC端使用SSH連接一開始有提到外網裝置多開的另外一個port <code>1994</code>去做測試</p>
+<p>到這邊內網裝置 B 已經算是設定完成了</p>
+<p>接下來，我們把自己第三方位置的 PC 公鑰複製到內網裝置 B 的<code>ssh_setting/.ssh/authorized_keys</code>後</p>
+<p>我們從 PC 端使用 SSH 連接一開始有提到外網裝置多開的另外一個 port <code>1994</code>去做測試</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh natlee@&lt;EXAMPLE_DOMAIN&gt; -p 1994</span><br><span class="line">Welcome to OpenSSH Server</span><br><span class="line"></span><br><span class="line">nat-tunnel-inside-bridge:~$</span><br></pre></td></tr></table></figure>
 
-<p>成功連到裝置B，也就是完美穿透防火牆，直接成功打洞進到內網了！</p>
-<h3 id="透過跳板B連至內網裝置C"><a href="#透過跳板B連至內網裝置C" class="headerlink" title="透過跳板B連至內網裝置C"></a>透過跳板B連至內網裝置C</h3><p>這邊的裝置C，我使用樹莓派當範例</p>
-<p>我們可以利用<code>~/.ssh/config</code>去設定SSH的快速連線方式，如下面的例子</p>
+<p>成功連到裝置 B，也就是完美穿透防火牆，直接成功打洞進到內網了！</p>
+<h3 id="透過跳板-B-連至內網裝置-C"><a href="#透過跳板-B-連至內網裝置-C" class="headerlink" title="透過跳板 B 連至內網裝置 C"></a>透過跳板 B 連至內網裝置 C</h3><p>這邊的裝置 C，我使用樹莓派當範例</p>
+<p>我們可以利用<code>~/.ssh/config</code>去設定 SSH 的快速連線方式，如下面的例子</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Host reverse-tunnel-outside-server</span><br><span class="line">    HostName &lt;EXAMPLE_DOMAIN&gt;</span><br><span class="line">    User natlee</span><br><span class="line">    port 1984</span><br><span class="line">    Compression yes</span><br><span class="line"></span><br><span class="line">Host reverse-tunnel-inside-bridge</span><br><span class="line">    HostName &lt;EXAMPLE_DOMAIN&gt;</span><br><span class="line">    User natlee</span><br><span class="line">    port 1994</span><br><span class="line">    Compression yes</span><br><span class="line"></span><br><span class="line">Host pi-reversed</span><br><span class="line">    HostName 192.168.1.87</span><br><span class="line">    User pi</span><br><span class="line">    port 22</span><br><span class="line">    Compression yes</span><br><span class="line">    ProxyCommand ssh -W %h:%p reverse-tunnel-inside-bridge</span><br></pre></td></tr></table></figure>
 
-<p>第一個host，我們可以連到外網server A，也就是port爲<code>1984</code>的那位</p>
-<p>第二個host，我們可以連到內網裝置B，也就是經過反向後，port爲<code>1994</code>的那位</p>
-<p>最重要的是第三個host，裏面這句<code>ProxyCommand ssh -W %h:%p reverse-tunnel-inside-bridge</code>是精髓</p>
-<p>意思是透過第二個host <code>reverse-tunnel-inside-bridge</code> 進行proxy連到區網的位置 <code>192.168.1.87</code></p>
+<p>第一個 host，我們可以連到外網 server A，也就是 port 爲<code>1984</code>的那位</p>
+<p>第二個 host，我們可以連到內網裝置 B，也就是經過反向後，port 爲<code>1994</code>的那位</p>
+<p>最重要的是第三個 host，裏面這句<code>ProxyCommand ssh -W %h:%p reverse-tunnel-inside-bridge</code>是精髓</p>
+<p>意思是透過第二個 host <code>reverse-tunnel-inside-bridge</code> 進行 proxy 連到區網的位置 <code>192.168.1.87</code></p>
 <p>有了這個快速連線法，我們就可以直接來體驗一下</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh pi-reversed</span><br><span class="line">Linux raspberrypi 5.10.17-v7l+ <span class="comment">#1421 SMP Thu May 27 14:00:13 BST 2021 armv7l</span></span><br><span class="line"></span><br><span class="line">The programs included with the Debian GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms <span class="keyword">for</span> each program are described <span class="keyword">in</span> the</span><br><span class="line">individual files <span class="keyword">in</span> /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law.</span><br><span class="line">Last login: Thu Feb 10 01:17:55 2022 from 192.168.1.133</span><br><span class="line"></span><br><span class="line">pi@raspberrypi:~ $</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>這樣配置之後，我們很簡單就可以直接從外網穿透到其他內部機器上了！</p>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
 <p>這篇實驗做滿久的，不過從頭跑一次整個流程之後，我也對打洞有更深一步的認識</p>
-<p>打洞的好處很多，像是vscode可以使用remote-ssh的套件</p>
+<p>打洞的好處很多，像是 vscode 可以使用 remote-ssh 的套件</p>
 <p>我們就可以直接選擇<code>./ssh/config</code>內的機器進行連線</p>
-<p>而且SFTP也是走SSH通道，我們可以直接在外網做內網檔案的傳輸</p>
-<p>甚至我們也可以直接用內網做proxy來瀏覽內部才能看的網站</p>
+<p>而且 SFTP 也是走 SSH 通道，我們可以直接在外網做內網檔案的傳輸</p>
+<p>甚至我們也可以直接用內網做 proxy 來瀏覽內部才能看的網站</p>
 <p>但是，這樣做其實會有些資安風險</p>
 <p>從上面的流程，我們可以看出來<code>反向</code>這件事是從內部機器主動連到外網機器</p>
 <p>也就是如果有心人士拿到內部機器的存取權限的話，外部機器自然不保了</p>
 <p>這邊能做的也只有保管好金鑰了</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
-<p><span class="exturl" data-url="aHR0cDovL2Fyb25kaWdodC5tZS8yMDE2LzAyLzE3LyVFNCVCRCVCRiVFNyU5NCVBOFNTSCVFNSU4RiU4RCVFNSU5MCU5MSVFOSU5QSVBNyVFOSU4MSU5MyVFOCVCRiU5QiVFOCVBMSU4QyVFNSU4NiU4NSVFNyVCRCU5MSVFNyVBOSVCRiVFOSU4MCU4Ri8=">使用SSH反向隧道进行内网穿透<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL2Fyb25kaWdodC5tZS8yMDE2LzAyLzE3LyVFNCVCRCVCRiVFNyU5NCVBOFNTSCVFNSU4RiU4RCVFNSU5MCU5MSVFOSU5QSVBNyVFOSU4MSU5MyVFOCVCRiU5QiVFOCVBMSU4QyVFNSU4NiU4NSVFNyVCRCU5MSVFNyVBOSVCRiVFOSU4MCU4Ri8=">使用 SSH 反向隧道进行内网穿透<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZXZlcnl0aGluZ2NsaS5vcmcvc3NoLXR1bm5lbGxpbmctZm9yLWZ1bi1hbmQtcHJvZml0LWF1dG9zc2gv">SSH TUNNELLING FOR FUN AND PROFIT: AUTOSSH<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfLyVFNCVCRCVCRiVFNyU5NCVBOGRvY2tlci1jb250YWluZXIlRTUlQkIlQkElRTclQUIlOEJzc2glRTUlOEYlOEQlRTUlOTAlOTElRTklODAlOUElRTklODElOTMlRTclQTklQkYlRTklODAlOEYlRTUlODUlQTclRTclQjYlQjIlRTklODAlQTMlRTYlOEUlQTUlRTUlODUlQTclRTklODMlQTglRTglQTMlOUQlRTclQkQlQUUtNzE2ZjBjMDQ5MjIz">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
@@ -578,7 +579,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:10</span>
+    <span title="Reading time total">3:11</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>

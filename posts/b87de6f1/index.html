@@ -20,16 +20,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.13.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="前言 NAS大多被用來儲存或是分享檔案 但其實還可以有很多其他有趣的用途，像是當個docker容器伺服器">
+    <meta name="description" content="前言 NAS 大多被用來儲存或是分享檔案 但其實還可以有很多其他有趣的用途，像是當個 docker 容器伺服器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Synology NAS Docker更新與遠端控制">
 <meta property="og:url" content="https://github.com/Blog/posts/b87de6f1/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
-<meta property="og:description" content="前言 NAS大多被用來儲存或是分享檔案 但其實還可以有很多其他有趣的用途，像是當個docker容器伺服器">
+<meta property="og:description" content="前言 NAS 大多被用來儲存或是分享檔案 但其實還可以有很多其他有趣的用途，像是當個 docker 容器伺服器">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://d1.awsstatic.com/acs/characters/Logos/Docker-Logo_Horizontel_279x131.b8a5c41e56b77706656d61080f6a0217a3ba356d.png">
 <meta property="article:published_time" content="2022-02-17T02:44:22.000Z">
-<meta property="article:modified_time" content="2022-11-16T13:53:21.738Z">
+<meta property="article:modified_time" content="2022-11-16T16:03:34.708Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="synology">
 <meta property="article:tag" content="nas">
@@ -133,7 +133,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0Docker"><span class="nav-number">2.1.</span> <span class="nav-text">更新Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E9%81%A0%E7%AB%AF%E8%A8%AD%E5%AE%9A"><span class="nav-number">2.2.</span> <span class="nav-text">Docker遠端設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-Docker"><span class="nav-number">2.1.</span> <span class="nav-text">更新 Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-%E9%81%A0%E7%AB%AF%E8%A8%AD%E5%AE%9A"><span class="nav-number">2.2.</span> <span class="nav-text">Docker 遠端設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -245,7 +245,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-16 21:53:21" itemprop="dateModified" datetime="2022-11-16T21:53:21+08:00">2022-11-16</time>
+      <time title="Modified: 2022-11-17 00:03:34" itemprop="dateModified" datetime="2022-11-17T00:03:34+08:00">2022-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -272,7 +272,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>2 mins.</span>
+      <span>3 mins.</span>
     </span>
 </div>
 
@@ -285,57 +285,60 @@
     <div class="post-body" itemprop="articleBody">
         <p><img data-src="https://d1.awsstatic.com/acs/characters/Logos/Docker-Logo_Horizontel_279x131.b8a5c41e56b77706656d61080f6a0217a3ba356d.png" alt="docker_logo"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<p>NAS大多被用來儲存或是分享檔案</p>
-<p>但其實還可以有很多其他有趣的用途，像是當個docker容器伺服器</p>
+<p>NAS 大多被用來儲存或是分享檔案</p>
+<p>但其實還可以有很多其他有趣的用途，像是當個 docker 容器伺服器</p>
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
 <blockquote>
-<p><em>WAIT！請注意！直接更改NAS內的檔案都會有風險！</em><br><em>請一定要知道你的每一步操作在做什麼！</em></p>
+<p><em>WAIT！請注意！直接更改 NAS 內的檔案都會有風險！</em> &gt; <em>請一定要知道你的每一步操作在做什麼！</em></p>
 </blockquote>
-<h3 id="更新Docker"><a href="#更新Docker" class="headerlink" title="更新Docker"></a>更新Docker</h3><p>首先，我們要確保NAS內的docker版本比較新的</p>
-<p>因爲Synology官方都很念舊，docker版本一直都不想更新</p>
-<p>甚至現在都2022年了，docker還停在18版</p>
+<h3 id="更新-Docker"><a href="#更新-Docker" class="headerlink" title="更新 Docker"></a>更新 Docker</h3><p>首先，我們要確保 NAS 內的 docker 版本比較新的</p>
+<p>因爲 Synology 官方都很念舊，docker 版本一直都不想更新</p>
+<p>甚至現在都 2022 年了，docker 還停在 18 版</p>
 <p>所以我們必須更新它</p>
 <p>當然這個問題衆所皆知，國外也有網友自幹了一波更新腳本</p>
 <p>可以參考一下這邊<a href="https://github.com/markdumay/synology-docker">Synology docker</a></p>
-<p>我們依照它的教學，先以ROOT登入NAS後，把腳本clone下來</p>
+<p>我們依照它的教學，先以 ROOT 登入 NAS 後，把腳本 clone 下來</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/markdumay/synology-docker.git</span><br><span class="line">$ <span class="built_in">cd</span> synology-docker</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>如果你沒有GIT指令，請參考之前的文章去安裝套件管理器</p>
+<p>如果你沒有 GIT 指令，請參考之前的文章去安裝套件管理器</p>
 </blockquote>
-<p>接着，我們就可以使用腳本更新docker了</p>
+<p>接着，我們就可以使用腳本更新 docker 了</p>
 <blockquote>
-<p>請注意！如果你舊有docker有重要資料，請不要強制更新！</p>
+<p>請注意！如果你舊有 docker 有重要資料，請不要強制更新！</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./syno_docker_update.sh update</span><br></pre></td></tr></table></figure>
 
-<p>更新成功後，我們可以確認一下docker版本</p>
+<p>更新成功後，我們可以確認一下 docker 版本</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker --version</span><br><span class="line">Docker version 20.10.12, build e91ed57</span><br></pre></td></tr></table></figure>
 
-<p>到這邊就成功更新docker版本了！</p>
-<h3 id="Docker遠端設定"><a href="#Docker遠端設定" class="headerlink" title="Docker遠端設定"></a>Docker遠端設定</h3><p>安裝好docker後，我們必須expose docker的遠端控制port</p>
+<p>到這邊就成功更新 docker 版本了！</p>
+<h3 id="Docker-遠端設定"><a href="#Docker-遠端設定" class="headerlink" title="Docker 遠端設定"></a>Docker 遠端設定</h3><p>安裝好 docker 後，我們必須 expose docker 的遠端控制 port</p>
 <p>所以，要編輯這個文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /var/packages/Docker/etc/dockerd.json</span><br></pre></td></tr></table></figure>
 
 <p>把裏面改成下面這樣，主要是加上<code>hosts</code></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">     <span class="attr">&quot;hosts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;unix:///var/run/docker.sock&quot;</span><span class="punctuation">,</span> <span class="string">&quot;tcp://0.0.0.0:2375&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;data-root&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;/var/packages/Docker/target/docker&quot;</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;log-driver&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;json-file&quot;</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;registry-mirrors&quot;</span> <span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">     <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="string">&quot;administrators&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;hosts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;unix:///var/run/docker.sock&quot;</span><span class="punctuation">,</span> <span class="string">&quot;tcp://0.0.0.0:2375&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;data-root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/var/packages/Docker/target/docker&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log-driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;json-file&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;registry-mirrors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="string">&quot;administrators&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>接下來，把NAS的docker服務重啓</p>
+<p>接下來，把 NAS 的 docker 服務重啓</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /var/packages/Docker/scripts/start-stop-status stop</span><br><span class="line">$ /var/packages/Docker/scripts/start-stop-status start</span><br></pre></td></tr></table></figure>
 
-<p>重啓完成後，用瀏覽器訪問NAS的port 2375，可以看到有回應（雖然404）</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;message&quot;</span><span class="punctuation">:</span><span class="string">&quot;page not found&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>重啓完成後，用瀏覽器訪問 NAS 的 port 2375，可以看到有回應（雖然 404）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;page not found&quot;</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>這樣代表我們已經成功expose了</p>
-<p>之後，只要再用別台裝置的docker就能夠遠端在NAS上run container了</p>
-<p>甚至是我們也可以用portainer去控制NAS的docker</p>
+<p>這樣代表我們已經成功 expose 了</p>
+<p>之後，只要再用別台裝置的 docker 就能夠遠端在 NAS 上 run container 了</p>
+<p>甚至是我們也可以用 portainer 去控制 NAS 的 docker</p>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
 <p>其實這篇跟上篇套件管理有相關</p>
-<p>爲了讓閒置的NAS有其他用途，只好想方設法在上面裝一些東西玩玩😊</p>
+<p>爲了讓閒置的 NAS 有其他用途，只好想方設法在上面裝一些東西玩玩 😊</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
 <p><a href="https://github.com/markdumay/synology-docker">Synology docker</a><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmFzcGVyLm9uZS8yMDE4LzAxL2RvY2tlci1kb2NrZXItaG9zdC1zeW5vbG9neS11YnVudHUuaHRtbA==">Docker Host<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfL3N5bm9sb2d5LW5hcy1kb2NrZXIlRTYlOUIlQjQlRTYlOTYlQjAlRTglODglODclRTklODElQTAlRTclQUIlQUYlRTYlOEUlQTclRTUlODglQjYtMmI0MzgxMGFjOGZl">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
@@ -468,7 +471,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:10</span>
+    <span title="Reading time total">3:11</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
