@@ -146,3 +146,9 @@ curl --location --request POST 'https://api.notion.com/v1/pages' \
 ---
 
 [How can I create new page with some contents of text](https://github.com/ramnes/notion-sdk-py/discussions/121)
+
+---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/%E4%BD%BF%E7%94%A8-python-notion-api-%E4%BE%86%E8%87%AA%E5%8B%95%E5%8C%AF%E5%85%A5%E7%AD%86%E8%A8%98-d25496ae7d18)

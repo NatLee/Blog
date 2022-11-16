@@ -71,3 +71,9 @@ ssh-keygen -t rsa -b 8192 -C "nat-key"
 ---
 
 [3 Steps to Perform SSH Login Without Password Using ssh-keygen & ssh-copy-id](https://www.thegeekstuff.com/2008/11/3-steps-to-perform-ssh-login-without-password-using-ssh-keygen-ssh-copy-id/)
+
+---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/ubuntu-%E8%88%87-windows-%E4%BD%BF%E7%94%A8-ssh-%E9%87%91%E9%91%B0%E5%BF%AB%E9%80%9F%E7%99%BB%E5%85%A5%E7%9A%84%E6%96%B9%E6%B3%95-823a8b0211e3)

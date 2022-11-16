@@ -12,31 +12,32 @@ date: 2022-02-16 22:15:54
 ![entware](https://repository-images.githubusercontent.com/123925061/fe5a0600-f91a-11ea-8914-601e3e722062)
 
 ## 前言
-----------
 
-我們都知道S社的DSM是一個難搞的東西，強制佔用又鎖port，還會擋東擋西
+---
 
-但物盡其用，我還是想在上面裝套件，至少不要連git都沒辦法用吧
+我們都知道 S 社的 DSM 是一個難搞的東西，強制佔用又鎖 port，還會擋東擋西
+
+但物盡其用，我還是想在上面裝套件，至少不要連 git 都沒辦法用吧
 
 <!--more-->
 
 ## 內容
-----------
 
-> _WAIT！請注意！直接更改NAS內的檔案都會有風險！_
-> _請一定要知道你的每一步操作在做什麼！_
+---
 
-某次我SSH連線進NAS的時候發現Git沒辦法使用
+> _WAIT！請注意！直接更改 NAS 內的檔案都會有風險！_ > _請一定要知道你的每一步操作在做什麼！_
 
-而且官方Docker套件又弄得很廢
+某次我 SSH 連線進 NAS 的時候發現 Git 沒辦法使用
+
+而且官方 Docker 套件又弄得很廢
 
 於是萌生出有沒有辦法在上面自己安裝套件的想法
 
 然後我就使用了`apt`大法
 
-結果發現 幹！原來OS不是debian系列
+結果發現 幹！原來 OS 不是 debian 系列
 
-花時間上網搜了一波發現大多資料都是DSM6以前的，DSM7.0以上的資料超級少
+花時間上網搜了一波發現大多資料都是 DSM6 以前的，DSM7.0 以上的資料超級少
 
 最後找到[這篇文章](https://windix.medium.com/install-package-via-opkg-entware-for-synology-dsm-7-9b9994415b2d)說可以用`opkg`來安裝
 
@@ -44,7 +45,7 @@ date: 2022-02-16 22:15:54
 
 於是跟着連結往深處尋找發現這個安裝流程[Entware install guide](https://github.com/Entware/Entware/wiki/Install-on-Synology-NAS)
 
-因爲我NAS的CPU是intel x64，所以我直接執行了這個腳本
+因爲我 NAS 的 CPU 是 intel x64，所以我直接執行了這個腳本
 
 ```bash
 wget -O - https://bin.entware.net/x64-k3.2/installer/generic.sh | /bin/sh
@@ -62,7 +63,7 @@ Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues
 
 ```
 
-接着用瀏覽器去個人NAS的首頁找到這個地方
+接着用瀏覽器去個人 NAS 的首頁找到這個地方
 
 > 設定 -> 服務 -> 任務排程器
 
@@ -82,7 +83,7 @@ Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues
 
 ```
 
-接着按上面的`任務設定`的tab把下面程式碼貼上以確保每次重開機都能夠先載入套件管理的工具
+接着按上面的`任務設定`的 tab 把下面程式碼貼上以確保每次重開機都能夠先載入套件管理的工具
 
 ```bash
 #!/bin/sh
@@ -110,8 +111,7 @@ fi
 
 按下確定後就可以重開機了！
 
-
-開機完成後，我們可以試試看安裝git
+開機完成後，我們可以試試看安裝 git
 
 ```bash
 root@Nat-Nas:~# opkg install git-http
@@ -131,24 +131,30 @@ Configuring git-http.
 
 終於搞定了！
 
-接下來就可以用GIT去clone一些專案
-
+接下來就可以用 GIT 去 clone 一些專案
 
 ## 結語
-----------
 
-其實在DSM6的時候，官方套件管理可以安裝Git功能
+---
 
-甚至是連Gitlab都能在官方套件內安裝
+其實在 DSM6 的時候，官方套件管理可以安裝 Git 功能
 
-後來看起來是Synology不想更新這一塊了
+甚至是連 Gitlab 都能在官方套件內安裝
+
+後來看起來是 Synology 不想更新這一塊了
 
 所以乾脆直接把套件抽掉
 
 好險非官方社群還有人在研究，不然閒置一台機器真的滿浪費的
 
-
 ## Reference
-----------
+
+---
 
 [Entware install guide](https://github.com/Entware/Entware/wiki/Install-on-Synology-NAS)
+
+---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/%E5%89%8D%E8%A8%80-fe60d03df21a)

@@ -176,7 +176,7 @@ Logfile is /var/log/cuda-installer.log
 
    它只要輸入版本號就能使用，裏面會自動幫你切換目前使用 CUDA 的路徑
 
-   例如： `_switch_cuda 10.1`.
+   例如： `_switch_cuda 10.1`
 
 5. 最後，可以確認看看`/usr/local`中的 CUDA 版本
 
@@ -216,3 +216,9 @@ Logfile is /var/log/cuda-installer.log
 ---
 
 [Installing multiple versions of cuda cudnn](https://notesbyair.github.io/blog/cs/2020-05-26-installing-multiple-versions-of-cuda-cudnn/)
+
+---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/%E5%A4%9A%E7%89%88%E6%9C%ACcuda%E5%8F%8Acudnn%E7%AE%A1%E7%90%86-e8f0f3c27583)
