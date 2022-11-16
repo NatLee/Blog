@@ -1,5 +1,5 @@
 ---
-title: 羅技滑鼠鍵盤的RMA心得
+title: 羅技Logitech 產品RMA心得
 categories: life
 tags:
   - life
@@ -168,3 +168,9 @@ RGB 還是滿漂亮的（大概只能當備用或裝飾了）
 應該可以相信這把 RMA 回來的鍵盤沒有連點的狀況（吧）
 
 不然我又要去找客服支援了 😂
+
+---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/%E7%BE%85%E6%8A%80logitech-%E7%94%A2%E5%93%81rma%E5%BF%83%E5%BE%97-ae04959cf39a)
