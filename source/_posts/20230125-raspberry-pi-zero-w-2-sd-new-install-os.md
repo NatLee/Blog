@@ -196,3 +196,7 @@ dd if=/dev/zero of=./speedTestFile bs=20M count=5 oflag=direct
 - [Best microSD Cards for Raspberry Pi 2023](https://www.tomshardware.com/best-picks/raspberry-pi-microsd-cards)
 
 ---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/%E5%9C%A8-raspberry-pi-zero-2-w%E4%B8%8A%E5%AE%89%E8%A3%9D-64-bit-%E7%9A%84-pi-os-813a26d306f1)
