@@ -119,6 +119,18 @@ ssh <你的PI上使用者名稱>@rpi.local
 
 [![How I Theme My Raspberry Pi OS](http://img.youtube.com/vi/gHUjO6MK5fg/0.jpg)](http://www.youtube.com/watch?v=gHUjO6MK5fg "How I Theme My Raspberry Pi OS")
 
+簡單來說，就是安裝一些主題如下：
+
+```bash
+sudo apt install arc-theme papirus-icon-theme breeze-cursor-theme -y -qq
+```
+
+然後執行調整主題的 GUI，進去裏面設定
+
+```bash
+lxappearance
+```
+
 ### SD Card 速度測試
 
 最後，我們不免俗還是來測試一下 SD 卡的速度
@@ -176,6 +188,22 @@ dd if=/dev/zero of=./speedTestFile bs=20M count=5 oflag=direct
 上面所說的卡都是 A1 規格，可以發現我用 A2 的 S 牌 Extreme Pro 測出來的結果跟上面同型號的 A1 規格來比
 
 速度差不多都是 20MB/s 上下，也就是說在 Zero Pi 2 W 上用 A1 的 SD 卡就很夠了
+
+### 同場加映
+
+有人可能有興趣爲什麼可以當 USB 直接插
+
+因爲我有另外去 Amazon 買[iUniker USB 擴展套件](https://www.amazon.com/dp/B07NKNBZYG?pd_rd_w=HS0EU)
+
+這個就是它把 micro USB 的 pin 再拉出來（不用焊接）變 USB
+
+![](https://i.imgur.com/et1m3E8.png)
+
+然後剛剛那個套件只照顧到背面，表面可能會有板子露出，所以再買這個[iUniker 殼](https://www.amazon.com/dp/B075FLGWJL)
+
+![](https://i.imgur.com/LRk5nfJ.png)
+
+這樣組裝起來整個就都包起來了 😊
 
 ## 結論
 
