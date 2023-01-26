@@ -113,7 +113,9 @@ ssh <你的PI上使用者名稱>@rpi.local
 
 ![config](https://i.imgur.com/1khoRH0.png)
 
-進入`System Options`把 VNC 的功能打開，這樣我們就可以用 GUI 去進行操作
+例如進入`System Options`把自動登入功能關掉
+
+或是，進到`Interface Options`開啓 VNC，這樣我們就可以用 GUI 去進行操作
 
 然後關於如何把畫面調炫砲一點，可以參考下面這個影片：
 
