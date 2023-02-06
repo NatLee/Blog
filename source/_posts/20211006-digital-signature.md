@@ -324,11 +324,11 @@ DER全名是Distinguished Encoding Rule，中文就是『可識別編碼規則�
 
 最左邊的`Name`是指這個type / tag / label / class的名稱（超多種代稱）。
 
-再來，`Permitted Construction`是指說這個class必須是哪種類型，是permitive？還是constructed？或是我全都要。
+再來，`Primitive Construction`是指說這個class必須是哪種類型，是primitive？還是constructed？或是我全都要。
 
-這邊會有疑問的是permitive到底是什麼？
+這邊會有疑問的是primitive到底是什麼？
 
-![permitive](https://i.imgur.com/EzHgkFf.png)
+![primitive](https://i.imgur.com/EzHgkFf.png)
 
 還是看不懂，爲什麼扯個類別可以提到原始？
 
