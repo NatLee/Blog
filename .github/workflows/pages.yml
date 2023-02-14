@@ -17,7 +17,7 @@ jobs:
     - name: Timezone set Asia/Taipei
       run: sudo timedatectl set-timezone 'Asia/Taipei'
     - name: Yarn Install
-      uses: borales/actions-yarn@v2.3.0
+      uses: borales/actions-yarn@v4
       with:
         cmd: install
     - name: Hexo Deploy
