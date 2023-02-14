@@ -27,13 +27,12 @@ jobs:
     - name: Hexo Build
       run: yarn -m hexo build
 
-    - name: Hexo Deploy
-      id: deploy
-      uses: sma11black/hexo-action@v1.0.3
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        deploy_key: ${{ secrets.DEPLOY_KEY }}
-        user_name: NatLee
-        user_email: natlee.work@gmail.com
+        github_token: ${{ secrets.DEPLOY_KEY }}
+        publish_dir: ./public
+
 
     - name: Get the output
       run: |
