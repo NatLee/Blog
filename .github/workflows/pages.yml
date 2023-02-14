@@ -22,7 +22,7 @@ jobs:
     - name: Yarn Install
       uses: borales/actions-yarn@v4
       with:
-        cmd: yarn install
+        cmd: install
 
     - name: Hexo Build
       run: yarn -m hexo build
