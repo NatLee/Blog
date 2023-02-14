@@ -22,7 +22,7 @@ jobs:
     - name: Yarn Install
       uses: borales/actions-yarn@v4
       with:
-        cmd: install
+        cmd: install && yarn -m hexo build
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
