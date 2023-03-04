@@ -1,16 +1,17 @@
 ---
-title: BlueStacks 及 Nox Player 在有 Hyper-V 的 Windows 11 上的支援狀況
+title: BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況
 categories: dev
 tags:
   - bluestacks
   - nox
+  - ldplayer
   - windows
   - hyperv
 abbrlink: aa88a654
 date: 2023-03-04 00:00:00
 ---
 
-![hyv-bs-nox](https://i.imgur.com/uE93mCb.png)
+![hyv-ld-bs-nox](https://i.imgur.com/cEz8vJ2.png)
 
 ## 前言
 
@@ -24,7 +25,7 @@ date: 2023-03-04 00:00:00
 
 ## 內容
 
-> 先說結論，BlueStacks 5 並不支援 Hyper-V，想要共存請去找夜神模擬器（Nox）
+> 先說結論，BlueStacks 5 並不支援 Hyper-V，想要共存請去找夜神模擬器（Nox）或是雷電模擬器（推薦）
 
 雖然開發人員不常使用Windows電腦，但還是有時候需要用到Windows。
 
@@ -126,9 +127,11 @@ date: 2023-03-04 00:00:00
 
 > 既然我們沒辦法解決BlueStacks無法相容Hyper-V的問題，那我們就改用能支援Hyper-V的模擬器不就好了？
 
-解決方案就是使用BlueStacks的另一個對手`夜神模擬器（NOX Player）`
+### 夜神模擬器（NOX Player）
 
-當然，我一開始在調研哪些模擬器支援Hyper-V有找到這篇文章
+解決方案其中一項就是使用BlueStacks的另一個對手`夜神模擬器（NOX Player）`
+
+當然，我一開始在調研哪些模擬器支援Hyper-V有找到一篇文章說夜神模擬器是不是無法與Hyper-V共存
 
 [Is NoxPlayer Hyper V compatibility a lie ? (Windows)](https://www.reddit.com/r/emulators/comments/woihq1/is_noxplayer_hyper_v_compatibility_a_lie_windows/)
 
@@ -173,6 +176,31 @@ date: 2023-03-04 00:00:00
 
 Hyper-V、WSL、Docker、模擬器全部都能開，一整個就是舒服
 
+### 雷電模擬器（LD Player）
+
+有些人嘗試用了NOX之後，會發現NOX的速度有點遲緩
+
+另一個解決方案就是雷電模擬器
+
+![ld](https://i.imgur.com/yWUmLmg.png)
+
+這個模擬器啓動速度比NOX還快，不妨也可以試試看
+
+然後比較不麻煩的是，直接去官網下載最新版即可
+
+[雷電官網下載區](https://www.ldplayer.tw/other/version-history-and-release-notes.html?log=9)
+
+點進去可以看到他們有做更新日誌
+
+![update-log](https://i.imgur.com/H1r0CIR.png)
+
+安裝完之後，就可以直接用了
+
+![combination](https://i.imgur.com/4L0xjJ0.png)
+
+一樣是Docker正常，WSL正常，模擬器正常！
+
+
 ## 結論
 
 ---
@@ -185,7 +213,9 @@ BlueStacks的開發者或許也是一樣，這個問題他們內部可能早就�
 
 但官網一直都寫支援的狀況下，無法解決也拉不下臉跟大家說明
 
-畢竟，他們跟NOX算是競爭對手，誰先早一步做完必要的功能就能搶到更多使用者
+畢竟，BlueStacks、NOX及雷電都是競爭對手，誰先早一步做完必要的功能就能搶到更多使用者
+
+最後評比一下，在與Hyper-V共存的狀況下，穩定度`雷電(速度最快)>NOX(有時會遲緩)>BlueStacks(完全不能用)`
 
 ---
 
