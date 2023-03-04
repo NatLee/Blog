@@ -22,12 +22,12 @@
 
     <meta name="description" content="前言首先，這篇絕對不是業配，而是親身經歷 我曾經浪費無數的夜晚在重灌Windows測試，最後才發現了解決方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BlueStacks 及 Nox Player 在有 Hyper-V 的 Windows 11 上的支援狀況">
+<meta property="og:title" content="BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況">
 <meta property="og:url" content="https://natlee.github.com/Blog/posts/aa88a654/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
 <meta property="og:description" content="前言首先，這篇絕對不是業配，而是親身經歷 我曾經浪費無數的夜晚在重灌Windows測試，最後才發現了解決方法">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/uE93mCb.png">
+<meta property="og:image" content="https://i.imgur.com/cEz8vJ2.png">
 <meta property="og:image" content="https://i.imgur.com/rreKQZm.png">
 <meta property="og:image" content="https://i.imgur.com/VDtb7rE.png">
 <meta property="og:image" content="https://i.imgur.com/YJijk2W.png">
@@ -43,25 +43,29 @@
 <meta property="og:image" content="https://i.imgur.com/DsFYBuv.png">
 <meta property="og:image" content="https://i.imgur.com/Hcowq2h.png">
 <meta property="og:image" content="https://i.imgur.com/FymieZv.png">
+<meta property="og:image" content="https://i.imgur.com/yWUmLmg.png">
+<meta property="og:image" content="https://i.imgur.com/H1r0CIR.png">
+<meta property="og:image" content="https://i.imgur.com/4L0xjJ0.png">
 <meta property="article:published_time" content="2023-03-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-03-04T15:38:28.303Z">
+<meta property="article:modified_time" content="2023-03-04T18:14:12.978Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="windows">
 <meta property="article:tag" content="bluestacks">
 <meta property="article:tag" content="nox">
+<meta property="article:tag" content="ldplayer">
 <meta property="article:tag" content="hyperv">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/uE93mCb.png">
+<meta name="twitter:image" content="https://i.imgur.com/cEz8vJ2.png">
 
 
 <link rel="canonical" href="https://natlee.github.com/Blog/posts/aa88a654/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/aa88a654/","path":"posts/aa88a654/","title":"BlueStacks 及 Nox Player 在有 Hyper-V 的 Windows 11 上的支援狀況"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/aa88a654/","path":"posts/aa88a654/","title":"BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>BlueStacks 及 Nox Player 在有 Hyper-V 的 Windows 11 上的支援狀況 | Nat's Blog</title>
+<title>BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況 | Nat's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66147173-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-66147173-1","only_pageview":false}</script>
@@ -144,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9C%E7%A5%9E%E6%A8%A1%E6%93%AC%E5%99%A8%EF%BC%88NOX-Player%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">夜神模擬器（NOX Player）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%B7%E9%9B%BB%E6%A8%A1%E6%93%AC%E5%99%A8%EF%BC%88LD-Player%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">雷電模擬器（LD Player）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -170,7 +174,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -221,12 +225,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="BlueStacks 及 Nox Player 在有 Hyper-V 的 Windows 11 上的支援狀況 | Nat's Blog">
+      <meta itemprop="name" content="BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況 | Nat's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          BlueStacks 及 Nox Player 在有 Hyper-V 的 Windows 11 上的支援狀況
+          BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況
         </h1>
 
         <div class="post-meta-container">
@@ -236,9 +240,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-03-04 00:00:00 / Modified: 23:38:28" itemprop="dateCreated datePublished" datetime="2023-03-04T00:00:00+08:00">2023-03-04</time>
+      <time title="Created: 2023-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2023-03-04T00:00:00+08:00">2023-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-05 02:14:12" itemprop="dateModified" datetime="2023-03-05T02:14:12+08:00">2023-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -258,14 +268,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>2.4k</span>
+      <span>2.7k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>4 mins.</span>
+      <span>5 mins.</span>
     </span>
 </div>
 
@@ -276,14 +286,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img data-src="https://i.imgur.com/uE93mCb.png" alt="hyv-bs-nox"></p>
+        <p><img data-src="https://i.imgur.com/cEz8vJ2.png" alt="hyv-ld-bs-nox"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>首先，這篇絕對不是業配，而是親身經歷</p>
 <p>我曾經浪費無數的夜晚在重灌Windows測試，最後才發現了解決方法</p>
 <hr>
 <span id="more"></span>
 
 <h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><blockquote>
-<p>先說結論，BlueStacks 5 並不支援 Hyper-V，想要共存請去找夜神模擬器（Nox）</p>
+<p>先說結論，BlueStacks 5 並不支援 Hyper-V，想要共存請去找夜神模擬器（Nox）或是雷電模擬器（推薦）</p>
 </blockquote>
 <p>雖然開發人員不常使用Windows電腦，但還是有時候需要用到Windows。</p>
 <p>比如說，打遊戲打到凌晨三點，結果老闆突然打電話表示伺服器掛了要緊急修復。</p>
@@ -352,8 +362,8 @@
 <blockquote>
 <p>既然我們沒辦法解決BlueStacks無法相容Hyper-V的問題，那我們就改用能支援Hyper-V的模擬器不就好了？</p>
 </blockquote>
-<p>解決方案就是使用BlueStacks的另一個對手<code>夜神模擬器（NOX Player）</code></p>
-<p>當然，我一開始在調研哪些模擬器支援Hyper-V有找到這篇文章</p>
+<h3 id="夜神模擬器（NOX-Player）"><a href="#夜神模擬器（NOX-Player）" class="headerlink" title="夜神模擬器（NOX Player）"></a>夜神模擬器（NOX Player）</h3><p>解決方案其中一項就是使用BlueStacks的另一個對手<code>夜神模擬器（NOX Player）</code></p>
+<p>當然，我一開始在調研哪些模擬器支援Hyper-V有找到一篇文章說夜神模擬器是不是無法與Hyper-V共存</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2VtdWxhdG9ycy9jb21tZW50cy93b2locTEvaXNfbm94cGxheWVyX2h5cGVyX3ZfY29tcGF0aWJpbGl0eV9hX2xpZV93aW5kb3dzLw==">Is NoxPlayer Hyper V compatibility a lie ? (Windows)<i class="fa fa-external-link-alt"></i></span></p>
 <p>但底下有人回應說目前有版本支援（雖然不是最新版）</p>
 <p><img data-src="https://i.imgur.com/CGJuwGq.png" alt="reply"></p>
@@ -377,12 +387,24 @@
 <p>結尾秀一張大集合</p>
 <p><img data-src="https://i.imgur.com/FymieZv.png" alt="my-dev"></p>
 <p>Hyper-V、WSL、Docker、模擬器全部都能開，一整個就是舒服</p>
+<h3 id="雷電模擬器（LD-Player）"><a href="#雷電模擬器（LD-Player）" class="headerlink" title="雷電模擬器（LD Player）"></a>雷電模擬器（LD Player）</h3><p>有些人嘗試用了NOX之後，會發現NOX的速度有點遲緩</p>
+<p>另一個解決方案就是雷電模擬器</p>
+<p><img data-src="https://i.imgur.com/yWUmLmg.png" alt="ld"></p>
+<p>這個模擬器啓動速度比NOX還快，不妨也可以試試看</p>
+<p>然後比較不麻煩的是，直接去官網下載最新版即可</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubGRwbGF5ZXIudHcvb3RoZXIvdmVyc2lvbi1oaXN0b3J5LWFuZC1yZWxlYXNlLW5vdGVzLmh0bWw/bG9nPTk=">雷電官網下載區<i class="fa fa-external-link-alt"></i></span></p>
+<p>點進去可以看到他們有做更新日誌</p>
+<p><img data-src="https://i.imgur.com/H1r0CIR.png" alt="update-log"></p>
+<p>安裝完之後，就可以直接用了</p>
+<p><img data-src="https://i.imgur.com/4L0xjJ0.png" alt="combination"></p>
+<p>一樣是Docker正常，WSL正常，模擬器正常！</p>
 <h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><hr>
 <p>這篇文章沒有要diss誰，我希望這篇文章能夠幫助到遇到類似問題的讀者</p>
 <p>雖然在開發者在開發時可能會以為同樣的功能可以適用於不同的環境，但實際上可能會因為套件版本的不同或者作業系統環境的差異導致無法兼容</p>
 <p>BlueStacks的開發者或許也是一樣，這個問題他們內部可能早就知道</p>
 <p>但官網一直都寫支援的狀況下，無法解決也拉不下臉跟大家說明</p>
-<p>畢竟，他們跟NOX算是競爭對手，誰先早一步做完必要的功能就能搶到更多使用者</p>
+<p>畢竟，BlueStacks、NOX及雷電都是競爭對手，誰先早一步做完必要的功能就能搶到更多使用者</p>
+<p>最後評比一下，在與Hyper-V共存的狀況下，穩定度<code>雷電(速度最快)&gt;NOX(有時會遲緩)&gt;BlueStacks(完全不能用)</code></p>
 <hr>
 <p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfL2JsdWVzdGFja3MtJUU1JThGJThBLW5veC1wbGF5ZXItJUU1JTlDJUE4JUU2JTlDJTg5LWh5cGVyLXYtJUU3JTlBJTg0LXdpbmRvd3MtMTEtJUU0JUI4JThBJUU3JTlBJTg0JUU2JTk0JUFGJUU2JThGJUI0JUU3JThCJTgwJUU2JUIzJTgxLTlhOGMyY2E4ZjEz">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
@@ -441,7 +463,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://natlee.github.com/Blog/posts/aa88a654/" title="BlueStacks 及 Nox Player 在有 Hyper-V 的 Windows 11 上的支援狀況">https://natlee.github.com/Blog/posts/aa88a654/</a>
+      <a href="https://natlee.github.com/Blog/posts/aa88a654/" title="BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況">https://natlee.github.com/Blog/posts/aa88a654/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
@@ -453,6 +475,7 @@
               <a href="/Blog/tags/windows/" rel="tag"># windows</a>
               <a href="/Blog/tags/bluestacks/" rel="tag"># bluestacks</a>
               <a href="/Blog/tags/nox/" rel="tag"># nox</a>
+              <a href="/Blog/tags/ldplayer/" rel="tag"># ldplayer</a>
               <a href="/Blog/tags/hyperv/" rel="tag"># hyperv</a>
           </div>
 
