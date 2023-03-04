@@ -39,7 +39,7 @@ yarn -m hexo build && yarn -m hexo server
 sudo apt update
 curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install -y nodejs
-sudo npm install yarn -y
+sudo npm i yarn --global
 yarn global add hexo-cli
 yarn -m hexo build && yarn -m hexo server
 ```
