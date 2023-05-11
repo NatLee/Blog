@@ -684,11 +684,11 @@ add_this_id: ra-62060193b1b05aaa
 
 # Google Analytics
 # See: https://analytics.google.com
-google_analytics:
-  tracking_id: UA-66147173-1 # <app_id>
+#google_analytics:
+  #tracking_id: UA-66147173-1 # <app_id>
   # By default, NexT will load an external gtag.js script on your site.
   # If you only need the pageview feature, set the following option to true to get a better performance.
-  only_pageview: false
+  #only_pageview: false
 
 # Baidu Analytics
 # See: https://tongji.baidu.com
