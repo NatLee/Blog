@@ -34,7 +34,7 @@ date: 2023-11-09 00:00:00
 - 雷電模擬器 LD Player
 - 夜神模擬器 NOX
 
-兩個模擬器分別安裝了不同的遊戲，LD Player安裝了公主 connect Re:Dive，NOX Player安裝了Blue Archive
+兩個模擬器分別安裝了不同的遊戲，LD Player安裝了公主連結 Re:Dive，NOX Player安裝了Blue Archive
 問題來了，爲什麼要安裝兩個模擬器呢？
 
 因爲Blue Archive在LD Player上會卡住，而在NOX Player上可以正常運行
