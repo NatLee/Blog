@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"natlee.github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.18.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="前言從以前到現在，開發環境一直都是令人難以捉摸的問題，尤其是在不同的開發環境之間切換，更是令人頭痛 在這篇文章中，我們會 Docker 來建立一個圖形化的開發環境，並且可以在不同的電腦上快速的部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Docker快速建立GUI圖形化的深度學習開發環境">
+<meta property="og:url" content="https://natlee.github.com/Blog/posts/c7016718/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言從以前到現在，開發環境一直都是令人難以捉摸的問題，尤其是在不同的開發環境之間切換，更是令人頭痛 在這篇文章中，我們會 Docker 來建立一個圖形化的開發環境，並且可以在不同的電腦上快速的部署">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://raw.githubusercontent.com/NatLee/dev-dock/main/doc/desktop.png">
+<meta property="og:image" content="https://www.docker.com/wp-content/uploads/2023/08/logo-guide-logos-1.svg">
+<meta property="article:published_time" content="2023-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-02T08:48:22.882Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="container">
+<meta property="article:tag" content="console">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/NatLee/dev-dock/main/doc/desktop.png">
+
+
+<link rel="canonical" href="https://natlee.github.com/Blog/posts/c7016718/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/c7016718/","path":"posts/c7016718/","title":"使用Docker快速建立GUI圖形化的深度學習開發環境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用Docker快速建立GUI圖形化的深度學習開發環境 | Nat's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+    <!-- head AdSense -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({google_ad_client: 'ca-pub-6070159426076964', enable_page_level_ads: true});
+    </script>
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile-%E8%A7%A3%E8%AA%AA"><span class="nav-number">2.1.</span> <span class="nav-text">Dockerfile 解說</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VNC-Server"><span class="nav-number">2.1.1.</span> <span class="nav-text">VNC Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NoVNC-Service"><span class="nav-number">2.1.2.</span> <span class="nav-text">NoVNC Service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GUI-%E7%95%8C%E9%9D%A2"><span class="nav-number">2.1.3.</span> <span class="nav-text">GUI 界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Dockerfile-%E4%BE%86%E5%95%93%E5%8B%95"><span class="nav-number">2.1.4.</span> <span class="nav-text">使用 Dockerfile 來啓動</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Compose-%E8%A7%A3%E8%AA%AA"><span class="nav-number">2.2.</span> <span class="nav-text">Docker Compose 解說</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-NVIDIA-Container-Toolkit%EF%BC%88Optional%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">安裝 NVIDIA Container Toolkit（Optional）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-docker-compose-%E4%BE%86%E5%95%93%E5%8B%95"><span class="nav-number">2.2.2.</span> <span class="nav-text">使用 docker-compose 來啓動</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVf" title="Medium → https:&#x2F;&#x2F;medium.com&#x2F;@natlee_"><i class="fab fa-medium fa-fw"></i>Medium</span>
+      </span>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://natlee.github.com/Blog/posts/c7016718/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用Docker快速建立GUI圖形化的深度學習開發環境 | Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用Docker快速建立GUI圖形化的深度學習開發環境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-01T00:00:00+08:00">2024-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-02 16:48:22" itemprop="dateModified" datetime="2024-01-02T16:48:22+08:00">2024-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+    </span>
+
+  
+
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>4.7k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>8 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://raw.githubusercontent.com/NatLee/dev-dock/main/doc/desktop.png" alt="GUI"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>從以前到現在，開發環境一直都是令人難以捉摸的問題，尤其是在不同的開發環境之間切換，更是令人頭痛</p>
+<p>在這篇文章中，我們會 Docker 來建立一個圖形化的開發環境，並且可以在不同的電腦上快速的部署</p>
+<hr>
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<blockquote>
+<p>只有在 x86&#x2F;64 及 MacOS M系列的 Linux 系統測試過</p>
+</blockquote>
+<p>讓我們把時間回到2018年，那時候 docker 還沒有那麼普及</p>
+<p>我們在開發的時候，常常會遇到開發環境的問題</p>
+<p>尤其是在不同的裝置上，因爲硬體的差異，更會遇到版本不同、套件無法編譯的狀況</p>
+<p>我們就會採用虛擬機的方式，來建立一個開發環境</p>
+<p>但是虛擬機的缺點就是，佔用的資源太多，而且啓動速度也很慢</p>
+<p>尤其是硬體資源不足的狀況下，我們常常需要開關虛擬機</p>
+<p>而且虛擬機在啓動的時候要設定一堆參數，還要設定網路跟連線方式，真的是很麻煩</p>
+<p>那時候的菜鳥如我還在某間很窮的NAS公司上班</p>
+<p>因爲硬體資源匱乏，開發又需要多環境，所以我就開始 survey 有什麼解決方案</p>
+<p>於是乎，我就找到了 docker</p>
+<p><img data-src="https://www.docker.com/wp-content/uploads/2023/08/logo-guide-logos-1.svg" alt="docker-logo"></p>
+<p>使用 docker 建立的容器，可以快速的啓動，而且佔用的資源也很少</p>
+<p>基本上，我們可以把 docker 當成一個輕量級的虛擬機（這邊只是假設，實際上每個容器都只是一支程式）</p>
+<p>我們只要在 <code>Dockerfile</code> 中，寫好我們要的環境並且 build 成獨立的 image 就可以快速部署</p>
+<p>這邊放上已開源的專案（與當初弄的時候比，現在可能還是不太完整，但應該算是有進化過的版本XD）</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jaw==">Dev Dock<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>接下來，我們來拆解一下這個專案XD</p>
+<p>這個專案主要是讓大家能夠快速使用，所以主目錄底下直接可以看到 <code>Dockerfile</code> 跟 <code>docker-compose.yml</code>兩個檔案</p>
+<h3 id="Dockerfile-解說"><a href="#Dockerfile-解說" class="headerlink" title="Dockerfile 解說"></a>Dockerfile 解說</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay9ibG9iL21haW4vRG9ja2VyZmlsZQ==">Dockerfile<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>Dockerfile 是用來建立 image 的，我們可以在這邊寫入我們要的環境</p>
+<p>這個檔案裏面指定了一些預設值，例如PORT位置、VNC的密碼（密碼竟然明碼公開，好孩子不要學XD）</p>
+<p>以及安裝了一些開發需要用到的套件，像是圖形化界面Xfce、VNC、VS Code以及Mini Conda等等</p>
+<p>有興趣可以看看<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay90cmVlL21haW4vc2NyaXB0cw==">script的目錄<i class="fa fa-external-link-alt"></i></span></p>
+<p>裏面最重要的部分是安裝圖形化界面的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay9ibG9iL21haW4vc2NyaXB0cy8zLmluc3RhbGwtdm5jLWNvcmUuc2g=">install-vnc-core.sh<i class="fa fa-external-link-alt"></i></span></p>
+<p>這個腳本裏面可以切成三個部分，分別是安裝Xfce、TigerVNC以及NoVNC</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">set</span> -euxo pipefail</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝 Xfce 的 UI</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Installing Xfce4 UI components&quot;</span></span><br><span class="line">apt-get -qq install -y supervisor xfce4 xfce4-terminal</span><br><span class="line">apt-get -qq purge -y pm-utils xscreensaver*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝 VNC 功能（使用 TigerVNC ）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Installing TigerVNC server...&quot;</span></span><br><span class="line">tar xzf <span class="variable">$VNC_TOOL_DIR</span>/tigervnc-1.10.1.x86_64.tar.gz --strip 1 -C /</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝網頁版 VNC（使用 NoVNC ）</span></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/novnc/noVNC.git <span class="variable">$NO_VNC_DIR</span></span><br><span class="line"><span class="built_in">chmod</span> +x -v <span class="variable">$NO_VNC_DIR</span>/utils/*</span><br><span class="line"><span class="built_in">ln</span> -s <span class="variable">$NO_VNC_DIR</span>/vnc.html <span class="variable">$NO_VNC_DIR</span>/index.html</span><br></pre></td></tr></table></figure>
+
+<p>再來，每當我們啓動容器會執行<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay9ibG9iL21haW4vc2NyaXB0cy9kb2NrZXItZW50cnlwb2ludC5zaA==">docker-entrypoint.sh<i class="fa fa-external-link-alt"></i></span></p>
+<p>首先，要根據環境的設定重新設定一下使用者的權限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Change user settings</span></span><br><span class="line"><span class="variable">$SCRIPTS_DIR</span>/1.user-settings.sh</span><br></pre></td></tr></table></figure>
+
+<p>我們會再根據設定中，VNC的密碼來設定VNC的密碼</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$VNC_PW</span>&quot;</span> | vncpasswd -f &gt;&gt; <span class="variable">$PASSWD_PATH</span></span><br><span class="line"><span class="built_in">chmod</span> 600 <span class="variable">$PASSWD_PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>最後，依序啓動VNC Server、NoVNC以及 GUI 界面的 Xfce</p>
+<h4 id="VNC-Server"><a href="#VNC-Server" class="headerlink" title="VNC Server"></a>VNC Server</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start vncserver</span></span><br><span class="line">vncserver -<span class="built_in">kill</span> <span class="variable">$DISPLAY</span> || <span class="built_in">rm</span> -rfv /tmp/.X*-lock /tmp/.X11-unix || <span class="built_in">echo</span> <span class="string">&quot;Remove old vnc locks to be a reattachable container&quot;</span></span><br><span class="line">vncserver <span class="variable">$DISPLAY</span> -depth <span class="variable">$VNC_COL_DEPTH</span> -geometry <span class="variable">$VNC_RESOLUTION</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="NoVNC-Service"><a href="#NoVNC-Service" class="headerlink" title="NoVNC Service"></a>NoVNC Service</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start noVNC webclient</span></span><br><span class="line"><span class="variable">$NO_VNC_DIR</span>/utils/novnc_proxy --vnc localhost:<span class="variable">$VNC_PORT</span> --listen <span class="variable">$NO_VNC_PORT</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="GUI-界面"><a href="#GUI-界面" class="headerlink" title="GUI 界面"></a>GUI 界面</h4><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay9ibG9iL21haW4veGZjZS93bS1zdGFydHVwLnNo">wm-startup.sh<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 關閉螢幕保護程式以及節能功能</span></span><br><span class="line">xset -dpms &amp;</span><br><span class="line">xset s noblank &amp;</span><br><span class="line">xset s off &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 啓動 Xfce（使用replace參數，可以讓我們啓動GUI，而不是開啓一個新的GUI）</span></span><br><span class="line"><span class="comment"># 然後把log輸出到 $HOME/wm.log</span></span><br><span class="line">/usr/bin/startxfce4 --replace &gt; <span class="variable">$HOME</span>/wm.log &amp;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-Dockerfile-來啓動"><a href="#使用-Dockerfile-來啓動" class="headerlink" title="使用 Dockerfile 來啓動"></a>使用 Dockerfile 來啓動</h4><p>依照 Dockerfile 內容，我們可以使用以下指令來啓動容器</p>
+<p>其中，我們可以使用 <code>-e</code> 來設定環境變數，例如 <code>VNC_PW</code> 來設定 VNC 的密碼</p>
+<p>環境變數的名稱可以參考 Dockerfile 中的設定</p>
+<blockquote>
+<p>注意，這邊指令中沒有 bind Device，所以沒有辦法控制主機的 GPU</p>
+</blockquote>
+<blockquote>
+<p>如果要使用 GPU 的話，可以參考<a href="#docker-compose-%E8%A7%A3%E8%AA%AA">docker-compose的部分</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 12345:5901 -p 13579:6901 -p 24680:22 \</span><br><span class="line">  -e VNC_PW=vnc-1234 \</span><br><span class="line">  -e VNC_RESOLUTION=1600x900 \</span><br><span class="line">  -e DEFAULT_USER=<span class="string">&#x27;test&#x27;</span> -e DEFAULT_USER_PASSWORD=<span class="string">&#x27;test&#x27;</span> \</span><br><span class="line">  -e ROOT_PASSWORD=<span class="string">&#x27;root&#x27;</span> \</span><br><span class="line">  --name <span class="built_in">test</span> test-vnc-gui</span><br></pre></td></tr></table></figure>
+
+<p>啓動之後， Docker 服務中會出現一個名稱為 <code>test</code> 的容器（以 test-vnc-gui 爲基底建立的容器）</p>
+<p>我們可以使用使用瀏覽器連線到 <code>http://localhost:13579</code> 來使用 noVNC 的網頁版圖形化界面</p>
+<h3 id="Docker-Compose-解說"><a href="#Docker-Compose-解說" class="headerlink" title="Docker Compose 解說"></a>Docker Compose 解說</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay9ibG9iL21haW4vZG9ja2VyLWNvbXBvc2UueW1s">docker-compose.yml<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay9ibG9iL21haW4vZG9ja2VyLWNvbXBvc2UubnZpZGlhLnltbA==">docker-compose.nvidia.yml<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>除了直接 <code>docker run</code> 之外，我們還可以使用 <code>docker-compose up</code> 來啓動容器</p>
+<p><code>docker-compose.yml</code> 是一個設定檔，我們可以更方便的在裏面設定容器的參數，這邊以 <code>docker-compose.nvidia.yml</code> 爲例</p>
+<p>因爲範例中有用到 NVIDIA 的 driver，所以我們要額外安裝<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm52aWRpYS5jb20vZGF0YWNlbnRlci9jbG91ZC1uYXRpdmUvY29udGFpbmVyLXRvb2xraXQvbGF0ZXN0L2luc3RhbGwtZ3VpZGUuaHRtbCNpbnN0YWxsaW5nLXdpdGgtYXB0">NVIDIA Container Toolkit<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>主機必須要有 NVIDIA 的 GPU 才能使用，如果沒有的話，直接使用 <code>docker-compose.yml</code> 即可</p>
+</blockquote>
+<h4 id="安裝-NVIDIA-Container-Toolkit（Optional）"><a href="#安裝-NVIDIA-Container-Toolkit（Optional）" class="headerlink" title="安裝 NVIDIA Container Toolkit（Optional）"></a>安裝 NVIDIA Container Toolkit（Optional）</h4><p>首先，我們要先把 NVIDIA 的 key 加入到 keyring 中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \</span><br><span class="line">  &amp;&amp; curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \</span><br><span class="line">    sed <span class="string">&#x27;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#x27;</span> | \</span><br><span class="line">    sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list</span><br></pre></td></tr></table></figure>
+
+<p>接著，更新 apt 並且直接安裝即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</span><br></pre></td></tr></table></figure>
+
+<p>安裝完成之後，我們就可以使用 docker-compose 來啓動容器</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.9&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">vnc:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="comment"># 使用指定的 Dockerfile 來建立 image</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">./Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">test</span> <span class="comment"># 建立的容器的名稱</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;12345:5901&quot;</span> <span class="comment"># VNC 的 port 對應</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;13579:6901&quot;</span> <span class="comment"># noVNC 的 port 對應</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;24680:22&quot;</span> <span class="comment"># SSH 的 port 對應</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">VNC_PW:</span> <span class="string">test</span> <span class="comment"># VNC 的密碼</span></span><br><span class="line">      <span class="attr">VNC_RESOLUTION:</span> <span class="string">1600x900</span> <span class="comment"># VNC 的解析度</span></span><br><span class="line">      <span class="attr">DEFAULT_USER:</span> <span class="string">test</span> <span class="comment"># 預設使用者</span></span><br><span class="line">      <span class="attr">DEFAULT_USER_PASSWORD:</span> <span class="string">test</span> <span class="comment"># 預設使用者的密碼</span></span><br><span class="line">      <span class="attr">ROOT_PASSWORD:</span> <span class="string">root</span> <span class="comment"># root 的密碼</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span> <span class="comment"># 不一定要加，但是如果要使用GPU的話，就需要加上</span></span><br><span class="line">    <span class="comment"># =====================</span></span><br><span class="line">    <span class="comment"># GPU support</span></span><br><span class="line">    <span class="comment"># =====================</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">reservations:</span></span><br><span class="line">          <span class="attr">devices:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">driver:</span> <span class="string">nvidia</span></span><br><span class="line">              <span class="attr">count:</span> <span class="string">all</span></span><br><span class="line">              <span class="attr">capabilities:</span> [<span class="string">gpu</span>]</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-docker-compose-來啓動"><a href="#使用-docker-compose-來啓動" class="headerlink" title="使用 docker-compose 來啓動"></a>使用 docker-compose 來啓動</h4><ul>
+<li><p>使用 NVIDIA GPU</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-compose.nvidia.yml build &amp;&amp; docker-compose -f docker-compose.nvidia.yml up</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不使用 NVIDIA GPU</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose build &amp;&amp; docker-compose up</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>雖然建立這種類虛擬機的違背 Docker 當初部署的本意</p>
+<p>我們甚至把圖形化界面放到了容器中，所以我覺得這個做法算是滿大膽的</p>
+<p>但是這樣的好處是我們可以透過網頁來使用圖形化界面</p>
+<p>當然CLI的部分也還是一樣可以用SSH連線進去</p>
+<p>順帶一提，這篇文章的 cover 就是實際跑起來的畫面</p>
+<p>有了這個方法，我們就可以在不同的裝置上，快速的部署開發環境並且測試</p>
+<p>若是同一台伺服器有這樣的 image ，也可以支援多人同時使用</p>
+<p>所以這樣的嘗試還是有一定的價值的，希望可以幫助到更多開發者</p>
+<p>不過，雖然 image build完後，docker run 很快</p>
+<p>但這樣的環境還要慢慢使用 command line 去建立，還是不太方便</p>
+<p>這邊預告下一集，</p>
+<p><strong>『以Django爲後端開發集成式管理的Docker開發環境』</strong></p>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><a href="">Medium 文章連結</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+    <!-- related posts -->
+        <div class="popular-posts-header">相關文章推薦</div>
+        <ul class="popular-posts">
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/440569875/" rel="bookmark">使用Container來快速建立開發環境(以python為例)</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/509187850/" rel="bookmark">使用docker container建立SSH反向通道穿透內網連接內部裝置</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/b87de6f1/" rel="bookmark">Synology NAS Docker更新與遠端控制</a>
+                        </div>
+                    </li>
+            </ul>
+
+    
+        <!-- like coin -->
+        <div>
+            <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
+        </div>
+        <!-- binance QR code -->
+        <div>
+            <hr>
+                <img src="https://i.imgur.com/VD6XVlC.png" alt="Binance QR code"></img>
+                <div class="post-meta">
+                    <i class="fa fa-heart"></i>TUtgWsPsEFNuuHYA7hNVjvQWbp3W6xRUbz<i class="fa fa-heart"></i>
+                </div>
+
+                <hr></div>
+            
+
+            
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://natlee.github.com/Blog/posts/c7016718/" title="使用Docker快速建立GUI圖形化的深度學習開發環境">https://natlee.github.com/Blog/posts/c7016718/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/docker/" rel="tag"># docker</a>
+              <a href="/Blog/tags/container/" rel="tag"># container</a>
+              <a href="/Blog/tags/console/" rel="tag"># console</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/cc3cb59a/" rel="prev" title="BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況後續">
+                  <i class="fa fa-angle-left"></i> BlueStacks 在有 Hyper-V 的 Windows 11 上的支援狀況後續
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">120k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">3:38</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://natlee.github.com/Blog/posts/c7016718/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"9df54022e5565608d5da20b094070e14"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
