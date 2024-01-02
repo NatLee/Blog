@@ -282,7 +282,7 @@ services:
 
 這篇文章同步發表於 Medium ，歡迎留言討論！
 
-[Medium 文章連結]()
+[Medium 文章連結](https://medium.com/@natlee_/%E4%BD%BF%E7%94%A8docker%E5%BF%AB%E9%80%9F%E5%BB%BA%E7%AB%8Bgui%E5%9C%96%E5%BD%A2%E5%8C%96%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E9%96%8B%E7%99%BC%E7%92%B0%E5%A2%83-a2e8d5cfc804)
 
 
 
