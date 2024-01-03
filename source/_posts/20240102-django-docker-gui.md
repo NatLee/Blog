@@ -6,7 +6,7 @@ tags:
   - django
   - python
 abbrlink: 41a1fec1
-date: 2021-01-02 00:00:00
+date: 2024-01-02 00:00:00
 ---
 
 ![operation](https://github.com/NatLee/django-docker-gui/blob/main/doc/operation.gif?raw=true)
