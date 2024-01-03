@@ -25,7 +25,7 @@ date: 2024-01-02 00:00:00
 
 ---
 
-> 注意！這篇文章只是一個專案的介紹！
+> 注意！這篇文章是專案 [Django Docker GUI](https://github.com/NatLee/django-docker-gui) 的概覽！
 
 你可能以爲我們要搞個Django的管理後台，然後把Docker的指令包裝起來，讓使用者可以透過網頁來管理開發環境
 
@@ -352,7 +352,11 @@ function createToastAlert(msg, isFailure) {
 
 ```
 
-這樣前端就可以接收到後端傳送過來的訊息了
+當我們操作按鈕的時候，所有有透過websocket連線的瀏覽器右上角就會彈跳出訊息
+
+![toast-alert](https://i.imgur.com/Fcd3DMQ.png)
+
+這樣前端就可以正常收發後端傳送過來的訊息了
 
 ---
 
