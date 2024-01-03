@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"natlee.github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.18.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="前言在上一篇文章，使用Docker快速建立GUI圖形化的深度學習開發環境中 最後結尾提到，我要來搞一個『以Django爲後端開發集成式管理的Docker開發環境』，於是就有了這篇文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以Django建立Docker GUI控制界面">
+<meta property="og:url" content="https://natlee.github.com/Blog/posts/41a1fec1/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言在上一篇文章，使用Docker快速建立GUI圖形化的深度學習開發環境中 最後結尾提到，我要來搞一個『以Django爲後端開發集成式管理的Docker開發環境』，於是就有了這篇文章">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://github.com/NatLee/django-docker-gui/blob/main/doc/operation.gif?raw=true">
+<meta property="og:image" content="https://i.imgur.com/R8kzXNx.png">
+<meta property="og:image" content="https://i.imgur.com/OhQeeA9.png">
+<meta property="og:image" content="https://i.imgur.com/dB0yO62.png">
+<meta property="og:image" content="https://i.imgur.com/HuAZV0F.png">
+<meta property="og:image" content="https://i.imgur.com/8emo6Cf.png">
+<meta property="og:image" content="https://i.imgur.com/R90BqTb.png">
+<meta property="article:published_time" content="2021-01-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-03T09:03:25.604Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="django">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/NatLee/django-docker-gui/blob/main/doc/operation.gif?raw=true">
+
+
+<link rel="canonical" href="https://natlee.github.com/Blog/posts/41a1fec1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/41a1fec1/","path":"posts/41a1fec1/","title":"以Django建立Docker GUI控制界面"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>以Django建立Docker GUI控制界面 | Nat's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+    <!-- head AdSense -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({google_ad_client: 'ca-pub-6070159426076964', enable_page_level_ads: true});
+    </script>
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stage-I-Django-Docker-GUI"><span class="nav-number">2.1.</span> <span class="nav-text">Stage I: Django Docker GUI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Authentication"><span class="nav-number">2.1.1.</span> <span class="nav-text">Authentication</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-API"><span class="nav-number">2.1.2.</span> <span class="nav-text">Docker API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Task-Queue"><span class="nav-number">2.1.3.</span> <span class="nav-text">Task Queue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebSocket"><span class="nav-number">2.1.4.</span> <span class="nav-text">WebSocket</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVf" title="Medium → https:&#x2F;&#x2F;medium.com&#x2F;@natlee_"><i class="fab fa-medium fa-fw"></i>Medium</span>
+      </span>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://natlee.github.com/Blog/posts/41a1fec1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="以Django建立Docker GUI控制界面 | Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          以Django建立Docker GUI控制界面
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-02T00:00:00+08:00">2021-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-03 17:03:25" itemprop="dateModified" datetime="2024-01-03T17:03:25+08:00">2024-01-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+    </span>
+
+  
+
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>7.4k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>13 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://github.com/NatLee/django-docker-gui/blob/main/doc/operation.gif?raw=true" alt="operation"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇文章，<span class="exturl" data-url="aHR0cHM6Ly9uYXRsZWUuZ2l0aHViLmlvL0Jsb2cvcG9zdHMvYzcwMTY3MTgv">使用Docker快速建立GUI圖形化的深度學習開發環境<i class="fa fa-external-link-alt"></i></span>中</p>
+<p>最後結尾提到，我要來搞一個『以Django爲後端開發集成式管理的Docker開發環境』，於是就有了這篇文章</p>
+<hr>
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<blockquote>
+<p>注意！這篇文章只是一個專案的介紹！</p>
+</blockquote>
+<p>你可能以爲我們要搞個Django的管理後台，然後把Docker的指令包裝起來，讓使用者可以透過網頁來管理開發環境</p>
+<p><img data-src="https://i.imgur.com/R8kzXNx.png" alt="並沒有"></p>
+<p>但是並沒有，因爲這個專案得分成兩個階段</p>
+<p>第一個階段，我們得先搞個Django的管理後台，然後把Docker的指令包裝起來</p>
+<p>讓使用者可以透過網頁來控制Docker</p>
+<p>第二個階段才是把建立開發環境的Docker的指令包裝起來，讓使用者可以透過網頁來管理開發環境</p>
+<h3 id="Stage-I-Django-Docker-GUI"><a href="#Stage-I-Django-Docker-GUI" class="headerlink" title="Stage I: Django Docker GUI"></a>Stage I: Django Docker GUI</h3><blockquote>
+<p>本專案可直接查看 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kamFuZ28tZG9ja2VyLWd1aQ==">Django Docker GUI<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>大致整理一下要達成這個階段的目標，我們需要以下功能</p>
+<p><img data-src="https://i.imgur.com/OhQeeA9.png"></p>
+<p>除了得透過Django定義API去控制裝置的Docker外</p>
+<p>我們還要設計登入方式以及簡單的前端頁面來呈現</p>
+<h4 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h4><p>登入的部分，我們採用JWT</p>
+<p>這邊我們使用 <span class="exturl" data-url="aHR0cHM6Ly9kamFuZ28tcmVzdC1mcmFtZXdvcmstc2ltcGxland0LnJlYWR0aGVkb2NzLmlvL2VuL2xhdGVzdC8=">Simple JWT<i class="fa fa-external-link-alt"></i></span> 來實作</p>
+<p>基本上，我之前有寫過一個 Django 的 template</p>
+<p>上面有很多標配功能，我們可以直接套用</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kamFuZ28tcHJvamVjdC10ZW1wbGF0ZQ==">Django Project Template<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>在前端的部分，我們需要一個簡易的登入頁面</p>
+<p><img data-src="https://i.imgur.com/dB0yO62.png" alt="login-page"></p>
+<p>主要的程式碼可以參考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kamFuZ28tZG9ja2VyLWd1aS9ibG9iL21haW4vc3JjL2xvZ2luL3RlbXBsYXRlcy9sb2dpbi5odG1s">login.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>輸入帳號密碼登入之後，就可以取得 JWT token</p>
+<h4 id="Docker-API"><a href="#Docker-API" class="headerlink" title="Docker API"></a>Docker API</h4><p>關於Docker的控制，我們使用已經包裝好的 <span class="exturl" data-url="aHR0cHM6Ly9kb2NrZXItcHkucmVhZHRoZWRvY3MuaW8vZW4vc3RhYmxlLw==">Docker SDK for Python<i class="fa fa-external-link-alt"></i></span> 來實作</p>
+<p>它的使用非常簡單，僅僅兩行就可以建立一個 Docker Client 的 instance</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> docker</span><br><span class="line">client = docker.from_env()</span><br></pre></td></tr></table></figure>
+
+<h4 id="Task-Queue"><a href="#Task-Queue" class="headerlink" title="Task Queue"></a>Task Queue</h4><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kamFuZ28tZG9ja2VyLWd1aS9ibG9iL21haW4vc3JjL3h0ZXJtL3Rhc2sucHk=">Django RQ Task<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>執行 Docker 指令的時候，我們會需要一些時間來等待 Docker 完成指令</p>
+<p>這時候我們就需要一個 Task Queue 來處理這些指令</p>
+<p>Survey一些選項，有些人用 celery 或是 Django Q 去控制任務</p>
+<p>但我們其實只要一個簡易的 Task Queue 就可以了</p>
+<p>所以後來我採用了 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JxL2RqYW5nby1ycQ==">Django RQ<i class="fa fa-external-link-alt"></i></span> 來實作</p>
+<p>這邊從程式碼內拿一個例子來看，以下是一個建立 Docker Container 的任務</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@job</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_image_task</span>(<span class="params">image_id</span>):</span><br><span class="line">    <span class="comment"># 先拿到 Docker Client 的 instance</span></span><br><span class="line">    client = docker.from_env()</span><br><span class="line">    <span class="comment"># 直接使用這個instance去建立 Container</span></span><br><span class="line">    container = client.containers.run(</span><br><span class="line">        image_id, <span class="comment"># 輸入的image id</span></span><br><span class="line">        stdin_open=<span class="literal">True</span>, <span class="comment"># 開啓stdin</span></span><br><span class="line">        detach=<span class="literal">True</span>, <span class="comment"># detach container</span></span><br><span class="line">        tty=<span class="literal">True</span>, <span class="comment"># 開啓tty</span></span><br><span class="line">    )</span><br><span class="line">    image_name = <span class="string">&quot;none&quot;</span> <span class="comment"># 預設image name，避免沒有image name的時候出錯</span></span><br><span class="line">    <span class="keyword">if</span> container.image.tags:</span><br><span class="line">        <span class="comment"># 如果有image name，就把image name拿出來</span></span><br><span class="line">        image_name = container.image.tags[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拿到container name</span></span><br><span class="line">    container_name = container.attrs[<span class="string">&#x27;Name&#x27;</span>][<span class="number">1</span>:]</span><br><span class="line"></span><br><span class="line">    msg = <span class="string">f&quot;Container [<span class="subst">&#123;container_name&#125;</span>] (<span class="subst">&#123;image_name&#125;</span>) has been created&quot;</span></span><br><span class="line"></span><br><span class="line">    message = &#123;</span><br><span class="line">        <span class="string">&quot;action&quot;</span>: <span class="string">&quot;CREATED&quot;</span>,</span><br><span class="line">        <span class="string">&quot;details&quot;</span>: msg</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># 透過WebSocket發送訊息</span></span><br><span class="line">    send_notification_to_group(message=message)</span><br><span class="line">    <span class="keyword">return</span> msg</span><br></pre></td></tr></table></figure>
+
+<p>所以有了 Docker SDK ，我們控制 Docker 的方式就變得很容易</p>
+<p>但這邊要注意的是<code>send_notification_to_group</code></p>
+<p>這個函數是用來發送 WebSocket 訊息的</p>
+<p>在前端的部分，我們有很多地方需要透過 WebSocket 來接收訊息</p>
+<h4 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h4><p><img data-src="https://i.imgur.com/HuAZV0F.png" alt="container-list"></p>
+<p>登入之後的頁面，我們可以看到上面有一個 Container List 的表格</p>
+<p>這個表格上的每一個 Container 都有一個操作欄位，裡面有一些按鈕</p>
+<p>觸發這些按鈕之後，我們會需要一些時間來等待 Docker 完成指令（使用 Task Queue）</p>
+<p>每個連線到這個頁面的瀏覽器就需要透過 WebSocket 來接收訊息，並且更新容器的狀態</p>
+<p>如果點進去 Console ，會進到一個網頁版 CMD 的頁面</p>
+<p><img data-src="https://i.imgur.com/8emo6Cf.png" alt="web-console"></p>
+<p>這個頁面也是透過 WebSocket 來接收訊息，並且更新 CMD 的輸出</p>
+<p><img data-src="https://i.imgur.com/R90BqTb.png" alt="pull-image"></p>
+<p>在拉取 Image 的時候，我們也需要一個 WebSocket 來接收訊息</p>
+<p>所以，websocket 在即時更新狀態上扮演了很重要的角色</p>
+<ul>
+<li>後端實作</li>
+</ul>
+<p>那麼，講了那麼多應用</p>
+<p>在後端 Websocket 的部分，我採用 Django Channels 來實作</p>
+<p>原本有考慮 Socket.IO ，但是它太特規</p>
+<p>除了前後端套件版本都要符合才能用之外，還只能吃同一個path</p>
+<p>有夠不友善的，所以就放棄了</p>
+<p>相較之下，Django Channels 除了能夠支援前端的原生 WebSocket 之外</p>
+<p>還可以以不同用途來使用不同的 path 來做 WebSocket</p>
+<p>以這個專案來說，下面是我們的 WebSocket path 例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> re_path</span><br><span class="line"><span class="keyword">from</span> xterm <span class="keyword">import</span> consumers</span><br><span class="line"></span><br><span class="line">websocket_urlpatterns = [</span><br><span class="line">    re_path(<span class="string">r&quot;ws/console/$&quot;</span>, consumers.ConsoleConsumer.as_asgi()), <span class="comment"># &lt;- 這個是 console 用的 consumer</span></span><br><span class="line">    re_path(<span class="string">r&quot;ws/pull-image/$&quot;</span>, consumers.PullConsumer.as_asgi()), <span class="comment"># &lt;- 這個是 pull image 用的 consumer</span></span><br><span class="line">    re_path(<span class="string">r&#x27;ws/notifications/$&#x27;</span>, consumers.NotificationConsumer.as_asgi()), <span class="comment"># &lt;- 這個是通知用的 consumer</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我們建立三個不同的 Consumer ，並且使用不同的 path 去接收 WebSocket 訊息</p>
+<p>另外，在 <a href="#task-queue">Task Queue</a> 的部分，我們使用了<code>send_notification_to_group</code>這個函數</p>
+<p>它可以從 server 端去對已經建立連線的 websocket 廣播訊息</p>
+<p>以下是這個函數的程式碼：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> asgiref.sync <span class="keyword">import</span> async_to_sync <span class="comment"># 非同步函數轉同步函數</span></span><br><span class="line"><span class="keyword">from</span> channels.layers <span class="keyword">import</span> get_channel_layer</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_notification_to_group</span>(<span class="params">message</span>):</span><br><span class="line">    channel_layer = get_channel_layer() <span class="comment"># 取得channel layer</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 因爲 `channel_layer.group_send` 是非同步函數</span></span><br><span class="line">    <span class="comment"># 所以我們需要把它轉成同步函數去執行</span></span><br><span class="line">    async_to_sync(channel_layer.group_send)(</span><br><span class="line">        <span class="comment"># 在 websocket 中，每個頻道都有專屬的group name</span></span><br><span class="line">        <span class="comment"># 這邊我們傳送的訊息要給使用 `group_notifications` 作爲group name 的頻道</span></span><br><span class="line">        <span class="string">&#x27;group_notifications&#x27;</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;send_notification&#x27;</span>, <span class="comment"># 這個是我們在 consumer 中定義的函數</span></span><br><span class="line">            <span class="string">&#x27;message&#x27;</span>: message</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>這個函數會把訊息傳送給<code>group_notifications</code>這個頻道</p>
+<p>並且它會透過在 consumer 中定義的函數<code>send_notification</code>把訊息傳送給所有連線的 websocket client</p>
+<p>以下是 consumer 中的程式碼：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NotificationConsumer</span>(<span class="title class_ inherited__">AsyncWebsocketConsumer</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">self</span>):</span><br><span class="line">        self.room_name = <span class="string">&#x27;notifications&#x27;</span>  <span class="comment"># Can be dynamic based on path</span></span><br><span class="line">        self.room_group_name = <span class="string">f&#x27;group_<span class="subst">&#123;self.room_name&#125;</span>&#x27;</span> <span class="comment"># 這邊就是 group name</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 把連線到這個 consumer 的 client 加入 group</span></span><br><span class="line">        <span class="keyword">await</span> self.channel_layer.group_add(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> self.accept()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">disconnect</span>(<span class="params">self, close_code</span>):</span><br><span class="line">        <span class="comment"># 結束連線時，把 client 從 group 中移除</span></span><br><span class="line">        <span class="keyword">await</span> self.channel_layer.group_discard(</span><br><span class="line">            self.room_group_name,</span><br><span class="line">            self.channel_name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 這邊定義收到訊息時的處理函數</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">send_notification</span>(<span class="params">self, event</span>):</span><br><span class="line">        message = event[<span class="string">&#x27;message&#x27;</span>] <span class="comment"># 從 event 中取得訊息</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 將訊息用json格式dump後，傳送給 client</span></span><br><span class="line">        <span class="keyword">await</span> self.send(text_data=json.dumps(&#123;</span><br><span class="line">            <span class="string">&#x27;message&#x27;</span>: message</span><br><span class="line">        &#125;))</span><br></pre></td></tr></table></figure>
+
+<p>這邊我們可以看到，當有 client 連線到這個 consumer 時</p>
+<p>我們會把 client 加入 group，並且在 client 斷線時把 client 從 group 中移除</p>
+<p>當 client 還在連線中的狀態下，我們就可以透過<code>send_notification</code>這個函數把訊息傳送給 client</p>
+<p>在後端我們就算是完成了 WebSocket Server 的部分</p>
+<ul>
+<li>前端實作</li>
+</ul>
+<p>對於前端來說，我們要怎麼接收這些訊息呢？</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kamFuZ28tZG9ja2VyLWd1aS9ibG9iL21haW4vc3JjL3N0YXRpYy9qcy9jb250YWluZXJzLmpz">Container Javascript<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>我們在前端的程式碼，可以使用原生的 WebSocket 來建立連線</p>
+<p>並且在收到訊息時，透過<code>onmessage</code>這個函數來處理訊息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">notificationWebsocket</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判斷 protocl 是 http 或是 https</span></span><br><span class="line">    <span class="keyword">var</span> ws_scheme = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">protocol</span> == <span class="string">&quot;https:&quot;</span> ? <span class="string">&quot;wss&quot;</span> : <span class="string">&quot;ws&quot;</span>;</span><br><span class="line">    <span class="comment">// 組合 websocket path</span></span><br><span class="line">    <span class="keyword">var</span> ws_path = ws_scheme + <span class="string">&#x27;://&#x27;</span> + <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">host</span> + <span class="string">&quot;/ws/notifications/&quot;</span>;</span><br><span class="line">    <span class="comment">// 使用原生的 WebSocket 來建立連線</span></span><br><span class="line">    <span class="keyword">var</span> socket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(ws_path);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    socket.<span class="property">onmessage</span> = <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">        <span class="comment">// 把收到的訊息轉成 JSON 格式</span></span><br><span class="line">        <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(event.<span class="property">data</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Notification message:&#x27;</span>, data.<span class="property">message</span>);</span><br><span class="line">        <span class="keyword">let</span> action = data.<span class="property">message</span>.<span class="property">action</span>;</span><br><span class="line">        <span class="keyword">if</span> (action === <span class="string">&quot;WAITING&quot;</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果是 WAITING 的訊息，就顯示訊息</span></span><br><span class="line">            <span class="comment">// createToastAlert 是彈跳視窗的通知函數</span></span><br><span class="line">            <span class="title function_">createToastAlert</span>(data.<span class="property">message</span>.<span class="property">details</span>, <span class="literal">false</span>);</span><br><span class="line">            <span class="keyword">let</span> containerID = data.<span class="property">message</span>.<span class="property">data</span>.<span class="property">container_id</span>;</span><br><span class="line">            <span class="comment">// 拿到 record 的 DOM 元素</span></span><br><span class="line">            <span class="keyword">let</span> record = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;actions-&quot;</span> + containerID);</span><br><span class="line">            <span class="comment">// 收到訊息後，把按鈕改成 Waiting（避免重複點擊）</span></span><br><span class="line">            record.<span class="property">innerHTML</span> = <span class="string">`</span></span><br><span class="line"><span class="string">                &lt;span class=&quot;btn btn-warning btn-sm me-3&quot;&gt;Waiting&lt;/span&gt;</span></span><br><span class="line"><span class="string">            `</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (action === <span class="string">&quot;CREATED&quot;</span> || action === <span class="string">&quot;STARTED&quot;</span> || action === <span class="string">&quot;STOPPED&quot;</span> || action === <span class="string">&quot;REMOVED&quot;</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果是 CREATED, STARTED, STOPPED, REMOVED 的訊息，就顯示訊息</span></span><br><span class="line">            <span class="title function_">createToastAlert</span>(data.<span class="property">message</span>.<span class="property">details</span>, <span class="literal">false</span>);</span><br><span class="line">            <span class="comment">// 並且重新取得 container 的資訊</span></span><br><span class="line">            <span class="title function_">fetchAndDisplayContainers</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>createToastAlert</code>這個函數可以參考下面的程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createToastAlert</span>(<span class="params">msg, isFailure</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> toastId = <span class="title class_">Math</span>.<span class="title function_">random</span>().<span class="title function_">toString</span>(<span class="number">36</span>).<span class="title function_">substr</span>(<span class="number">2</span>, <span class="number">16</span>); <span class="comment">// 對彈跳的視窗元素產生一個唯一的ID</span></span><br><span class="line">    <span class="keyword">const</span> toastColorClass = isFailure ? <span class="string">&#x27;bg-danger&#x27;</span> : <span class="string">&#x27;bg-primary&#x27;</span>; <span class="comment">// 判斷是失敗還是成功的訊息</span></span><br><span class="line">    <span class="comment">// 產生彈跳視窗的HTML</span></span><br><span class="line">    <span class="keyword">const</span> toastHtml = <span class="string">`</span></span><br><span class="line"><span class="string">        &lt;div id=&quot;<span class="subst">$&#123;toastId&#125;</span>&quot; class=&quot;toast align-items-center text-white <span class="subst">$&#123;toastColorClass&#125;</span> border-0&quot; role=&quot;alert&quot; aria-live=&quot;assertive&quot; aria-atomic=&quot;true&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;div class=&quot;d-flex&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;div class=&quot;toast-body&quot;&gt;<span class="subst">$&#123;msg&#125;</span>&lt;/div&gt;</span></span><br><span class="line"><span class="string">                &lt;button type=&quot;button&quot; class=&quot;btn-close btn-close-white me-2 m-auto&quot; data-bs-dismiss=&quot;toast&quot;  aria-label=&quot;Close&quot;&gt;&lt;/button&gt;</span></span><br><span class="line"><span class="string">            &lt;/div&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把彈跳視窗的HTML插入到頁面中</span></span><br><span class="line">    <span class="keyword">const</span> toastContainer = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;toastContainer&#x27;</span>);</span><br><span class="line">    toastContainer.<span class="title function_">insertAdjacentHTML</span>(<span class="string">&#x27;beforeend&#x27;</span>, toastHtml);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 顯示彈跳視窗</span></span><br><span class="line">    <span class="keyword">const</span> toastElement = $(<span class="string">`#<span class="subst">$&#123;toastId&#125;</span>`</span>);</span><br><span class="line">    toastElement.<span class="title function_">toast</span>(<span class="string">&#x27;show&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 當彈跳視窗關閉時，移除彈跳視窗的HTML</span></span><br><span class="line">    toastElement.<span class="title function_">on</span>(<span class="string">&#x27;hidden.bs.toast&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">       toastElement.<span class="title function_">remove</span>();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2秒後，自動關閉彈跳視窗</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">       toastElement.<span class="title function_">toast</span>(<span class="string">&#x27;hide&#x27;</span>);</span><br><span class="line">    &#125;, <span class="number">2000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這樣前端就可以接收到後端傳送過來的訊息了</p>
+<hr>
+<p>以上就是這個專案的第一個階段</p>
+<p>這個階段的目標是要建立一個可以控制 Docker 的後台</p>
+<p>並且透過 WebSocket 來即時更新狀態</p>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><hr>
+<p>我們回顧一下這篇文章</p>
+<p>專案最初使用了 Django 來建立一個簡單的後端</p>
+<p>然後，我們透過 Docker SDK 來實現控制 Docker</p>
+<p>又透過 Django RQ 來實作 Task Queue 來非同步處理 Docker 指令</p>
+<p>最後，透過 Django Channels 來實作 WebSocket Server</p>
+<p>前端則是使用一些簡易頁面來展示，並且以原生的 WebSocket 來接收訊息</p>
+<p>這個專案受到下面這個專案很大的啓發</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01haG1vdWRBbHl5L2RvY2tlci1kamFuZ28tdWk=">MahmoudAlyy&#x2F;docker-django-ui<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>我把它重構並改寫了一個新的版本</p>
+<p>但爲了達成上一篇文章所說的目標</p>
+<p><strong>『以Django爲後端開發集成式管理的Docker開發環境』</strong></p>
+<p>我們還需要一些努力！下一篇文章終於可以來介紹第二個階段的專案了！</p>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfLyVFNCVCQiVBNWRqYW5nbyVFNSVCQiVCQSVFNyVBQiU4QmRvY2tlci1ndWklRTYlOEUlQTclRTUlODglQjYlRTclOTUlOEMlRTklOUQlQTItMzU3YTk5ODdlOGYz">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+    <!-- related posts -->
+        <div class="popular-posts-header">相關文章推薦</div>
+        <ul class="popular-posts">
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/2800319203/" rel="bookmark">使用Django框架建置圖片上傳與展示的平台</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/440569875/" rel="bookmark">使用Container來快速建立開發環境(以python為例)</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/165930856/" rel="bookmark">Python中List的Copy反直覺踩坑</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/e55783e1/" rel="bookmark">使用Python Notion API來自動匯入筆記</a>
+                        </div>
+                    </li>
+            </ul>
+
+    
+        <!-- like coin -->
+        <div>
+            <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
+        </div>
+        <!-- binance QR code -->
+        <div>
+            <hr>
+                <img src="https://i.imgur.com/VD6XVlC.png" alt="Binance QR code"></img>
+                <div class="post-meta">
+                    <i class="fa fa-heart"></i>TUtgWsPsEFNuuHYA7hNVjvQWbp3W6xRUbz<i class="fa fa-heart"></i>
+                </div>
+
+                <hr></div>
+            
+
+            
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://natlee.github.com/Blog/posts/41a1fec1/" title="以Django建立Docker GUI控制界面">https://natlee.github.com/Blog/posts/41a1fec1/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/django/" rel="tag"># django</a>
+              <a href="/Blog/tags/python/" rel="tag"># python</a>
+              <a href="/Blog/tags/docker/" rel="tag"># docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/4162982688/" rel="prev" title="Python中的多執行緒(multithread)及多程序(multiprocessing)">
+                  <i class="fa fa-angle-left"></i> Python中的多執行緒(multithread)及多程序(multiprocessing)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/posts/1950864450/" rel="next" title="Blog Upgraded">
+                  Blog Upgraded <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">127k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">3:51</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://natlee.github.com/Blog/posts/41a1fec1/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"9ce1c06a8b4e794a2ba4d463676ecfde"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
