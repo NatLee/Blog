@@ -101,7 +101,7 @@ ln -s $NO_VNC_DIR/vnc.html $NO_VNC_DIR/index.html
 
 再來，每當我們啓動容器會執行[docker-entrypoint.sh](https://github.com/NatLee/dev-dock/blob/main/scripts/docker-entrypoint.sh)
 
-首先，要根據環境的設定重新設定一下使用者的權限
+首先，要根據環境的設定重新設定一下使用者的權限（可見[1.user-settings.sh](https://github.com/NatLee/dev-dock/blob/main/scripts/1.user-settings.sh)）
 
 ```bash
 # Change user settings
