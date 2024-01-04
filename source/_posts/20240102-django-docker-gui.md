@@ -273,6 +273,10 @@ class NotificationConsumer(AsyncWebsocketConsumer):
 
 並且在收到訊息時，透過`onmessage`這個函數來處理訊息
 
+![console-web-terminal](https://i.imgur.com/P46kyDh.png)
+
+程式碼如下：
+
 ```js
 function notificationWebsocket() {
 
