@@ -34,9 +34,10 @@
 <meta property="og:image" content="https://i.imgur.com/HuAZV0F.png">
 <meta property="og:image" content="https://i.imgur.com/8emo6Cf.png">
 <meta property="og:image" content="https://i.imgur.com/R90BqTb.png">
+<meta property="og:image" content="https://i.imgur.com/P46kyDh.png">
 <meta property="og:image" content="https://i.imgur.com/Fcd3DMQ.png">
 <meta property="article:published_time" content="2024-01-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-04T06:02:35.061Z">
+<meta property="article:modified_time" content="2024-01-04T09:14:24.273Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="django">
 <meta property="article:tag" content="python">
@@ -147,7 +148,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/Blog/archives/">
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -158,7 +159,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,7 +233,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-04 14:02:35" itemprop="dateModified" datetime="2024-01-04T14:02:35+08:00">2024-01-04</time>
+      <time title="Modified: 2024-01-04 17:14:24" itemprop="dateModified" datetime="2024-01-04T17:14:24+08:00">2024-01-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -370,6 +371,8 @@
 </blockquote>
 <p>我們在前端的程式碼，可以使用原生的 WebSocket 來建立連線</p>
 <p>並且在收到訊息時，透過<code>onmessage</code>這個函數來處理訊息</p>
+<p><img data-src="https://i.imgur.com/P46kyDh.png" alt="console-web-terminal"></p>
+<p>程式碼如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">notificationWebsocket</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判斷 protocl 是 http 或是 https</span></span><br><span class="line">    <span class="keyword">var</span> ws_scheme = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">protocol</span> == <span class="string">&quot;https:&quot;</span> ? <span class="string">&quot;wss&quot;</span> : <span class="string">&quot;ws&quot;</span>;</span><br><span class="line">    <span class="comment">// 組合 websocket path</span></span><br><span class="line">    <span class="keyword">var</span> ws_path = ws_scheme + <span class="string">&#x27;://&#x27;</span> + <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">host</span> + <span class="string">&quot;/ws/notifications/&quot;</span>;</span><br><span class="line">    <span class="comment">// 使用原生的 WebSocket 來建立連線</span></span><br><span class="line">    <span class="keyword">var</span> socket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(ws_path);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    socket.<span class="property">onmessage</span> = <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">        <span class="comment">// 把收到的訊息轉成 JSON 格式</span></span><br><span class="line">        <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(event.<span class="property">data</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Notification message:&#x27;</span>, data.<span class="property">message</span>);</span><br><span class="line">        <span class="keyword">let</span> action = data.<span class="property">message</span>.<span class="property">action</span>;</span><br><span class="line">        <span class="keyword">if</span> (action === <span class="string">&quot;WAITING&quot;</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果是 WAITING 的訊息，就顯示訊息</span></span><br><span class="line">            <span class="comment">// createToastAlert 是彈跳視窗的通知函數</span></span><br><span class="line">            <span class="title function_">createToastAlert</span>(data.<span class="property">message</span>.<span class="property">details</span>, <span class="literal">false</span>);</span><br><span class="line">            <span class="keyword">let</span> containerID = data.<span class="property">message</span>.<span class="property">data</span>.<span class="property">container_id</span>;</span><br><span class="line">            <span class="comment">// 拿到 record 的 DOM 元素</span></span><br><span class="line">            <span class="keyword">let</span> record = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;actions-&quot;</span> + containerID);</span><br><span class="line">            <span class="comment">// 收到訊息後，把按鈕改成 Waiting（避免重複點擊）</span></span><br><span class="line">            record.<span class="property">innerHTML</span> = <span class="string">`</span></span><br><span class="line"><span class="string">                &lt;span class=&quot;btn btn-warning btn-sm me-3&quot;&gt;Waiting&lt;/span&gt;</span></span><br><span class="line"><span class="string">            `</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (action === <span class="string">&quot;CREATED&quot;</span> || action === <span class="string">&quot;STARTED&quot;</span> || action === <span class="string">&quot;STOPPED&quot;</span> || action === <span class="string">&quot;REMOVED&quot;</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果是 CREATED, STARTED, STOPPED, REMOVED 的訊息，就顯示訊息</span></span><br><span class="line">            <span class="title function_">createToastAlert</span>(data.<span class="property">message</span>.<span class="property">details</span>, <span class="literal">false</span>);</span><br><span class="line">            <span class="comment">// 並且重新取得 container 的資訊</span></span><br><span class="line">            <span class="title function_">fetchAndDisplayContainers</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>其中，<code>createToastAlert</code>這個函數可以參考下面的程式碼：</p>
@@ -413,6 +416,11 @@
         <ul class="popular-posts">
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
+                            <a href="/Blog/posts/c83a1208/" rel="bookmark">以Django爲後端開發集成式管理的Docker開發環境</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
                             <a href="/Blog/posts/2800319203/" rel="bookmark">使用Django框架建置圖片上傳與展示的平台</a>
                         </div>
                     </li>
@@ -429,11 +437,6 @@
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
                             <a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a>
-                        </div>
-                    </li>
-                <li class="popular-posts-item">
-                        <div class="popular-posts-title">
-                            <a href="/Blog/posts/e55783e1/" rel="bookmark">使用Python Notion API來自動匯入筆記</a>
                         </div>
                     </li>
             </ul>
@@ -488,6 +491,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/Blog/posts/c83a1208/" rel="next" title="以Django爲後端開發集成式管理的Docker開發環境">
+                  以Django爲後端開發集成式管理的Docker開發環境 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -519,13 +525,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">127k</span>
+    <span title="Word count total">137k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:51</span>
+    <span title="Reading time total">4:09</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>

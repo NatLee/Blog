@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"natlee.github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.18.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="前言 從使用Docker快速建立GUI圖形化的深度學習開發環境這篇文章之後，我們自己土砲幹了一個Portainer，可以用來管理Docker，但是還是沒辦法滿足我們大量建立並管理開發環境的需求。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以Django爲後端開發集成式管理的Docker開發環境">
+<meta property="og:url" content="https://natlee.github.com/Blog/posts/c83a1208/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言 從使用Docker快速建立GUI圖形化的深度學習開發環境這篇文章之後，我們自己土砲幹了一個Portainer，可以用來管理Docker，但是還是沒辦法滿足我們大量建立並管理開發環境的需求。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://github.com/NatLee/dev-dock-manager/raw/main/doc/workflow.gif">
+<meta property="og:image" content="https://i.imgur.com/5zvekw0.png">
+<meta property="og:image" content="https://i.imgur.com/QdfaRng.png">
+<meta property="og:image" content="https://i.imgur.com/FyJ0znu.png">
+<meta property="og:image" content="https://i.imgur.com/dSBhK00.png">
+<meta property="og:image" content="https://i.imgur.com/grxAR2O.png">
+<meta property="og:image" content="https://i.imgur.com/F2AHauZ.png">
+<meta property="og:image" content="https://i.imgur.com/O0lLm0R.png">
+<meta property="article:published_time" content="2024-01-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-04T09:14:24.273Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="django">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="traefik">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/NatLee/dev-dock-manager/raw/main/doc/workflow.gif">
+
+
+<link rel="canonical" href="https://natlee.github.com/Blog/posts/c83a1208/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/c83a1208/","path":"posts/c83a1208/","title":"以Django爲後端開發集成式管理的Docker開發環境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>以Django爲後端開發集成式管理的Docker開發環境 | Nat's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+    <!-- head AdSense -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({google_ad_client: 'ca-pub-6070159426076964', enable_page_level_ads: true});
+    </script>
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stage-II-Container-Management"><span class="nav-number">2.1.</span> <span class="nav-text">Stage II: Container Management</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Proxy%E5%B7%A5%E5%85%B7-Traefik"><span class="nav-number">2.1.1.</span> <span class="nav-text">Proxy工具 Traefik</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E7%9A%84%E9%A1%8D%E5%A4%96%E5%BE%8C%E7%AB%AFAPI"><span class="nav-number">2.1.2.</span> <span class="nav-text">新增的額外後端API</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVf" title="Medium → https:&#x2F;&#x2F;medium.com&#x2F;@natlee_"><i class="fab fa-medium fa-fw"></i>Medium</span>
+      </span>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://natlee.github.com/Blog/posts/c83a1208/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="以Django爲後端開發集成式管理的Docker開發環境 | Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          以Django爲後端開發集成式管理的Docker開發環境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-01-04 00:00:00 / Modified: 17:14:24" itemprop="dateCreated datePublished" datetime="2024-01-04T00:00:00+08:00">2024-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+    </span>
+
+  
+
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>9.4k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>17 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://github.com/NatLee/dev-dock-manager/raw/main/doc/workflow.gif" alt="demo"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>從使用Docker快速建立GUI圖形化的深度學習開發環境這篇文章之後，我們自己土砲幹了一個<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9ydGFpbmVyLmlvLw==">Portainer<i class="fa fa-external-link-alt"></i></span>，可以用來管理Docker，但是還是沒辦法滿足我們大量建立並管理開發環境的需求。</p>
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<blockquote>
+<p>這篇文章完成的專案在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2Vy">Dev Dock Manager<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>在上一篇文章<span class="exturl" data-url="aHR0cHM6Ly9uYXRsZWUuZ2l0aHViLmlvL0Jsb2cvcG9zdHMvNDFhMWZlYzEv">以 Django 建立 Docker GUI 控制界面<i class="fa fa-external-link-alt"></i></span>中，我們使用Django建立了一個Docker GUI控制界面</p>
+<p>但是還是沒有辦法滿足我們的需求，因爲我們需要一個可以管理多個開發環境的界面</p>
+<p>所以上一次，我們只完成了第一階段的目標</p>
+<p>這次，我們把完整的流程圖畫出來：</p>
+<p><img data-src="https://i.imgur.com/5zvekw0.png" alt="workflow"></p>
+<p>從圖上可以看到第二階段我們需要：</p>
+<ul>
+<li>GUI Docker Image</li>
+<li>Development Container</li>
+</ul>
+<p><code>GUI Docker Image</code>的部分，我們已經在之前的文章有介紹了</p>
+<p>詳情可參考<span class="exturl" data-url="aHR0cHM6Ly9uYXRsZWUuZ2l0aHViLmlvL0Jsb2cvcG9zdHMvYzcwMTY3MTgv">使用 Docker 快速建立 GUI 圖形化的深度學習開發環境<i class="fa fa-external-link-alt"></i></span>，其專案的位置在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jaw==">Dev Dock<i class="fa fa-external-link-alt"></i></span></p>
+<p>所以，我們要完成的最後一個部分是『開發容器』的管理</p>
+<h3 id="Stage-II-Container-Management"><a href="#Stage-II-Container-Management" class="headerlink" title="Stage II: Container Management"></a>Stage II: Container Management</h3><p>這個階段，我們分爲兩個部分，其中一個是我們要新增的後端API</p>
+<p>另外一個則是爲了要能夠對container使用網頁進行遠端操作，我們需要找到proxy的工具並且將其整合進來</p>
+<h4 id="Proxy工具-Traefik"><a href="#Proxy工具-Traefik" class="headerlink" title="Proxy工具 Traefik"></a>Proxy工具 Traefik</h4><p>在這個專案中，我使用了<span class="exturl" data-url="aHR0cHM6Ly90cmFlZmlrLmlvLw==">traefik<i class="fa fa-external-link-alt"></i></span>來做為管理各個container proxy的工具</p>
+<blockquote>
+<p>原始碼可以參照<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9kb2NrZXItY29tcG9zZS55bWw=">docker-compose.yml<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">x-common-networks:</span> <span class="string">&amp;common-networks</span></span><br><span class="line">  <span class="comment"># 爲了安全（可能也沒多安全XD）</span></span><br><span class="line">  <span class="comment"># 我們得把開發用的container都綁在同一個docker network上</span></span><br><span class="line">  <span class="attr">networks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">d-gui-network</span></span><br><span class="line"></span><br><span class="line"><span class="attr">x-common-extra-hosts:</span> <span class="string">&amp;extra-hosts</span></span><br><span class="line">  <span class="comment"># 使用 host.docker.internal 來連接到 host 的 gateway</span></span><br><span class="line">  <span class="comment"># 這樣我們就可以在 container 中使用 host 的網路</span></span><br><span class="line">  <span class="comment"># （剛剛才說爲了安全，現在這個又是不安全的操作XDDD）</span></span><br><span class="line">  <span class="attr">extra_hosts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;host.docker.internal:host-gateway&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">backend:</span></span><br><span class="line">    <span class="string">&lt;&lt;:</span> [<span class="string">*common-networks</span>, <span class="string">*extra-hosts</span>]</span><br><span class="line">    <span class="comment"># ...&lt;省略一些code&gt;...</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="comment"># 這邊把專案的 network 寫進環境變數</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DOCKER_NETWORK=d-gui-network</span></span><br><span class="line">    <span class="comment"># ...&lt;省略一些code&gt;...</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">      <span class="comment"># 開啓 traefik</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.enable=true&quot;</span></span><br><span class="line">      <span class="comment"># ====== 這邊去定義 traefik 對這個 container 的路由 ======</span></span><br><span class="line">      <span class="comment"># Define router for /</span></span><br><span class="line">      <span class="comment"># 這邊是定義訪問 traefik / 的路由</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-root.rule=Path(`/`)&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-root.service=backend-service&quot;</span></span><br><span class="line">      <span class="comment"># Define router for /login</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-login.rule=PathPrefix(`/login`)&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-login.service=backend-service&quot;</span></span><br><span class="line">      <span class="comment"># Define router for /dashboard</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-dashboard.rule=PathPrefix(`/dashboard`)&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-dashboard.service=backend-service&quot;</span></span><br><span class="line">      <span class="comment"># Define router for /api</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-api.rule=PathPrefix(`/api`)&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-api.service=backend-service&quot;</span></span><br><span class="line">      <span class="comment"># Define router for websocket</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-websocket.rule=PathPrefix(`/ws`)&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.routers.backend-websocket.service=backend-service&quot;</span></span><br><span class="line">      <span class="comment"># Define the service</span></span><br><span class="line">      <span class="comment"># Django啓動的後端在 container 內部的 port 是 8000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;traefik.http.services.backend-service.loadbalancer.server.port=8000&quot;</span></span><br><span class="line">      <span class="comment"># ========================================================</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ...&lt;省略一些code&gt;...</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">traefik:</span></span><br><span class="line">    <span class="string">&lt;&lt;:</span> [<span class="string">*common-networks</span>]</span><br><span class="line">    <span class="attr">image:</span> <span class="string">traefik:v3.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">d-gui-proxy</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="comment"># 這邊是 traefik 啓動時的設定</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">--providers.docker</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">--providers.docker.exposedByDefault=false</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">--entrypoints.web.address=:80</span> <span class="comment"># web entrypoint</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">--api.dashboard=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">--api.insecure</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">--serverstransport.insecureskipverify=true</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000:80&quot;</span> <span class="comment"># Traefik 的 web entrypoint</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span> <span class="comment"># Traefik Dashboard</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="comment"># 這邊是讓 traefik 可以讀取 docker.sock</span></span><br><span class="line">      <span class="comment"># 這樣 traefik 才能夠知道有哪些 container 需要被 proxy</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">d-gui-network:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>我們在<code>docker-compose.yml</code>把設定都定義完成之後，我們就可以使用<code>docker-compose up -d</code>來啓動這個服務</p>
+<p>另外，補充一下上篇文章沒有提到的部分</p>
+<p>因爲我們有使用 task queue ，所以需要額外啓動 Django-RQ</p>
+<p>根據Docker官方建議做法，我是使用 supervisor 來同時管理的兩個服務（Django、Django-RQ）</p>
+<blockquote>
+<p>詳情可見<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9zdXBlcnZpc29yZC5jb25m">supervisord.conf<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>關於Django後端在supervisord上的設定如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[program:django]</span><br><span class="line">command=python manage.py runserver 0.0.0.0:8000 # 啓動 Django 的方式</span><br><span class="line">stdout_logfile=/dev/stdout # 把 stdout 導到容器內的 /dev/stdout</span><br><span class="line">stdout_logfile_maxbytes=0 # 不限制 stdout 的大小</span><br><span class="line">stderr_logfile=/dev/stderr # 把 stderr 導到容器內的 /dev/stderr</span><br><span class="line">stderr_logfile_maxbytes=0 # 不限制 stderr 的大小</span><br><span class="line">autostart=true # 自動啓動</span><br><span class="line">autorestart=true # 自動重啓</span><br></pre></td></tr></table></figure>
+
+<h4 id="新增的額外後端API"><a href="#新增的額外後端API" class="headerlink" title="新增的額外後端API"></a>新增的額外後端API</h4><ul>
+<li>更新建立Container的API</li>
+</ul>
+<p>在上篇文章中，我們建立container的API不需要再去做額外的設定</p>
+<p>但因爲我們要建立開發用的container，所以我們需要做帳號、密碼以及環境的設定</p>
+<p>原本的<code>run_image_task</code>程式碼改成下面這樣：</p>
+<blockquote>
+<p>原始碼可以參照<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9zcmMveHRlcm0vdGFzay5weQ==">task.py<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@job</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_image_task</span>(<span class="params"></span></span><br><span class="line"><span class="params">  image_name, <span class="comment"># 使用的image名稱</span></span></span><br><span class="line"><span class="params">  ports, <span class="comment"># 開啓的port</span></span></span><br><span class="line"><span class="params">  volumes, <span class="comment"># 掛載的volume</span></span></span><br><span class="line"><span class="params">  environment, <span class="comment"># 環境變數</span></span></span><br><span class="line"><span class="params">  name, <span class="comment"># 設定的container名稱</span></span></span><br><span class="line"><span class="params">  privileged=<span class="literal">False</span>, <span class="comment"># 是否使用privileged</span></span></span><br><span class="line"><span class="params">  nvdocker=<span class="literal">False</span> <span class="comment"># 是否使用NVIDIA GPU</span></span></span><br><span class="line"><span class="params"></span>):</span><br><span class="line">    client = docker.from_env()</span><br><span class="line">    device_requests = []</span><br><span class="line">    network = client.networks.get(DOCKER_NETWORK)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> nvdocker:</span><br><span class="line">        <span class="comment"># Define device requests for NVIDIA GPUs</span></span><br><span class="line">        device_requests += [</span><br><span class="line">            docker.types.DeviceRequest(</span><br><span class="line">                count=-<span class="number">1</span>,  <span class="comment"># -1 specifies all available GPUs</span></span><br><span class="line">                capabilities=[[<span class="string">&#x27;gpu&#x27;</span>]],  <span class="comment"># This is the equivalent of `--gpus all`</span></span><br><span class="line">                driver=<span class="string">&#x27;nvidia&#x27;</span></span><br><span class="line">            )</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 這邊要新增 traefik 的 label</span></span><br><span class="line">    <span class="comment"># 讓 traefik 可以抓到並將這個 container 的 port</span></span><br><span class="line">    traefik_labels = &#123;</span><br><span class="line">        <span class="comment"># 對這個 container 啓用 traefik</span></span><br><span class="line">        <span class="string">&quot;traefik.enable&quot;</span>: <span class="string">&quot;true&quot;</span>,</span><br><span class="line">        <span class="comment"># 標記 novnc 路由位置</span></span><br><span class="line">        <span class="string">f&quot;traefik.http.routers.d-gui-<span class="subst">&#123;name&#125;</span>.rule&quot;</span>: <span class="string">f&quot;PathPrefix(`/novnc/<span class="subst">&#123;name&#125;</span>/`)&quot;</span>,</span><br><span class="line">        <span class="comment"># 標記這個 container 的 novnc 的port</span></span><br><span class="line">        <span class="string">f&quot;traefik.http.services.d-gui-<span class="subst">&#123;name&#125;</span>.loadbalancer.server.port&quot;</span>: <span class="string">&quot;6901&quot;</span>,</span><br><span class="line">        <span class="comment"># 設定一個 middlewares 做stripprefix 來把 novnc 的路由前綴去掉</span></span><br><span class="line">        <span class="string">f&quot;traefik.http.middlewares.d-gui-<span class="subst">&#123;name&#125;</span>-strip-prefix.stripprefix.prefixes&quot;</span>: <span class="string">f&quot;/novnc/<span class="subst">&#123;name&#125;</span>/&quot;</span>,</span><br><span class="line">        <span class="comment"># 把路由前綴去掉的 middleware 加到這個 container 上</span></span><br><span class="line">        <span class="string">f&quot;traefik.http.routers.d-gui-<span class="subst">&#123;name&#125;</span>.middlewares&quot;</span>: <span class="string">f&#x27;d-gui-<span class="subst">&#123;name&#125;</span>-strip-prefix&#x27;</span>,</span><br><span class="line">        <span class="comment"># 把這個 container 標記到同一個 treafik 的 network 上</span></span><br><span class="line">        <span class="string">&quot;traefik.docker.network&quot;</span>: DOCKER_NETWORK,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用 client 的 instance 建立 container</span></span><br><span class="line">    container = client.containers.run(</span><br><span class="line">        image_name,</span><br><span class="line">        stdin_open=<span class="literal">True</span>,</span><br><span class="line">        detach=<span class="literal">True</span>,</span><br><span class="line">        tty=<span class="literal">True</span>,</span><br><span class="line">        ports=ports,</span><br><span class="line">        volumes=volumes,</span><br><span class="line">        environment=environment,</span><br><span class="line">        name=name,</span><br><span class="line">        privileged=privileged,</span><br><span class="line">        device_requests=device_requests,</span><br><span class="line">        network=network.<span class="built_in">id</span>,  <span class="comment"># Attach the container to the network</span></span><br><span class="line">        labels=traefik_labels</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ...&lt;省略一些code&gt;...</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> msg</span><br></pre></td></tr></table></figure>
+
+<p>其中有一個地方寫到<code>DOCKER_NETWORK</code>，這個是爲了讓所有的container都可以在同一個網路上，這樣我們才能夠使用traefik來管理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_NETWORK = os.environ.get(<span class="string">&quot;DOCKER_NETWORK&quot;</span>, <span class="string">&quot;d-gui-network&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>偵測是否支援NVIDIA GPU</li>
+</ul>
+<p>偵測機器上面是否能使用GPU這件事，我們可以使用<code>nvidia-smi</code></p>
+<p>但是我們要怎麼在 Django 後端的 container 內部去偵測呢？答案是做不到！</p>
+<p>不僅僅是因爲我們的 container 內沒有 NVIDIA GPU 的 driver，而且我們安裝也會很麻煩</p>
+<p>可是這樣就沒辦法偵測了嗎？當然不是！</p>
+<p>我們可以使用<code>nvidia/cuda</code>這個 image 來偵測</p>
+<p>如果使用<code>nvidia/cuda</code>這個 image 啓動 container 沒有問題，那就代表這個機器是支援 NVIDIA GPU 的</p>
+<p>爲了確保使用者先pull下來這個 image，我們可以在<code>docker-compose.yml</code>中定義一個<code>nvidia-cuda</code>的 container</p>
+<blockquote>
+<p>定義在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9kb2NrZXItY29tcG9zZS55bWwjTDUy">nvidia-cuda<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nvidia-cuda:</span></span><br><span class="line">  <span class="comment"># for testing with GPU support</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">nvidia/cuda:11.0.3-base-ubuntu20.04</span></span><br><span class="line">  <span class="attr">container_name:</span> <span class="string">d-gui-cuda</span></span><br><span class="line">  <span class="attr">entrypoint:</span> [<span class="string">&quot;echo&quot;</span>, <span class="string">&quot;CUDA image ready&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>程式內部的偵測方式就可以使用Docker SDK來做了</p>
+<blockquote>
+<p>原始碼可以參照<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9zcmMveHRlcm0vdXRpbHMvY2FuX3VzZV9udmlkaWFfZG9ja2VyLnB5">can_use_nvidia_docker.py<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> docker</span><br><span class="line"><span class="keyword">from</span> docker.errors <span class="keyword">import</span> APIError, ContainerError</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">can_use_nvidia_docker</span>() -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    client = docker.from_env()</span><br><span class="line">    test_image = <span class="string">&#x27;nvidia/cuda:11.0.3-base-ubuntu20.04&#x27;</span> <span class="comment"># NVIDIA CUDA image</span></span><br><span class="line">    test_command = <span class="string">&#x27;nvidia-smi&#x27;</span> <span class="comment"># 測試用的指令</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># Run a container that utilizes GPU</span></span><br><span class="line">        container = client.containers.run(</span><br><span class="line">            test_image,</span><br><span class="line">            command=test_command,</span><br><span class="line">            runtime=<span class="string">&#x27;nvidia&#x27;</span>,  <span class="comment"># Specify the NVIDIA runtime</span></span><br><span class="line">            detach=<span class="literal">True</span>,</span><br><span class="line">            auto_remove=<span class="literal">True</span>,  <span class="comment"># Remove container after execution</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Fetch logs to check if nvidia-smi command was successful</span></span><br><span class="line">        <span class="comment">#logs = container.logs()</span></span><br><span class="line">        <span class="comment">#print(logs.decode(&#x27;utf-8&#x27;))  # Optional: Print output for verification</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># If the command was successful, NVIDIA Docker is available</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">except</span> (APIError, ContainerError) <span class="keyword">as</span> e:</span><br><span class="line">        <span class="comment"># If there was an error, log it and return False</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Error checking NVIDIA Docker availability: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment"># Cleanup: Stop container if it&#x27;s still running</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            container.stop()</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">pass</span>  <span class="comment"># If container doesn&#x27;t exist or is already removed, ignore</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是說，我們直接Run一個<code>nvidia/cuda</code>的container，然後執行<code>nvidia-smi</code>指令</p>
+<p>如果成功就代表這個機器是支援NVIDIA GPU的，反之則否</p>
+<p>對於前端來說，如果機器本身不支援NVIDIA GPU，我們就可以提示使用者</p>
+<p><img data-src="https://i.imgur.com/QdfaRng.png" alt="detect-gpu"></p>
+<ul>
+<li>偵測現在能使用哪些Port</li>
+</ul>
+<p>雖然我們的VNC、noVNC可以靠proxy來解決訪問的問題</p>
+<p>但是SSH就不行了，因爲SSH是直接連接到container的port</p>
+<p>所以我們需要偵測現在能使用哪些port，然後把這些port顯示給使用者選擇或是自動選擇</p>
+<p>也就是說，爲了達成這個功能，我們需要做到以下三件事：</p>
+<ol>
+<li>判斷某個port是否能使用</li>
+<li>偵測現在有哪些port被container使用（！？）</li>
+<li>偵測現在有哪些port能使用</li>
+</ol>
+<hr>
+<p>第一件事，我們可以使用<code>socket</code>來做：</p>
+<blockquote>
+<p>原始碼可以參照<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9zcmMveHRlcm0vdXRpbHMvY2hlY2tfcG9ydF9pbl91c2UucHk=">check_port_in_use.py<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">check_port_in_use</span>(<span class="params">port</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    <span class="comment"># check if port is in use in the host</span></span><br><span class="line">    <span class="keyword">with</span> socket.socket(socket.AF_INET, socket.SOCK_STREAM) <span class="keyword">as</span> s:</span><br><span class="line">        <span class="comment"># If connect_ex returns 0, the port is in use</span></span><br><span class="line">        <span class="keyword">return</span> s.connect_ex((<span class="string">&#x27;host.docker.internal&#x27;</span>, port)) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>上面要注意的是，我們使用<code>host.docker.internal</code>來連接到 host 的 gateway</p>
+<p>因爲port必須對應到主裝置，所以才需要連接到 host</p>
+<hr>
+<p>第二件事比較弔詭</p>
+<p>因爲理論上來說，我們判斷port有沒有被使用，就可以知道哪些port可以使用了吧？</p>
+<p>但是當container是stop的狀態下，port會被釋出，所以我們無法知道哪些port是被container使用的</p>
+<p>所以我們需要做的是，使用Docker SDK去判斷哪些port是被container使用的（包含stop的container）</p>
+<blockquote>
+<p>原始碼可以參照<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9zcmMveHRlcm0vdXRpbHMvaXNfcG9ydF91c2VkX2J5X2NvbnRhaW5lci5weQ==">is_port_used_by_container.py<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_port_used_by_container</span>(<span class="params">port:<span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    client = docker.from_env()</span><br><span class="line">    <span class="keyword">for</span> container <span class="keyword">in</span> client.containers.<span class="built_in">list</span>(<span class="built_in">all</span>=<span class="literal">True</span>):</span><br><span class="line">        port_bindings:<span class="built_in">dict</span> = client.api.inspect_container(container.<span class="built_in">id</span>)[<span class="string">&#x27;HostConfig&#x27;</span>].get(<span class="string">&#x27;PortBindings&#x27;</span>, &#123;&#125;) <span class="comment"># 關鍵是這邊直接inspect去看container設定的port</span></span><br><span class="line">        ports = parse_ports(port_bindings)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(port) <span class="keyword">in</span> ports.values():</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>最後一件事！</p>
+<p>我們完成前面兩件事之後，就可以從最小的port開始往上找，找到沒被使用的port</p>
+<p>這邊要注意的是，找到所有的port非常耗時（畢竟是使用socket去測試）</p>
+<p>所以我們要定義數量，找到足夠的port就可以停止了</p>
+<blockquote>
+<p>原始碼可以參照<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kZXYtZG9jay1tYW5hZ2VyL2Jsb2IvbWFpbi9zcmMveHRlcm0vdXRpbHMvZmluZF9tdWx0aXBsZV9mcmVlX3BvcnRzLnB5">find_multiple_free_ports.py<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">find_multiple_free_ports</span>(<span class="params">count</span>):</span><br><span class="line">    <span class="comment"># find multiple free ports in the host</span></span><br><span class="line"></span><br><span class="line">    base_port = <span class="number">1024</span>  <span class="comment"># Start scanning from port 1024</span></span><br><span class="line">    free_ports = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(free_ports) &lt; count <span class="keyword">and</span> base_port &lt; <span class="number">65535</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> check_port_in_use(base_port) <span class="keyword">and</span> <span class="keyword">not</span> is_port_used_by_container(base_port):</span><br><span class="line">            <span class="comment"># find port is not in use in the host</span></span><br><span class="line">            free_ports.append(base_port)</span><br><span class="line">        base_port += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(free_ports) &lt; count:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">&quot;Not enough free ports available.&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> free_ports</span><br></pre></td></tr></table></figure>
+
+<p>再寫一個API包起來，就可以在前端使用了</p>
+<p>從網站就可以看到每次建立container會先去問現在有哪些port可以使用</p>
+<p><img data-src="https://i.imgur.com/FyJ0znu.png" alt="check-ports"></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
+<p>這次的專案，我們最後完成了一個多個開發環境的網頁管理系統</p>
+<p>內容包含可以操作的GUI容器、可網頁控制的docker界面以及整個管理系統</p>
+<p>也就是一開始的目標：</p>
+<p><strong>『以Django爲後端開發集成式管理的Docker開發環境』</strong></p>
+<p>如同一開始這篇文章的cover所示，我們可以在這個界面上面建立獨立的開發環境</p>
+<p>甚至可以使用網頁進行遠端GUI操作以及web terminal</p>
+<p>還可以綁定NVIDIA GPU，讓開發環境可以使用GPU進行各種深度學習AI相關的開發及測試</p>
+<hr>
+<p>說實在的，其實一開始沒想過要做完整套管理系統</p>
+<p>但後來要測試的專案跟環境越來越多又越來越亂，也沒有一個好的管理方式</p>
+<p>而且待過的公司都是在同一台機器上面開發（大家甚至都是用root帳號，動不動就破壞環境）</p>
+<p>還是我沒有去過有好開發方式的公司？</p>
+<p>總之，我設想一個系統能夠做到管理不同虛擬環境的事情，於是就催生了這個專案</p>
+<p>雖然這個專案的功能還有很多可以改進的地方，但畢竟時間不多，而且也只是side project</p>
+<p>之前能重用的部分我也盡量重用了XDD</p>
+<hr>
+<p>最後，我們來看一下這個專案的部分畫面</p>
+<ul>
+<li><p>登入畫面<br><img data-src="https://i.imgur.com/dSBhK00.png" alt="login-page"></p>
+</li>
+<li><p>首頁看到的container list<br><img data-src="https://i.imgur.com/grxAR2O.png" alt="container-list"></p>
+</li>
+<li><p>NoVNC進入container<br><img data-src="https://i.imgur.com/F2AHauZ.png" alt="demo"></p>
+</li>
+<li><p>Web Terminal<br><img data-src="https://i.imgur.com/O0lLm0R.png" alt="web-terminal"></p>
+</li>
+</ul>
+<p>歡迎大家提出建議或是發PR，我都會處理的 :D</p>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfLyVFNCVCQiVBNWRqYW5nbyVFNyU4OCVCMiVFNSVCRSU4QyVFNyVBQiVBRiVFOSU5NiU4QiVFNyU5OSVCQyVFOSU5QiU4NiVFNiU4OCU5MCVFNSVCQyU4RiVFNyVBRSVBMSVFNyU5MCU4NiVFNyU5QSU4NGRvY2tlciVFOSU5NiU4QiVFNyU5OSVCQyVFNyU5MiVCMCVFNSVBMiU4My1mZTc5MGZjZmIyZGI=">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+    <!-- related posts -->
+        <div class="popular-posts-header">相關文章推薦</div>
+        <ul class="popular-posts">
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/41a1fec1/" rel="bookmark">以Django建立Docker GUI控制界面</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/2800319203/" rel="bookmark">使用Django框架建置圖片上傳與展示的平台</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/440569875/" rel="bookmark">使用Container來快速建立開發環境(以python為例)</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/165930856/" rel="bookmark">Python中List的Copy反直覺踩坑</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a>
+                        </div>
+                    </li>
+            </ul>
+
+    
+        <!-- like coin -->
+        <div>
+            <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
+        </div>
+        <!-- binance QR code -->
+        <div>
+            <hr>
+                <img src="https://i.imgur.com/VD6XVlC.png" alt="Binance QR code"></img>
+                <div class="post-meta">
+                    <i class="fa fa-heart"></i>TUtgWsPsEFNuuHYA7hNVjvQWbp3W6xRUbz<i class="fa fa-heart"></i>
+                </div>
+
+                <hr></div>
+            
+
+            
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://natlee.github.com/Blog/posts/c83a1208/" title="以Django爲後端開發集成式管理的Docker開發環境">https://natlee.github.com/Blog/posts/c83a1208/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/django/" rel="tag"># django</a>
+              <a href="/Blog/tags/python/" rel="tag"># python</a>
+              <a href="/Blog/tags/docker/" rel="tag"># docker</a>
+              <a href="/Blog/tags/traefik/" rel="tag"># traefik</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/41a1fec1/" rel="prev" title="以Django建立Docker GUI控制界面">
+                  <i class="fa fa-angle-left"></i> 以Django建立Docker GUI控制界面
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">137k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:09</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://natlee.github.com/Blog/posts/c83a1208/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"b7bea6613ac56146a8cf642122c65947"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
