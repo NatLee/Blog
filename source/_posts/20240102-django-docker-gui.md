@@ -25,7 +25,7 @@ date: 2024-01-02 00:00:00
 
 ---
 
-> 注意！這篇文章是專案 [Django Docker GUI](https://github.com/NatLee/django-docker-gui) 的概覽！
+> 這篇文章最後完成的專案在 [Django Docker GUI](https://github.com/NatLee/django-docker-gui)
 
 你可能以爲我們要搞個Django的管理後台，然後把Docker的指令包裝起來，讓使用者可以透過網頁來管理開發環境
 
