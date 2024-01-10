@@ -321,8 +321,6 @@ Quit the server with CONTROL-C.
 
 - [使用Django版本2去建置圖片上傳與展示的平台](https://natlee.github.io/Blog/posts/2800319203/)
 - [django 实现图片上传和显示操作](https://blog.csdn.net/c_beautiful/article/details/79755368)
-- [Django上傳並顯示圖片](https://hk.saowen.com/a/025706bf034bd83359bffe190ab6cf5fc62398a67bc0589b4552b6e33b165c34)
-
 
 ---
 
