@@ -22,16 +22,16 @@
 
     <meta name="description" content="*ネトゲの嫁は女の子じゃないと思った？*  前言 今天一張UR都沒抽到所以在這邊整理了一個如何製作Django建置圖片上傳平台教學">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Django框架建置圖片上傳與展示的平台">
+<meta property="og:title" content="使用Django版本2去建置圖片上傳與展示的平台">
 <meta property="og:url" content="https://natlee.github.com/Blog/posts/2800319203/index.html">
 <meta property="og:site_name" content="Nat&#39;s Blog">
 <meta property="og:description" content="*ネトゲの嫁は女の子じゃないと思った？*  前言 今天一張UR都沒抽到所以在這邊整理了一個如何製作Django建置圖片上傳平台教學">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/PECvJrh.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Django_Upload_and_Show_Image/01.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Django_Upload_and_Show_Image/02.png">
+<meta property="og:image" content="https://i.imgur.com/cVPGz03.png">
+<meta property="og:image" content="https://i.imgur.com/9vumG0w.png">
 <meta property="article:published_time" content="2018-06-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-04T09:14:24.269Z">
+<meta property="article:modified_time" content="2024-01-10T09:08:41.514Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="django">
 <meta property="article:tag" content="python">
@@ -45,10 +45,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/2800319203/","path":"posts/2800319203/","title":"使用Django框架建置圖片上傳與展示的平台"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/2800319203/","path":"posts/2800319203/","title":"使用Django版本2去建置圖片上傳與展示的平台"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>使用Django框架建置圖片上傳與展示的平台 | Nat's Blog</title>
+<title>使用Django版本2去建置圖片上傳與展示的平台 | Nat's Blog</title>
   
 
 
@@ -143,7 +143,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/Blog/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -205,12 +205,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="使用Django框架建置圖片上傳與展示的平台 | Nat's Blog">
+      <meta itemprop="name" content="使用Django版本2去建置圖片上傳與展示的平台 | Nat's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          使用Django框架建置圖片上傳與展示的平台
+          使用Django版本2去建置圖片上傳與展示的平台
         </h1>
 
         <div class="post-meta-container">
@@ -228,7 +228,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-04 17:14:24" itemprop="dateModified" datetime="2024-01-04T17:14:24+08:00">2024-01-04</time>
+      <time title="Modified: 2024-01-10 17:08:41" itemprop="dateModified" datetime="2024-01-10T17:08:41+08:00">2024-01-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -248,14 +248,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>4.9k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>9 mins.</span>
+      <span>8 mins.</span>
     </span>
 </div>
 
@@ -273,6 +273,9 @@
 <span id="more"></span>
 
 <h2 id="準備材料"><a href="#準備材料" class="headerlink" title="準備材料"></a>準備材料</h2><hr>
+<blockquote>
+<p>2024&#x2F;01&#x2F;10 更新：這邊有新版本的教學<span class="exturl" data-url="aHR0cHM6Ly9uYXRsZWUuZ2l0aHViLmlvL0Jsb2cvcG9zdHMvNzYyMDU1MzIv">使用Django版本4及5建置圖片上傳與展示的平台<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
 <p>我使用的Python版本是3.6.5，以及Django版本是2.0.6<br>處理圖片可能需要使用到pillow套件，資料庫則要用到mysqlclinent<br>可以在命令列中輸入以下指令安裝需要的套件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install Django==2.0.6</span><br><span class="line">pip install pillow</span><br><span class="line">pip install mysqlclient</span><br></pre></td></tr></table></figure>
 
@@ -347,20 +350,15 @@
 </blockquote>
 </li>
 </ul>
-<p>先到上傳圖片的頁面，按下選擇檔案挑好圖片並按送出。<br><img data-src="https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Django_Upload_and_Show_Image/01.png"></p>
+<p>先到上傳圖片的頁面，按下選擇檔案挑好圖片並按送出。<br><img data-src="https://i.imgur.com/cVPGz03.png" alt="upload-page"></p>
 <p>因為是簡易頁面，所以在上傳成功時，畫面中並不會有任何提示。</p>
-<p>這時，你會看到命令列出現下列資訊。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[20/Jun/2018 06:38:52] <span class="string">&quot;GET /uploadImg/ HTTP/1.1&quot;</span> 200 422</span><br><span class="line">Not Found: /favicon.ico</span><br><span class="line">[20/Jun/2018 06:38:53] <span class="string">&quot;GET /favicon.ico HTTP/1.1&quot;</span> 404 2319</span><br><span class="line">[20/Jun/2018 06:39:37] <span class="string">&quot;POST /uploadImg/ HTTP/1.1&quot;</span> 200 422</span><br></pre></td></tr></table></figure>
-<p>意思是一開始進去網頁載入頁面，然後找不到favicon的icon圖片<br>最後一行則返回200，代表圖片已經POST成功。</p>
 <ul>
 <li>顯示圖片<blockquote>
 <p><span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo4MDAwL3Nob3dJbWcv">http://localhost:8000/showImg/<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 </li>
 </ul>
-<p>再到展示的頁面就可以看到剛剛上傳的照片了。<br><img data-src="https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Django_Upload_and_Show_Image/02.png"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[20/Jun/2018 06:40:04] <span class="string">&quot;GET /showImg/ HTTP/1.1&quot;</span> 200 344</span><br><span class="line">[20/Jun/2018 06:40:04] <span class="string">&quot;GET /media/img/riko.jpg HTTP/1.1&quot;</span> 200 65002</span><br></pre></td></tr></table></figure>
-<p>在命令列可以看到返回200代表載入頁面並下載圖片成功。</p>
+<p>再到展示的頁面就可以看到剛剛上傳的照片了。<br><img data-src="https://i.imgur.com/9vumG0w.png" alt="show-page"></p>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><hr>
 <p>因為網路上Django跟Python的版本不一<br>除了Python版本造成不相容外<br>Django版本也有很大的影響<br>所以很多地方相關的範例都有些小錯誤，沒辦法執行<br>希望在這邊做成一篇完整且能執行的版本後能夠幫助到大家<br>順便記錄一下，以後自己忘記也能提醒自己如何操作</p>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><hr>
@@ -378,12 +376,17 @@
         <ul class="popular-posts">
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
-                            <a href="/Blog/posts/41a1fec1/" rel="bookmark">以Django建立Docker GUI控制界面</a>
+                            <a href="/Blog/posts/76205532/" rel="bookmark">使用Django版本4及5建置圖片上傳與展示的平台</a>
                         </div>
                     </li>
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
                             <a href="/Blog/posts/c83a1208/" rel="bookmark">以Django爲後端開發集成式管理的Docker開發環境</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/41a1fec1/" rel="bookmark">以Django建立Docker GUI控制界面</a>
                         </div>
                     </li>
                 <li class="popular-posts-item">
@@ -394,11 +397,6 @@
                 <li class="popular-posts-item">
                         <div class="popular-posts-title">
                             <a href="/Blog/posts/4162982688/" rel="bookmark">Python中的多執行緒(multithread)及多程序(multiprocessing)</a>
-                        </div>
-                    </li>
-                <li class="popular-posts-item">
-                        <div class="popular-posts-title">
-                            <a href="/Blog/posts/440569875/" rel="bookmark">使用Container來快速建立開發環境(以python為例)</a>
                         </div>
                     </li>
             </ul>
@@ -430,7 +428,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://natlee.github.com/Blog/posts/2800319203/" title="使用Django框架建置圖片上傳與展示的平台">https://natlee.github.com/Blog/posts/2800319203/</a>
+      <a href="https://natlee.github.com/Blog/posts/2800319203/" title="使用Django版本2去建置圖片上傳與展示的平台">https://natlee.github.com/Blog/posts/2800319203/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
@@ -488,13 +486,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">137k</span>
+    <span title="Word count total">142k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:09</span>
+    <span title="Reading time total">4:19</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
