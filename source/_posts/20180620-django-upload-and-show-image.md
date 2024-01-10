@@ -1,5 +1,5 @@
 ---
-title: 使用Django框架建置圖片上傳與展示的平台
+title: 使用Django版本2去建置圖片上傳與展示的平台
 categories: develop
 tags:
   - django
@@ -23,6 +23,8 @@ date: 2018-06-20 00:00:00
 
 ## 準備材料
 ----------
+
+> 2024/01/10 更新：這邊有新版本的教學[使用Django版本4及5建置圖片上傳與展示的平台](https://natlee.github.io/Blog/posts/76205532/)
 
 我使用的Python版本是3.6.5，以及Django版本是2.0.6
 處理圖片可能需要使用到pillow套件，資料庫則要用到mysqlclinent
@@ -221,31 +223,15 @@ TEMPLATES = [
 > http://localhost:8000/uploadImg/
 
 先到上傳圖片的頁面，按下選擇檔案挑好圖片並按送出。
-![](https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Django_Upload_and_Show_Image/01.png)
+![upload-page](https://i.imgur.com/cVPGz03.png)
 
 因為是簡易頁面，所以在上傳成功時，畫面中並不會有任何提示。
-
-這時，你會看到命令列出現下列資訊。
-```bash
-    [20/Jun/2018 06:38:52] "GET /uploadImg/ HTTP/1.1" 200 422
-    Not Found: /favicon.ico
-    [20/Jun/2018 06:38:53] "GET /favicon.ico HTTP/1.1" 404 2319
-    [20/Jun/2018 06:39:37] "POST /uploadImg/ HTTP/1.1" 200 422
-```
-意思是一開始進去網頁載入頁面，然後找不到favicon的icon圖片
-最後一行則返回200，代表圖片已經POST成功。
 
 * 顯示圖片
 > http://localhost:8000/showImg/
 
 再到展示的頁面就可以看到剛剛上傳的照片了。
-![](https://raw.githubusercontent.com/NatLee/BlogSource/master/Image/Django_Upload_and_Show_Image/02.png)
-
-```bash
-    [20/Jun/2018 06:40:04] "GET /showImg/ HTTP/1.1" 200 344
-    [20/Jun/2018 06:40:04] "GET /media/img/riko.jpg HTTP/1.1" 200 65002
-```
-在命令列可以看到返回200代表載入頁面並下載圖片成功。
+![show-page](https://i.imgur.com/9vumG0w.png)
 
 ## 結語
 ----------
