@@ -323,3 +323,10 @@ Quit the server with CONTROL-C.
 - [django 实现图片上传和显示操作](https://blog.csdn.net/c_beautiful/article/details/79755368)
 - [Django上傳並顯示圖片](https://hk.saowen.com/a/025706bf034bd83359bffe190ab6cf5fc62398a67bc0589b4552b6e33b165c34)
 
+
+---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/%E5%89%8D%E8%A8%80-de423396bb7f)
+
