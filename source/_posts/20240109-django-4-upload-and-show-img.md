@@ -1,5 +1,5 @@
 ---
-title: 使用Django版本4或5建置圖片上傳與展示的平台
+title: 使用Django 4 建置圖片上傳與展示的平台
 categories: develop
 tags:
   - django
