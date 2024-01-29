@@ -221,6 +221,17 @@ BlueStacks的開發者或許也是一樣，這個問題他們內部可能早就�
 
 ---
 
+> 2024.01.29 更新
+> 補充一下我的PC規格
+> CPU: 12th Gen Intel(R) Core(TM) i7–12700 2.10 GHz
+> MB: ASUS TUF GAMING B660M-PLUS D4
+> RAM: DDR4 16x2 GB
+> GPU: ASUS TUF NVIDIA RTX4080
+> OS: Windows 11 Pro 23H2 22631.3007
+> DISK: Crucial P5 Plus 2TB PCIe M.2 2280SS SSD
+
+---
+
 這篇文章同步發表於 Medium ，歡迎留言討論！
 
 [Medium 文章連結](https://medium.com/@natlee_/bluestacks-%E5%8F%8A-nox-player-%E5%9C%A8%E6%9C%89-hyper-v-%E7%9A%84-windows-11-%E4%B8%8A%E7%9A%84%E6%94%AF%E6%8F%B4%E7%8B%80%E6%B3%81-9a8c2ca8f13)
