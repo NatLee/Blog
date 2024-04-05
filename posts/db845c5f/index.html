@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"natlee.github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="前言 之前使用樹莓派的時候，都是透過HDMI接上螢幕，再透過鍵盤滑鼠操作。但是萬一手邊沒有螢幕跟鍵盤滑鼠，要怎麼操作呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用USB Ethernet Gadget連接Raspberry Pi Zero W 2">
+<meta property="og:url" content="https://natlee.github.com/Blog/posts/db845c5f/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言 之前使用樹莓派的時候，都是透過HDMI接上螢幕，再透過鍵盤滑鼠操作。但是萬一手邊沒有螢幕跟鍵盤滑鼠，要怎麼操作呢？">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/I5WdHYc.png">
+<meta property="og:image" content="https://i.imgur.com/aZJZlVE.png">
+<meta property="og:image" content="https://i.imgur.com/nq6Mx1m.png">
+<meta property="og:image" content="https://i.imgur.com/X6CmYE9.png">
+<meta property="og:image" content="https://i.imgur.com/3RRKhkd.png">
+<meta property="og:image" content="https://i.imgur.com/rrIMM31.png">
+<meta property="og:image" content="https://i.imgur.com/v3W25iF.png">
+<meta property="og:image" content="https://i.imgur.com/FO5BQva.png">
+<meta property="og:image" content="https://i.imgur.com/uLymh1F.png">
+<meta property="og:image" content="https://i.imgur.com/6pv5oL5.png">
+<meta property="article:published_time" content="2024-04-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-05T07:46:12.957Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="raspberry">
+<meta property="article:tag" content="pi">
+<meta property="article:tag" content="ethernet gadget">
+<meta property="article:tag" content="usb">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/I5WdHYc.png">
+
+
+<link rel="canonical" href="https://natlee.github.com/Blog/posts/db845c5f/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/db845c5f/","path":"posts/db845c5f/","title":"使用USB Ethernet Gadget連接Raspberry Pi Zero W 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用USB Ethernet Gadget連接Raspberry Pi Zero W 2 | Nat's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+    <!-- head AdSense -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({google_ad_client: 'ca-pub-6070159426076964', enable_page_level_ads: true});
+    </script>
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%96%E5%82%99%E9%96%8B%E5%A7%8B"><span class="nav-number">2.</span> <span class="nav-text">準備開始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F"><span class="nav-number">3.</span> <span class="nav-text">安裝步驟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">4.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVf" title="Medium → https:&#x2F;&#x2F;medium.com&#x2F;@natlee_"><i class="fab fa-medium fa-fw"></i>Medium</span>
+      </span>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://natlee.github.com/Blog/posts/db845c5f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用USB Ethernet Gadget連接Raspberry Pi Zero W 2 | Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用USB Ethernet Gadget連接Raspberry Pi Zero W 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-04-04 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-04T00:00:00+08:00">2024-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-04-05 15:46:12" itemprop="dateModified" datetime="2024-04-05T15:46:12+08:00">2024-04-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+    </span>
+
+  
+
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>4 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://i.imgur.com/I5WdHYc.png" alt="rpi-zero"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>之前使用樹莓派的時候，都是透過HDMI接上螢幕，再透過鍵盤滑鼠操作。<br>但是萬一手邊沒有螢幕跟鍵盤滑鼠，要怎麼操作呢？</p>
+<span id="more"></span>
+
+<h2 id="準備開始"><a href="#準備開始" class="headerlink" title="準備開始"></a>準備開始</h2><p>首先，我們需要準備以下材料：</p>
+<ul>
+<li>1 x Raspberry Pi 4 or Zero &#x2F; Zero W &#x2F; Zero 2 W 或是更新</li>
+<li>1 x MicroSD 卡</li>
+<li>1 x 能夠讀取 MicroSD 卡的裝置</li>
+<li>1 x 筆電或是桌機</li>
+<li>1 x MicroUSB to USB 連接線</li>
+</ul>
+<blockquote>
+<p>筆電或是桌機必須是<code>Windows</code>，因為<code>Linux</code>設定太坑了，所以我沒成功過，然後<code>MacOS</code>可能可以，但我沒試過</p>
+</blockquote>
+<h2 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h2><ol>
+<li><p>我們要先下載 Raspberry Pi OS 的映像檔並安裝，這邊建議直接使用 <span class="exturl" data-url="aHR0cHM6Ly93d3cucmFzcGJlcnJ5cGkub3JnL3NvZnR3YXJlLw==">Raspberry Pi Imager<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>這邊注意！建議選<code>64-bit Full</code>的版本，其他版本我沒有試過，不確定是否有支援<br> <img data-src="https://i.imgur.com/aZJZlVE.png" alt="select-os"></p>
+</blockquote>
+</li>
+<li><p>設定安裝的主機名稱（hostname）以及使用者帳密（username&#x2F;password）<br> <img data-src="https://i.imgur.com/nq6Mx1m.png" alt="customize-settings"></p>
+</li>
+<li><p>等待安裝完成，並重新插入 MicroSD 卡到電腦中</p>
+</li>
+<li><p>找到 MicroSD 卡的 <code>bootfs</code> 磁碟中的 <code>config.txt</code> 檔案</p>
+<ol>
+<li><p>新增一行在特定位置</p>
+<blockquote>
+<p>位置一定要對！網路上很多教學都只說新增一行，但沒說要新增在哪裡🥹<br> <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment"># Enable audio (loads snd_bcm2835)</span></span><br><span class="line"><span class="attr">dtparam</span>=audio=<span class="literal">on</span></span><br><span class="line"><span class="attr">dtoverlay</span>=dwc2</span><br><span class="line"></span><br><span class="line"><span class="comment"># Automatically load overlays for detected cameras</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure><br> 結果如下：<br> <img data-src="https://i.imgur.com/X6CmYE9.png" alt="add-dtoverlay"></p>
+</blockquote>
+</li>
+<li><p>接著，將<code>otg_mode=1</code>給註解掉</p>
+ <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="section">[cm4]</span></span><br><span class="line"><span class="comment"># Enable host mode on the 2711 built-in XHCI USB controller.</span></span><br><span class="line"><span class="comment"># This line should be removed if the legacy DWC2 controller is required</span></span><br><span class="line"><span class="comment"># (e.g. for USB device mode) or if USB support is not required.</span></span><br><span class="line"><span class="comment"># otg_mode=1 &lt;---- 就是這行</span></span><br><span class="line"></span><br><span class="line"><span class="section">[all]</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>找到 MicroSD 卡的 <code>bootfs</code> 磁碟中的 <code>cmdline.txt</code> 檔案</p>
+<ol>
+<li>在<code>rootwait</code>後面加上<code>modules-load=dwc2,g_ether</code><blockquote>
+<p>因為cmdline只有一行，要注意不要加錯位置<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">... rootwait modules-load=dwc2,g_ether quiet splash ...</span><br></pre></td></tr></table></figure><br> 會變成這樣：<br> <img data-src="https://i.imgur.com/3RRKhkd.png" alt="add-modules-load"></p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>將 MicroSD 卡退出，插入到 Raspberry Pi Zero W 2 中，並連接 MicroUSB to USB 連接線到電腦上。我是用<span class="exturl" data-url="aHR0cHM6Ly93d3cuYW1hem9uLmNvLmpwLy0vZW4vUmFzcGJlcnJ5LURvbmdsZS1FeHBhbnNpb24tR2VlZWtQaS1JbmNsdWRlZC9kcC9CMDdWM0RZNzZG">Raspberry Pi USB Dongle Expansion Board Kit<i class="fa fa-external-link-alt"></i></span>，所以可以直接插上去<br> <img data-src="https://i.imgur.com/rrIMM31.png" alt="insert-pi"></p>
+</li>
+<li><p>如果你的電腦是<code>Windows</code>，會需要安裝<code>RNDIS</code>驅動程式，可以參考<span class="exturl" data-url="aHR0cHM6Ly93aWtpLnNpcGVlZC5jb20vaGFyZHdhcmUvZW4vbWFpeHNlbnNlL21haXhzZW5zZS1hMDc1di9pbnN0YWxsX2RyaXZlcnMuaHRtbCNEb3dubG9hZC1kcml2ZXI=">這篇<i class="fa fa-external-link-alt"></i></span></p>
+<p> 安裝完成後，可以在裝置管理員中看到<code>RNDIS</code>的裝置<br> <img data-src="https://i.imgur.com/v3W25iF.png" alt="device"></p>
+<p> 網路介面卡也會多出一個裝置，這就是直接把 Raspberry Pi Zero W 2 當成網路介面卡<br> <img data-src="https://i.imgur.com/FO5BQva.png" alt="RNDIS"></p>
+</li>
+<li><p>接著，等待一下，Raspberry Pi Zero W 2 會自動開啟並連接到你的電腦上，這時候我們可以先ping一下看看有沒有連上</p>
+<blockquote>
+<p>Pi 有可能會重新連接你的電腦，所以馬上ping可能會失敗，可以看一下網路介面有沒有連上，等一下再試試看<br>     <img data-src="https://i.imgur.com/uLymh1F.png" alt="interface"></p>
+</blockquote>
+<p> 如果網路介面沒有問題，我們可以ping一下看看有沒有連上：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping pi.local</span><br></pre></td></tr></table></figure>
+<p> 成功的話，你會看到類似以下的結果：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Ping pi.local [fe80::f4da:bc9b:9cc1:2daf%26] (使用 32 位元組的資料):</span><br><span class="line">回覆自 fe80::f4da:bc9b:9cc1:2daf%26: 時間&lt;1ms</span><br><span class="line">回覆自 fe80::f4da:bc9b:9cc1:2daf%26: 時間&lt;1ms</span><br><span class="line">回覆自 fe80::f4da:bc9b:9cc1:2daf%26: 時間&lt;1ms</span><br><span class="line">回覆自 fe80::f4da:bc9b:9cc1:2daf%26: 時間&lt;1ms</span><br><span class="line"></span><br><span class="line">fe80::f4da:bc9b:9cc1:2daf%26 的 Ping 統計資料:</span><br><span class="line">    封包: 已傳送 = 4，已收到 = 4, 已遺失 = 0 (0% 遺失)，</span><br><span class="line">大約的來回時間 (毫秒):</span><br><span class="line">    最小值 = 0ms，最大值 = 0ms，平均 = 0ms</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最後，我們可以透過<code>ssh</code>連接到 Raspberry Pi Zero W 2 上</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh pi.local</span><br></pre></td></tr></table></figure>
+<p> <img data-src="https://i.imgur.com/6pv5oL5.png" alt="connect"></p>
+</li>
+</ol>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><hr>
+<p>我們從沒有外部螢幕和鍵盤的情況下，利用USB連線設定和訪問Raspberry Pi Zero W 2</p>
+<p>但可惜的是，我這邊沒有測試成功Linux和MacOS，如果有人成功了，歡迎留言告訴我，我再補充上去🥲</p>
+<p>Linux的坑滿多的，連上去還有可能會遇到找不到裝置的問題，所以我就放棄了😂</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><hr>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubWFrZXVzZW9mLmNvbS9ob3ctdG8tY29ubmVjdC1yYXNwYmVycnktcGktdG8tbGFwdG9wLW9yLXBjLXVzYi8=">How to Connect a Raspberry Pi to a PC or Laptop Using USB<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5hZGFmcnVpdC5jb20vdHVybmluZy15b3VyLXJhc3BiZXJyeS1waS16ZXJvLWludG8tYS11c2ItZ2FkZ2V0L2V0aGVybmV0LWdhZGdldA==">Turning your Raspberry Pi Zero into a USB Gadget &gt; Ethernet Gadget<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93aWtpLnNpcGVlZC5jb20vaGFyZHdhcmUvZW4vbWFpeHNlbnNlL21haXhzZW5zZS1hMDc1di9pbnN0YWxsX2RyaXZlcnMuaHRtbA==">Windows&#x2F;Install RNDIS driver<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZmFjdG9yeWZvcndhcmQuY29tL3BpLXplcm8tdy1oZWFkbGVzcy1zZXR1cC13aW5kb3dzMTAtcm5kaXMtZHJpdmVyLWlzc3VlLXJlc29sdmVkLw==">Raspberry Pi Zero W Headless setup – Windows 10 RNDIS Driver issue resolved<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+    <!-- related posts -->
+        <div class="popular-posts-header">相關文章推薦</div>
+        <ul class="popular-posts">
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/21d73346/" rel="bookmark">在SSD上爲Raspberry Pi 4B安裝64-bit的作業系統</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/6ac02cd9/" rel="bookmark">在 Raspberry Pi Zero 2 W上安裝 64-bit 的 Pi OS</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/5a40e3d8/" rel="bookmark">Ubuntu與Windows使用SSH金鑰快速登入的方法</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/509187850/" rel="bookmark">使用docker container建立SSH反向通道穿透內網連接內部裝置</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/53cbcaf3/" rel="bookmark">在群暉Synology NAS DSM7.0上安裝套件管理器</a>
+                        </div>
+                    </li>
+            </ul>
+
+    
+        <!-- like coin -->
+        <div>
+            <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
+        </div>
+        <!-- binance QR code -->
+        <div>
+            <hr>
+                <img src="https://i.imgur.com/VD6XVlC.png" alt="Binance QR code"></img>
+                <div class="post-meta">
+                    <i class="fa fa-heart"></i>TUtgWsPsEFNuuHYA7hNVjvQWbp3W6xRUbz<i class="fa fa-heart"></i>
+                </div>
+
+                <hr></div>
+            
+
+            
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://natlee.github.com/Blog/posts/db845c5f/" title="使用USB Ethernet Gadget連接Raspberry Pi Zero W 2">https://natlee.github.com/Blog/posts/db845c5f/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/ssh/" rel="tag"># ssh</a>
+              <a href="/Blog/tags/linux/" rel="tag"># linux</a>
+              <a href="/Blog/tags/raspberry/" rel="tag"># raspberry</a>
+              <a href="/Blog/tags/pi/" rel="tag"># pi</a>
+              <a href="/Blog/tags/ethernet-gadget/" rel="tag"># ethernet gadget</a>
+              <a href="/Blog/tags/usb/" rel="tag"># usb</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/76205532/" rel="prev" title="使用Django 4 建置圖片上傳與展示的平台">
+                  <i class="fa fa-angle-left"></i> 使用Django 4 建置圖片上傳與展示的平台
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">145k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:23</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://natlee.github.com/Blog/posts/db845c5f/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"a07acad186ba2e24876fcfe192f1fd4a"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
