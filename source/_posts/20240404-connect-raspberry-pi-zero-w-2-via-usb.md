@@ -140,3 +140,10 @@ Linux的坑滿多的，連上去還有可能會遇到找不到裝置的問題，
 - [Turning your Raspberry Pi Zero into a USB Gadget > Ethernet Gadget](https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-gadget)
 - [Windows/Install RNDIS driver](https://wiki.sipeed.com/hardware/en/maixsense/maixsense-a075v/install_drivers.html)
 - [Raspberry Pi Zero W Headless setup – Windows 10 RNDIS Driver issue resolved](https://www.factoryforward.com/pi-zero-w-headless-setup-windows10-rndis-driver-issue-resolved/)
+
+---
+
+這篇文章同步發表於 Medium ，歡迎留言討論！
+
+[Medium 文章連結](https://medium.com/@natlee_/%E4%BD%BF%E7%94%A8usb-ethernet-gadget%E9%80%A3%E6%8E%A5raspberry-pi-zero-w-2-04a2268ca28b)
+
