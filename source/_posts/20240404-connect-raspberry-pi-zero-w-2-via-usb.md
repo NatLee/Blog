@@ -8,6 +8,7 @@ tags:
   - ethernet gadget
   - usb
   - ssh
+abbrlink: db845c5f
 date: 2024-04-04 00:00:00
 ---
 
