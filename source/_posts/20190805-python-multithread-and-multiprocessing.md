@@ -1,11 +1,10 @@
 ---
 title: Python中的多執行緒(multithread)及多程序(multiprocessing)
-categories: develop
+categories: dev
 tags:
   - python
   - multithread
   - multiprocessing
-  - develop
 abbrlink: 4162982688
 date: 2019-08-05 00:00:00
 ---

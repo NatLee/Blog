@@ -1,9 +1,8 @@
 ---
 title: Git 筆記
-categories: develop
+categories: dev
 tags:
   - git
-  - develop
 abbrlink: 4239708371
 date: 2021-09-07 00:00:00
 ---

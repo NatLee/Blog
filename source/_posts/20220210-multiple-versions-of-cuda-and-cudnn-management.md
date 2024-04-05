@@ -1,6 +1,6 @@
 ---
 title: 多版本CUDA及cuDNN管理
-categories: develop
+categories: dev
 tags:
   - cuda
   - cudnn
