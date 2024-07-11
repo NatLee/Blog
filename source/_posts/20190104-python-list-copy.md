@@ -1,6 +1,6 @@
 ---
 title: Python中List的Copy反直覺踩坑
-categories: develop
+categories: dev
 tags:
   - code
   - python

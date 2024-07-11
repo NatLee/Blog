@@ -1,6 +1,6 @@
 ---
 title: 使用Container來快速建立開發環境(以python為例)
-categories: develop
+categories: dev
 tags:
   - docker
   - python

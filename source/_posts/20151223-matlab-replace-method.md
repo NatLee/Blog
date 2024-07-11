@@ -1,6 +1,6 @@
 ---
 title: Matlab 取代語法
-categories: develop
+categories: dev
 tags:
   - matlab
   - code

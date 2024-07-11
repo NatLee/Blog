@@ -1,6 +1,6 @@
 ---
 title: 使用Django版本2去建置圖片上傳與展示的平台
-categories: develop
+categories: dev
 tags:
   - django
   - python
