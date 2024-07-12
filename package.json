@@ -29,6 +29,6 @@
     "hexo-symbols-count-time": "^0.7.1",
     "hexo-theme-landscape": "^1.0.0",
     "hexo-theme-next": "^8.20.0",
-    "yarn": "^1.22.21"
+    "yarn": "^1.22.22"
   }
 }
