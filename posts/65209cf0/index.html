@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"natlee.github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="前言 明明前後端分離這麼流行，為什麼 Django 的 Allauth 套件沒有支援直接返回 JWT 的功能呢？這篇文章就來探討一下其中的奧妙之處">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Django 中使用 Allauth 綁定 JWT 登入">
+<meta property="og:url" content="https://natlee.github.com/Blog/posts/65209cf0/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言 明明前後端分離這麼流行，為什麼 Django 的 Allauth 套件沒有支援直接返回 JWT 的功能呢？這篇文章就來探討一下其中的奧妙之處">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://github.com/NatLee/django-allauth-JWT-template/raw/main/doc/dashboard.png">
+<meta property="article:published_time" content="2024-08-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-12T07:43:31.327Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="django">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="allauth">
+<meta property="article:tag" content="jwt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/NatLee/django-allauth-JWT-template/raw/main/doc/dashboard.png">
+
+
+<link rel="canonical" href="https://natlee.github.com/Blog/posts/65209cf0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/65209cf0/","path":"posts/65209cf0/","title":"在 Django 中使用 Allauth 綁定 JWT 登入"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在 Django 中使用 Allauth 綁定 JWT 登入 | Nat's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+    <!-- head AdSense -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({google_ad_client: 'ca-pub-6070159426076964', enable_page_level_ads: true});
+    </script>
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%BE%8C%E7%AB%AF%E5%88%86%E9%9B%A2%E7%9A%84-Google-%E7%99%BB%E5%85%A5"><span class="nav-number">2.1.</span> <span class="nav-text">前後端分離的 Google 登入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Allauth-%E8%88%87-JWT"><span class="nav-number">2.2.</span> <span class="nav-text">Allauth 與 JWT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVf" title="Medium → https:&#x2F;&#x2F;medium.com&#x2F;@natlee_"><i class="fab fa-medium fa-fw"></i>Medium</span>
+      </span>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://natlee.github.com/Blog/posts/65209cf0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在 Django 中使用 Allauth 綁定 JWT 登入 | Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 Django 中使用 Allauth 綁定 JWT 登入
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-08-11 00:00:00" itemprop="dateCreated datePublished" datetime="2024-08-11T00:00:00+08:00">2024-08-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-08-12 15:43:31" itemprop="dateModified" datetime="2024-08-12T15:43:31+08:00">2024-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+    </span>
+
+  
+
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>8.5k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>15 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>明明前後端分離這麼流行，為什麼 Django 的 Allauth 套件沒有支援直接返回 JWT 的功能呢？<br>這篇文章就來探討一下其中的奧妙之處</p>
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><hr>
+<p>眾所周知，Django 的 Allauth 套件是一個非常強大的第三方登入套件，可以讓我們快速的實現第三方登入的功能<br>但是它的登入方式是基於 session 的，這對於前後端分離的專案來說，就有點不太方便了</p>
+<h3 id="前後端分離的-Google-登入"><a href="#前後端分離的-Google-登入" class="headerlink" title="前後端分離的 Google 登入"></a>前後端分離的 Google 登入</h3><p>一般來說，前後端分離的專案通常是使用 JWT 來做登入驗證，這邊使用 Django 以 Google 登入為例，來看看前後端如何串接</p>
+<ul>
+<li><p>前端</p>
+<p>前端在HTML的部分，我們需要引入 Google 登入的 SDK，並且設定好 <code>client_id</code> 和 <code>callback</code></p>
+<p>其中，Google的程式碼會在前端動態載入，去判斷<code>client_id</code>跟<code>當前網址</code>是不是可以被信任<br>也就是說，GCP專案憑證上設定的<code>callback</code>必須跟前端設定的<code>callback</code>一致，否則會出現錯誤</p>
+<p>‵‵&#96;html</p>
+<meta name="google-signin-scope" content="profile email">
+<meta name="google-signin-client_id" content="">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<div id="g_id_onload" data-client_id="" data-callback="getJWTUsingGoogleCredential"></div>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">當使用者登入成功後，會呼叫 `getJWTUsingGoogleCredential` 這個函數，將 Google 登入的 `credential` 傳送給後端</span><br><span class="line"></span><br><span class="line">```javascript</span><br><span class="line">function getJWTUsingGoogleCredential(data) &#123;</span><br><span class="line">  const credential = data.credential;</span><br><span class="line">  $.ajax(&#123;</span><br><span class="line">      method: &quot;POST&quot;,</span><br><span class="line">      url: &quot;/api/auth/google/token/session&quot;,</span><br><span class="line">      data: &#123; credential: credential &#125;</span><br><span class="line">  &#125;).done(function (data) &#123;</span><br><span class="line">      const access_token = data.access;</span><br><span class="line">      const refresh_token = data.refresh_token;</span><br><span class="line">      localStorage.setItem(&#x27;access_token&#x27;, access_token);</span><br><span class="line">      localStorage.setItem(&#x27;refresh_token&#x27;, refresh_token);</span><br><span class="line">      /* ... */</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>後端</p>
+<p>在後端的部分，我們需要自定義一個 Serializer 來處理 Google 登入的 <code>credential</code>，並且驗證這個 <code>credential</code> 是否有效</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> google.oauth2 <span class="keyword">import</span> id_token</span><br><span class="line"><span class="keyword">from</span> google.auth.transport <span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoogleLoginSerializer</span>(serializers.Serializer):</span><br><span class="line">    <span class="comment"># Google login</span></span><br><span class="line">    <span class="comment"># 用於接收Google返回的憑證</span></span><br><span class="line">    credential = serializers.CharField(required=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">verify_token</span>(<span class="params">self, credential: <span class="built_in">str</span></span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        驗證Google返回的id_token</span></span><br><span class="line"><span class="string">        credential: JWT格式的字串</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 使用Google提供的方法驗證token</span></span><br><span class="line">        idinfo = id_token.verify_oauth2_token(</span><br><span class="line">            credential,</span><br><span class="line">            requests.Request(),</span><br><span class="line">            settings.SOCIAL_GOOGLE_CLIENT_ID</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 驗證token的發行者</span></span><br><span class="line">        <span class="keyword">if</span> idinfo[<span class="string">&quot;iss&quot;</span>] <span class="keyword">not</span> <span class="keyword">in</span> [</span><br><span class="line">            <span class="string">&quot;accounts.google.com&quot;</span>,</span><br><span class="line">            <span class="string">&quot;https://accounts.google.com&quot;</span>,</span><br><span class="line">        ]:</span><br><span class="line">            logger.error(<span class="string">&quot;Wrong issuer&quot;</span>)</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&quot;Wrong issuer.&quot;</span>)</span><br><span class="line">        <span class="comment"># 驗證token的受眾</span></span><br><span class="line">        <span class="keyword">if</span> idinfo[<span class="string">&quot;aud&quot;</span>] <span class="keyword">not</span> <span class="keyword">in</span> [settings.SOCIAL_GOOGLE_CLIENT_ID]:</span><br><span class="line">            logger.error(<span class="string">&quot;Could not verify audience&quot;</span>)</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&quot;Could not verify audience.&quot;</span>)</span><br><span class="line">        <span class="comment"># 驗證成功</span></span><br><span class="line">        logger.info(<span class="string">&quot;successfully verified&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> idinfo</span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<p>裡面會拿前端傳過來的 <code>credential</code> 去跟Google驗證，並且返回一個 <code>idinfo</code><br>這個 <code>idinfo</code> 就是 Google 登入的資訊，裡面包含了使用者的名字及電子郵件資訊</p>
+<p>其中， <code>SOCIAL_GOOGLE_CLIENT_ID</code> 是我們在 GCP 專案中設定的 <code>client_id</code>，這邊要注意的是，這個 <code>client_id</code> 必須跟前端設定的 <code>client_id</code> 一致</p>
+<p><code>idinfo</code>的範例資料如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="comment">// These six fields are included in all Google ID Tokens.</span></span><br><span class="line"><span class="attr">&quot;iss&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://accounts.google.com&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;sub&quot;</span><span class="punctuation">:</span> <span class="string">&quot;110169484474386276334&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;azp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;aud&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;iat&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1433978353&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;exp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1433981953&quot;</span><span class="punctuation">,</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// These seven fields are only included when the user has granted the &quot;profile&quot; and</span></span><br><span class="line"><span class="comment">// &quot;email&quot; OAuth scopes to the application.</span></span><br><span class="line"><span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;testuser@gmail.com&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;email_verified&quot;</span><span class="punctuation">:</span> <span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;name&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;Test User&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;picture&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://lh4.googleusercontent.com/-kYgzyAWpZzJ/ABCDEFGHI/AAAJKLMNOP/tIXL9Ir44LE/s99-c/photo.jpg&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;given_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Test&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;family_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;User&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;locale&quot;</span><span class="punctuation">:</span> <span class="string">&quot;en&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>其他詳細的資料可以參考 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2dsZS5jb20vaWRlbnRpdHkvc2lnbi1pbi93ZWIvYmFja2VuZC1hdXRoP2hsPXpoLXR3">Google 官方文件<i class="fa fa-external-link-alt"></i></span></p>
+<p>當驗證成功後，我們就可以使用 <code>idinfo</code> 中的資料來創建或更新使用者的資料，並且返回 JWT 給前端</p>
+<p>但是問題來了，不是所有的第三方登入都像 Google 一樣提供了前端動態載入的一頁式 SDK，那該怎麼辦呢？</p>
+<p>而且只有登入的部分是不夠的，我們還需要處理登出、綁定、解綁等等的功能！</p>
+</li>
+</ul>
+<h3 id="Allauth-與-JWT"><a href="#Allauth-與-JWT" class="headerlink" title="Allauth 與 JWT"></a>Allauth 與 JWT</h3><p>如果我們一個個去實現所有的第三方登入，那就太麻煩了，這時候 Allauth 就派上用場了</p>
+<p>根據<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmFsbGF1dGgub3JnL2VuL2xhdGVzdC9pbnN0YWxsYXRpb24vcXVpY2tzdGFydC5odG1s">Allauth官方文件<i class="fa fa-external-link-alt"></i></span>，我們可以快速的將他整合到我們的專案中</p>
+<p>他有非常多的providers可以使用，包括 Google、Facebook、Twitter、Github等等</p>
+<p>但要記得把我們需要的部分加入到 <code>INSTALLED_APPS</code> 中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">&#x27;allauth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;allauth.account&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;allauth.socialaccount&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;allauth.socialaccount.providers.google&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>在URL的部分，不同的provider會有不同的路徑，當我們將他的URL加入到我們的專案中後，就可以直接使用他的登入功能</p>
+<p>假設我們在專案加入一個 app ，叫做 <code>authentication</code>，我們可以在專案以及app的 <code>urls.py</code> 中加入以下的路徑：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project/urls.py</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    <span class="comment"># ===================</span></span><br><span class="line">    <span class="comment"># Custom Allauth Routes</span></span><br><span class="line">    <span class="comment"># ===================</span></span><br><span class="line">    path(<span class="string">&#x27;api/allauth/&#x27;</span>, include(<span class="string">&#x27;authentication.urls&#x27;</span>)),</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># authentication/urls.py</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># ===================</span></span><br><span class="line">    <span class="comment"># Django Allauth</span></span><br><span class="line">    <span class="comment"># ===================</span></span><br><span class="line">    <span class="comment"># Include Allauth Routes</span></span><br><span class="line">    path(<span class="string">&#x27;&#x27;</span>, include(<span class="string">&#x27;allauth.urls&#x27;</span>)),</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>當我們已經綁定好路徑後，我們就可以直接使用 <code>allauth</code> 提供的登入功能了</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 第三方登入功能 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">title</span>=<span class="string">&quot;Google&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/api/allauth/google/login/?process=login&quot;</span> <span class="attr">class</span>=<span class="string">&quot;social-login-btn&quot;</span>&gt;</span>登入 Google<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 第三方綁定功能 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">title</span>=<span class="string">&quot;Google&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/api/allauth/google/login/?process=connect&quot;</span> <span class="attr">class</span>=<span class="string">&quot;social-login-btn&quot;</span>&gt;</span>綁定 Google<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不過，我們如果直接點下登入的話，會發現他是基於 session 的登入的<br>最後，跳轉回來的時候，會發現他是直接返回到 <code>/accounts/profile/</code><br>這樣就無法直接返回 JWT 給前端了！</p>
+<p>因此，我們需要自定義一個 <code>Adapter</code> 來處理複寫 <code>allauth</code> 的登入流程</p>
+<p>我們先在 <code>authentication</code> app 中新增一個 <code>adapters.py</code>，並且繼承 <code>DefaultSocialAccountAdapter</code></p>
+<p>然後，我們可以在 <code>get_connect_redirect_url</code> 這個函數中處理社交帳號連接的重定向</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> allauth.socialaccount.adapter <span class="keyword">import</span> DefaultSocialAccountAdapter</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MySocialAccountAdapter</span>(<span class="title class_ inherited__">DefaultSocialAccountAdapter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_connect_redirect_url</span>(<span class="params">self, request, socialaccount</span>):</span><br><span class="line">        <span class="comment"># 處理社交帳號連接的重定向</span></span><br><span class="line">        base_url = reverse(<span class="string">&#x27;social-connect-callback&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> base_url</span><br></pre></td></tr></table></figure>
+
+<p>接著，我們在 <code>authentication</code> app 中新增一個 <code>views.py</code>以及一個 <code>urls.py</code>，來處理社交帳號的連接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># authentication/views.py</span></span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">social_login_callback</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;social_login_callback.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># authentication/urls.py</span></span><br><span class="line">urlpatterns += [</span><br><span class="line">    <span class="comment"># ===================</span></span><br><span class="line">    <span class="comment"># Custom Callback Route</span></span><br><span class="line">    <span class="comment"># ===================</span></span><br><span class="line">    <span class="comment"># 第三方帳號登入 Callback</span></span><br><span class="line">    path(<span class="string">&#x27;social/login/callback&#x27;</span>, views.social_login_callback, name=<span class="string">&#x27;social-login-callback&#x27;</span>),</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最後，我們建立一個空白檔案 <code>authentication/templates/social_login_callback.html</code></p>
+<p>這樣，當我們點擊登入的時候，就會跳轉到 <code>social_login_callback.html</code> 這個頁面<br>雖然這個頁面是空白的，但是我們可以在這個頁面中加入一些 JavaScript 來處理JWT的轉移！</p>
+<p>我們再回到 <code>adapter.py</code> 中，我們可以再建立一個新的 <code>Adapter</code> 來處理登入的重定向</p>
+<p>這邊我們建立一個叫做 <code>MyAccountAdapter</code> 的 <code>Adapter</code>，並且繼承 <code>DefaultAccountAdapter</code></p>
+<p>裡面定義了一個 <code>get_login_redirect_url</code> 函數，判斷是否為社交帳號登入，如果是的話，就返回 JWT 給前端；如果不是的話，就使用預設的重定向</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyAccountAdapter</span>(<span class="title class_ inherited__">DefaultAccountAdapter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_login_redirect_url</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="comment"># 檢查是否為社交帳號登入</span></span><br><span class="line">        auth_methods = request.session.get(<span class="string">&#x27;account_authentication_methods&#x27;</span>)</span><br><span class="line">        <span class="comment"># ========================</span></span><br><span class="line">        <span class="comment"># 這邊判斷是否為社交帳號登入</span></span><br><span class="line">        <span class="keyword">if</span> auth_methods <span class="keyword">and</span> auth_methods[<span class="number">0</span>].get(<span class="string">&#x27;method&#x27;</span>) == <span class="string">&quot;socialaccount&quot;</span>:</span><br><span class="line">            <span class="comment"># 獲取 tokens</span></span><br><span class="line">            tokens = self.get_tokens(request)</span><br><span class="line">            base_url = reverse(<span class="string">&#x27;social-login-callback&#x27;</span>)</span><br><span class="line">            query_params = urlencode(&#123;<span class="string">&#x27;tokens&#x27;</span>: json.dumps(tokens)&#125;)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;base_url&#125;</span>?<span class="subst">&#123;query_params&#125;</span>&quot;</span></span><br><span class="line">        <span class="comment"># ========================</span></span><br><span class="line">        <span class="comment"># 如果不是社交帳號登入，使用預設跳轉</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>().get_login_redirect_url(request)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_tokens</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="keyword">from</span> rest_framework_simplejwt.tokens <span class="keyword">import</span> RefreshToken</span><br><span class="line">        user = request.user</span><br><span class="line">        refresh = RefreshToken.for_user(user)</span><br><span class="line">        <span class="comment"># 返回 tokens</span></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="string">&#x27;access_token&#x27;</span>: <span class="built_in">str</span>(refresh.access_token),</span><br><span class="line">            <span class="string">&#x27;refresh_token&#x27;</span>: <span class="built_in">str</span>(refresh)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣我們第三方登入完成後，就會跳轉到 <code>social_login_callback.html</code> 這個頁面，並且返回 JWT 到網址上</p>
+<p>我們只要在 <code>social_login_callback.html</code> 中去解析網址上的 JWT，並且存儲到 localStorage 中，就可以完成整個登入流程了</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 解析 URL 參數</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">function</span> <span class="title function_">getUrlParameter</span>(<span class="params">name</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            name = name.<span class="title function_">replace</span>(<span class="regexp">/[\[]/</span>, <span class="string">&#x27;\\[&#x27;</span>).<span class="title function_">replace</span>(<span class="regexp">/[\]]/</span>, <span class="string">&#x27;\\]&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> regex = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;[\\?&amp;]&#x27;</span> + name + <span class="string">&#x27;=([^&amp;#]*)&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> results = regex.<span class="title function_">exec</span>(location.<span class="property">search</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> results === <span class="literal">null</span> ? <span class="string">&#x27;&#x27;</span> : <span class="built_in">decodeURIComponent</span>(results[<span class="number">1</span>].<span class="title function_">replace</span>(<span class="regexp">/\+/g</span>, <span class="string">&#x27; &#x27;</span>));</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 獲取 tokens</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> tokensJson = <span class="title function_">getUrlParameter</span>(<span class="string">&#x27;tokens&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 如果 tokens 存在，則解析並存儲到 localStorage</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (tokensJson) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">try</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> tokens = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(tokensJson);</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&#x27;access_token&#x27;</span>, tokens.<span class="property">access_token</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&#x27;refresh_token&#x27;</span>, tokens.<span class="property">refresh_token</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Tokens 已成功儲存&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125; <span class="keyword">catch</span> (e) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;解析或存儲 tokens 時發生錯誤:&#x27;</span>, e);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&#x27;未找到 tokens&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;)();</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣，我們就完成了整個 Allauth 與 JWT 的串接了！</p>
+<p>從前端點擊登入，到跳轉到我們定義的頁面，頁面的 JavaScript 會解析網址上的 JWT，並且存儲到 localStorage 中！</p>
+<p>因為 Allauth 本身已經提供很多provider，所以我們改寫 <code>Adapter</code> 的部分就可以應對所有的第三方登入了！</p>
+<p>最後，要記得 <code>project/settings.py</code> 中加入我們自定義的 <code>Adapter</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ACCOUNT_ADAPTER = <span class="string">&#x27;authentication.adapters.MyAccountAdapter&#x27;</span></span><br><span class="line">SOCIALACCOUNT_ADAPTER = <span class="string">&#x27;authentication.adapters.MySocialAccountAdapter&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><hr>
+<p>這篇文章想分享在 Django 中使用 Allauth 綁定 JWT 登入的方法</p>
+<p>但除了文章內改寫的部分外，還有很多眉角，例如：</p>
+<ul>
+<li>帳號的email是否重複</li>
+<li>是否有重複綁定的問題</li>
+<li>Email的 domain 是否屬於白名單</li>
+<li>Callback視窗是否會自己關閉</li>
+<li>主視窗要怎麼知道登入成功</li>
+</ul>
+<p>等等，這些需要考慮的問題有在我GitHub上專案中的程式碼有提供解決方案，有興趣的人可以參考一下</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS9kamFuZ28tYWxsYXV0aC1KV1QtdGVtcGxhdGUvYmxvYi9tYWluL2JhY2tlbmQvYXV0aGVudGljYXRpb24vYWRhcHRlci5weSNMNDU=">django-allauth-JWT-template&#x2F;authentication&#x2F;adapter.py#L45<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>這個專案有提供一個playground，可以直接測試各種功能：</p>
+<p><img data-src="https://github.com/NatLee/django-allauth-JWT-template/raw/main/doc/dashboard.png" alt="demo-cover"></p>
+<p>原本我不想串接Allauth，因為在前後端分離的狀況下，session登入有點難搞</p>
+<p>但是後來發現Allauth提供的provider非常多，比起自己一個個維護</p>
+<p>只要多一個callback頁面，就可以省下一堆麻煩，那還有不用的理由嗎？</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmFsbGF1dGgub3JnL2VuL2xhdGVzdC9pbmRleC5odG1s">Django Allauth<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<hr>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><a href="">Medium 文章連結</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+    <!-- related posts -->
+        <div class="popular-posts-header">相關文章推薦</div>
+        <ul class="popular-posts">
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/2800319203/" rel="bookmark">使用Django版本2去建置圖片上傳與展示的平台</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/76205532/" rel="bookmark">使用Django 4 建置圖片上傳與展示的平台</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/c83a1208/" rel="bookmark">以Django爲後端開發集成式管理的Docker開發環境</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/41a1fec1/" rel="bookmark">以Django建立Docker GUI控制界面</a>
+                        </div>
+                    </li>
+                <li class="popular-posts-item">
+                        <div class="popular-posts-title">
+                            <a href="/Blog/posts/165930856/" rel="bookmark">Python中List的Copy反直覺踩坑</a>
+                        </div>
+                    </li>
+            </ul>
+
+    
+        <!-- like coin -->
+        <div>
+            <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
+        </div>
+        <!-- binance QR code -->
+        <div>
+            <hr>
+                <img src="https://i.imgur.com/VD6XVlC.png" alt="Binance QR code"></img>
+                <div class="post-meta">
+                    <i class="fa fa-heart"></i>TUtgWsPsEFNuuHYA7hNVjvQWbp3W6xRUbz<i class="fa fa-heart"></i>
+                </div>
+
+                <hr></div>
+            
+
+            
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://natlee.github.com/Blog/posts/65209cf0/" title="在 Django 中使用 Allauth 綁定 JWT 登入">https://natlee.github.com/Blog/posts/65209cf0/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/django/" rel="tag"># django</a>
+              <a href="/Blog/tags/python/" rel="tag"># python</a>
+              <a href="/Blog/tags/allauth/" rel="tag"># allauth</a>
+              <a href="/Blog/tags/jwt/" rel="tag"># jwt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/db845c5f/" rel="prev" title="使用USB Ethernet Gadget連接Raspberry Pi Zero W 2">
+                  <i class="fa fa-angle-left"></i> 使用USB Ethernet Gadget連接Raspberry Pi Zero W 2
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">153k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:39</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/sidebar.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://natlee.github.com/Blog/posts/65209cf0/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"c30ebb24b8b12903db33bfcd84842afa"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
