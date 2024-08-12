@@ -6,8 +6,11 @@ tags:
   - django
   - allauth
   - jwt
+abbrlink: 65209cf0
 date: 2024-08-11 00:00:00
 ---
+
+![](https://files.realpython.com/media/Write-an-App-with-Login-with-Google-Option_Watermarked.4060f8cc0b67.jpg)
 
 ## 前言
 
@@ -37,16 +40,16 @@ date: 2024-08-11 00:00:00
   也就是說，GCP專案憑證上設定的`callback`必須跟前端設定的`callback`一致，否則會出現錯誤
 
   ‵‵`html
-  <meta name="google-signin-scope" content="profile email">
-  <meta name="google-signin-client_id" content="{{ client_id }}">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <div id="g_id_onload" data-client_id="{{ client_id }}" data-callback="getJWTUsingGoogleCredential"></div>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="{{ client_id }}">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload" data-client_id="{{ client_id }}" data-callback="getJWTUsingGoogleCredential"></div>
   ```
 
   當使用者登入成功後，會呼叫 `getJWTUsingGoogleCredential` 這個函數，將 Google 登入的 `credential` 傳送給後端
 
   ```javascript
-  function getJWTUsingGoogleCredential(data) {
+    function getJWTUsingGoogleCredential(data) {
     const credential = data.credential;
     $.ajax({
         method: "POST",
@@ -59,7 +62,7 @@ date: 2024-08-11 00:00:00
         localStorage.setItem('refresh_token', refresh_token);
         /* ... */
     });
-  }
+    }
   ```
 
 - 後端
@@ -67,39 +70,39 @@ date: 2024-08-11 00:00:00
   在後端的部分，我們需要自定義一個 Serializer 來處理 Google 登入的 `credential`，並且驗證這個 `credential` 是否有效
 
   ```python
-  from google.oauth2 import id_token
-  from google.auth.transport import requests
+    from google.oauth2 import id_token
+    from google.auth.transport import requests
 
-  class GoogleLoginSerializer(serializers.Serializer):
-      # Google login
-      # 用於接收Google返回的憑證
-      credential = serializers.CharField(required=True)
-      def verify_token(self, credential: str) -> dict:
-          """
-          驗證Google返回的id_token
-          credential: JWT格式的字串
-          """
-          # 使用Google提供的方法驗證token
-          idinfo = id_token.verify_oauth2_token(
-              credential,
-              requests.Request(),
-              settings.SOCIAL_GOOGLE_CLIENT_ID
-          )
-          # 驗證token的發行者
-          if idinfo["iss"] not in [
-              "accounts.google.com",
-              "https://accounts.google.com",
-          ]:
-              logger.error("Wrong issuer")
-              raise ValueError("Wrong issuer.")
-          # 驗證token的受眾
-          if idinfo["aud"] not in [settings.SOCIAL_GOOGLE_CLIENT_ID]:
-              logger.error("Could not verify audience")
-              raise ValueError("Could not verify audience.")
-          # 驗證成功
-          logger.info("successfully verified")
-          return idinfo
-      # ...
+    class GoogleLoginSerializer(serializers.Serializer):
+        # Google login
+        # 用於接收Google返回的憑證
+        credential = serializers.CharField(required=True)
+        def verify_token(self, credential: str) -> dict:
+            """
+            驗證Google返回的id_token
+            credential: JWT格式的字串
+            """
+            # 使用Google提供的方法驗證token
+            idinfo = id_token.verify_oauth2_token(
+                credential,
+                requests.Request(),
+                settings.SOCIAL_GOOGLE_CLIENT_ID
+            )
+            # 驗證token的發行者
+            if idinfo["iss"] not in [
+                "accounts.google.com",
+                "https://accounts.google.com",
+            ]:
+                logger.error("Wrong issuer")
+                raise ValueError("Wrong issuer.")
+            # 驗證token的受眾
+            if idinfo["aud"] not in [settings.SOCIAL_GOOGLE_CLIENT_ID]:
+                logger.error("Could not verify audience")
+                raise ValueError("Could not verify audience.")
+            # 驗證成功
+            logger.info("successfully verified")
+            return idinfo
+        # ...
   ```
 
   裡面會拿前端傳過來的 `credential` 去跟Google驗證，並且返回一個 `idinfo`
@@ -110,25 +113,25 @@ date: 2024-08-11 00:00:00
   `idinfo`的範例資料如下：
 
   ```json
-  {
-  // These six fields are included in all Google ID Tokens.
-  "iss": "https://accounts.google.com",
-  "sub": "110169484474386276334",
-  "azp": "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-  "aud": "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-  "iat": "1433978353",
-  "exp": "1433981953",
+    {
+    // These six fields are included in all Google ID Tokens.
+    "iss": "https://accounts.google.com",
+    "sub": "110169484474386276334",
+    "azp": "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+    "aud": "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+    "iat": "1433978353",
+    "exp": "1433981953",
 
-  // These seven fields are only included when the user has granted the "profile" and
-  // "email" OAuth scopes to the application.
-  "email": "testuser@gmail.com",
-  "email_verified": "true",
-  "name" : "Test User",
-  "picture": "https://lh4.googleusercontent.com/-kYgzyAWpZzJ/ABCDEFGHI/AAAJKLMNOP/tIXL9Ir44LE/s99-c/photo.jpg",
-  "given_name": "Test",
-  "family_name": "User",
-  "locale": "en"
-  }
+    // These seven fields are only included when the user has granted the "profile" and
+    // "email" OAuth scopes to the application.
+    "email": "testuser@gmail.com",
+    "email_verified": "true",
+    "name" : "Test User",
+    "picture": "https://lh4.googleusercontent.com/-kYgzyAWpZzJ/ABCDEFGHI/AAAJKLMNOP/tIXL9Ir44LE/s99-c/photo.jpg",
+    "given_name": "Test",
+    "family_name": "User",
+    "locale": "en"
+    }
   ```
 
   其他詳細的資料可以參考 [Google 官方文件](https://developers.google.com/identity/sign-in/web/backend-auth?hl=zh-tw)
@@ -151,12 +154,12 @@ date: 2024-08-11 00:00:00
 
 ```python
 INSTALLED_APPS = [
-    ...
+    # ...
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    ...
+    # ...
 ]
 ```
 
@@ -335,13 +338,13 @@ SOCIALACCOUNT_ADAPTER = 'authentication.adapters.MySocialAccountAdapter'
 - Callback視窗是否會自己關閉
 - 主視窗要怎麼知道登入成功
 
-等等，這些需要考慮的問題有在我GitHub上專案中的程式碼有提供解決方案，有興趣的人可以參考一下
+等等，這些需要考慮的問題有在我GitHub上專案中的程式碼有提供解決方案：
 
 - [django-allauth-JWT-template/authentication/adapter.py#L45](https://github.com/NatLee/django-allauth-JWT-template/blob/main/backend/authentication/adapter.py#L45)
 
 這個專案有提供一個playground，可以直接測試各種功能：
 
-![demo-cover](https://github.com/NatLee/django-allauth-JWT-template/raw/main/doc/dashboard.png)
+![allauth-jwt-template](https://github.com/NatLee/django-allauth-JWT-template/raw/main/doc/dashboard.png)
 
 原本我不想串接Allauth，因為在前後端分離的狀況下，session登入有點難搞
 
@@ -349,16 +352,41 @@ SOCIALACCOUNT_ADAPTER = 'authentication.adapters.MySocialAccountAdapter'
 
 只要多一個callback頁面，就可以省下一堆麻煩，那還有不用的理由嗎？
 
+另外，同場加映的是，我有做一個Django Template的專案，裡面有很多常用的功能，列出其中幾項如下：
+
+- Containerized
+- Nginx
+- Async Task(Django-Q2)
+- MySQL(MariaDB)
+- API Proxy
+- User Login History
+- WebSocket
+- JWT
+- 3rd Party Login
+- ...
+
+總之就是一包瑞士刀，有興趣的人可以參考一下[Django Project Template](https://github.com/NatLee/django-project-template)
+
+裡面的儀表板看起來比較炫砲一點
+
+![template-dashboard](https://github.com/NatLee/django-project-template/raw/main/doc/cover.png)
+
+歡迎大家一起交流！
 
 ## Reference
 
 ---
 
+### 參考文件
+
 - [Django Allauth](https://docs.allauth.org/en/latest/index.html)
 
+### 圖片來源
+
+- [Flask Google Login](https://realpython.com/flask-google-login/)
 ---
 
 這篇文章同步發表於 Medium ，歡迎留言討論！
 
-[Medium 文章連結]()
+[Medium 文章連結](https://medium.com/@natlee_/%E5%9C%A8-django-%E4%B8%AD%E4%BD%BF%E7%94%A8-allauth-%E7%B6%81%E5%AE%9A-jwt-%E7%99%BB%E5%85%A5-51f6d4436f86)
 
