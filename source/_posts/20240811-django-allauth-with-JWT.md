@@ -10,7 +10,7 @@ abbrlink: 65209cf0
 date: 2024-08-11 00:00:00
 ---
 
-![](https://files.realpython.com/media/Write-an-App-with-Login-with-Google-Option_Watermarked.4060f8cc0b67.jpg)
+![](https://i.imgur.com/4o87A4H.png)
 
 ## 前言
 
@@ -377,13 +377,8 @@ SOCIALACCOUNT_ADAPTER = 'authentication.adapters.MySocialAccountAdapter'
 
 ---
 
-### 參考文件
-
 - [Django Allauth](https://docs.allauth.org/en/latest/index.html)
 
-### 圖片來源
-
-- [Flask Google Login](https://realpython.com/flask-google-login/)
 ---
 
 這篇文章同步發表於 Medium ，歡迎留言討論！
