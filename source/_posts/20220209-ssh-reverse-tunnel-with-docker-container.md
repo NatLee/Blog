@@ -451,6 +451,28 @@ pi@raspberrypi:~ $
 
 這邊能做的也只有保管好金鑰了
 
+> 2024-08-13 更新
+
+雖說內網可以反向連到外網機器很危險，但我們只要在外網機器SSH的設定檔做一些限制就可以了
+
+```
+# /etc/ssh/sshd_config
+
+Match User telepy
+AllowTcpForwarding yes
+PermitTunnel yes
+ForceCommand echo 'This account can only be used for reverse SSH tunneling'
+```
+我們在`sshd_config`中加入這段設定，就可以限制只有`telepy`這個使用者
+然後，我們的外網機器只有這個使用者且這個使用者只能進行tunneling，其他的操作都會被拒絕
+這樣就可以避免內網機器拿到外網機器的命令執行權限
+
+這邊可以參考後來我做的一個新專案[Telepy](https://github.com/NatLee/telepy)
+這個專案提供SSH通道在Web UI上的管理界面以及基本的使用者管理
+甚至還有Web Terminal的功能，可以直接在瀏覽器上操作遠端機器
+
+有興趣的話可以去看看！😎
+
 ## Reference
 
 ---
