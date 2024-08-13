@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png">
 <meta property="article:published_time" content="2022-02-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-12T09:31:06.071Z">
+<meta property="article:modified_time" content="2024-08-13T06:34:10.709Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="container">
@@ -226,7 +226,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-08-12 17:31:06" itemprop="dateModified" datetime="2024-08-12T17:31:06+08:00">2024-08-12</time>
+      <time title="Modified: 2024-08-13 14:34:10" itemprop="dateModified" datetime="2024-08-13T14:34:10+08:00">2024-08-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -246,7 +246,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>8.6k</span>
+      <span>9k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -431,6 +431,14 @@
 <p>從上面的流程，我們可以看出來<code>反向</code>這件事是從內部機器主動連到外網機器</p>
 <p>也就是如果有心人士拿到內部機器的存取權限的話，外部機器自然不保了</p>
 <p>這邊能做的也只有保管好金鑰了</p>
+<blockquote>
+<p>2024-08-13 更新</p>
+</blockquote>
+<p>雖說內網可以反向連到外網機器很危險，但我們只要在外網機器SSH的設定檔做一些限制就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line">Match User telepy</span><br><span class="line">AllowTcpForwarding yes</span><br><span class="line">PermitTunnel yes</span><br><span class="line">ForceCommand echo &#x27;This account can only be used for reverse SSH tunneling&#x27;</span><br></pre></td></tr></table></figure>
+<p>我們在<code>sshd_config</code>中加入這段設定，就可以限制只有<code>telepy</code>這個使用者<br>然後，我們的外網機器只有這個使用者且這個使用者只能進行tunneling，其他的操作都會被拒絕<br>這樣就可以避免內網機器拿到外網機器的命令執行權限</p>
+<p>這邊可以參考後來我做的一個新專案<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS90ZWxlcHk=">Telepy<i class="fa fa-external-link-alt"></i></span><br>這個專案提供SSH通道在Web UI上的管理界面以及基本的使用者管理<br>甚至還有Web Terminal的功能，可以直接在瀏覽器上操作遠端機器</p>
+<p>有興趣的話可以去看看！😎</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><hr>
 <p><span class="exturl" data-url="aHR0cDovL2Fyb25kaWdodC5tZS8yMDE2LzAyLzE3LyVFNCVCRCVCRiVFNyU5NCVBOFNTSCVFNSU4RiU4RCVFNSU5MCU5MSVFOSU5QSVBNyVFOSU4MSU5MyVFOCVCRiU5QiVFOCVBMSU4QyVFNSU4NiU4NSVFNyVCRCU5MSVFNyVBOSVCRiVFOSU4MCU4Ri8=">使用 SSH 反向隧道进行内网穿透<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZXZlcnl0aGluZ2NsaS5vcmcvc3NoLXR1bm5lbGxpbmctZm9yLWZ1bi1hbmQtcHJvZml0LWF1dG9zc2gv">SSH TUNNELLING FOR FUN AND PROFIT: AUTOSSH<i class="fa fa-external-link-alt"></i></span></p>
@@ -560,13 +568,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">153k</span>
+    <span title="Word count total">154k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:39</span>
+    <span title="Reading time total">4:40</span>
   </span>
 </div>
   <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
