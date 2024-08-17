@@ -32,24 +32,24 @@ date: 2024-08-11 00:00:00
 
 一般來說，前後端分離的專案通常是使用 JWT 來做登入驗證，這邊使用 Django 以 Google 登入為例，來看看前後端如何串接
 
-- 前端
+#### 前端
 
-  前端在HTML的部分，我們需要引入 Google 登入的 SDK，並且設定好 `client_id` 和 `callback`
+前端在HTML的部分，我們需要引入 Google 登入的 SDK，並且設定好 `client_id` 和 `callback`
 
-  其中，Google的程式碼會在前端動態載入，去判斷`client_id`跟`當前網址`是不是可以被信任
-  也就是說，GCP專案憑證上設定的`callback`必須跟前端設定的`callback`一致，否則會出現錯誤
+其中，Google的程式碼會在前端動態載入，去判斷`client_id`跟`當前網址`是不是可以被信任
+也就是說，GCP專案憑證上設定的`callback`必須跟前端設定的`callback`一致，否則會出現錯誤
 
-  ‵‵`html
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="{{ client_id }}">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <div id="g_id_onload" data-client_id="{{ client_id }}" data-callback="getJWTUsingGoogleCredential"></div>
-  ```
+```html
+<meta name="google-signin-scope" content="profile email">
+<meta name="google-signin-client_id" content="{{ client_id }}">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<div id="g_id_onload" data-client_id="{{ client_id }}" data-callback="getJWTUsingGoogleCredential"></div>
+```
 
-  當使用者登入成功後，會呼叫 `getJWTUsingGoogleCredential` 這個函數，將 Google 登入的 `credential` 傳送給後端
+當使用者登入成功後，會呼叫 `getJWTUsingGoogleCredential` 這個函數，將 Google 登入的 `credential` 傳送給後端
 
-  ```javascript
-    function getJWTUsingGoogleCredential(data) {
+```javascript
+function getJWTUsingGoogleCredential(data) {
     const credential = data.credential;
     $.ajax({
         method: "POST",
@@ -62,58 +62,58 @@ date: 2024-08-11 00:00:00
         localStorage.setItem('refresh_token', refresh_token);
         /* ... */
     });
-    }
-  ```
+}
+```
 
-- 後端
+#### 後端
 
-  在後端的部分，我們需要自定義一個 Serializer 來處理 Google 登入的 `credential`，並且驗證這個 `credential` 是否有效
+在後端的部分，我們需要自定義一個 Serializer 來處理 Google 登入的 `credential`，並且驗證這個 `credential` 是否有效
 
-  ```python
-    from google.oauth2 import id_token
-    from google.auth.transport import requests
+```python
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
-    class GoogleLoginSerializer(serializers.Serializer):
-        # Google login
-        # 用於接收Google返回的憑證
-        credential = serializers.CharField(required=True)
-        def verify_token(self, credential: str) -> dict:
-            """
-            驗證Google返回的id_token
-            credential: JWT格式的字串
-            """
-            # 使用Google提供的方法驗證token
-            idinfo = id_token.verify_oauth2_token(
-                credential,
-                requests.Request(),
-                settings.SOCIAL_GOOGLE_CLIENT_ID
-            )
-            # 驗證token的發行者
-            if idinfo["iss"] not in [
-                "accounts.google.com",
-                "https://accounts.google.com",
-            ]:
-                logger.error("Wrong issuer")
-                raise ValueError("Wrong issuer.")
-            # 驗證token的受眾
-            if idinfo["aud"] not in [settings.SOCIAL_GOOGLE_CLIENT_ID]:
-                logger.error("Could not verify audience")
-                raise ValueError("Could not verify audience.")
-            # 驗證成功
-            logger.info("successfully verified")
-            return idinfo
-        # ...
-  ```
+class GoogleLoginSerializer(serializers.Serializer):
+    # Google login
+    # 用於接收Google返回的憑證
+    credential = serializers.CharField(required=True)
+    def verify_token(self, credential: str) -> dict:
+        """
+        驗證Google返回的id_token
+        credential: JWT格式的字串
+        """
+        # 使用Google提供的方法驗證token
+        idinfo = id_token.verify_oauth2_token(
+            credential,
+            requests.Request(),
+            settings.SOCIAL_GOOGLE_CLIENT_ID
+        )
+        # 驗證token的發行者
+        if idinfo["iss"] not in [
+            "accounts.google.com",
+            "https://accounts.google.com",
+        ]:
+            logger.error("Wrong issuer")
+            raise ValueError("Wrong issuer.")
+        # 驗證token的受眾
+        if idinfo["aud"] not in [settings.SOCIAL_GOOGLE_CLIENT_ID]:
+            logger.error("Could not verify audience")
+            raise ValueError("Could not verify audience.")
+        # 驗證成功
+        logger.info("successfully verified")
+        return idinfo
+    # ...
+```
 
-  裡面會拿前端傳過來的 `credential` 去跟Google驗證，並且返回一個 `idinfo`
-  這個 `idinfo` 就是 Google 登入的資訊，裡面包含了使用者的名字及電子郵件資訊
+裡面會拿前端傳過來的 `credential` 去跟Google驗證，並且返回一個 `idinfo`
+這個 `idinfo` 就是 Google 登入的資訊，裡面包含了使用者的名字及電子郵件資訊
 
-  其中， `SOCIAL_GOOGLE_CLIENT_ID` 是我們在 GCP 專案中設定的 `client_id`，這邊要注意的是，這個 `client_id` 必須跟前端設定的 `client_id` 一致
+其中， `SOCIAL_GOOGLE_CLIENT_ID` 是我們在 GCP 專案中設定的 `client_id`，這邊要注意的是，這個 `client_id` 必須跟前端設定的 `client_id` 一致
 
-  `idinfo`的範例資料如下：
+`idinfo`的範例資料如下：
 
-  ```json
-    {
+```json
+{
     // These six fields are included in all Google ID Tokens.
     "iss": "https://accounts.google.com",
     "sub": "110169484474386276334",
@@ -131,16 +131,16 @@ date: 2024-08-11 00:00:00
     "given_name": "Test",
     "family_name": "User",
     "locale": "en"
-    }
-  ```
+}
+```
 
-  其他詳細的資料可以參考 [Google 官方文件](https://developers.google.com/identity/sign-in/web/backend-auth?hl=zh-tw)
+其他詳細的資料可以參考 [Google 官方文件](https://developers.google.com/identity/sign-in/web/backend-auth?hl=zh-tw)
 
-  當驗證成功後，我們就可以使用 `idinfo` 中的資料來創建或更新使用者的資料，並且返回 JWT 給前端
+當驗證成功後，我們就可以使用 `idinfo` 中的資料來創建或更新使用者的資料，並且返回 JWT 給前端
 
-  但是問題來了，不是所有的第三方登入都像 Google 一樣提供了前端動態載入的一頁式 SDK，那該怎麼辦呢？
+但是問題來了，不是所有的第三方登入都像 Google 一樣提供了前端動態載入的一頁式 SDK，那該怎麼辦呢？
 
-  而且只有登入的部分是不夠的，我們還需要處理登出、綁定、解綁等等的功能！
+而且只有登入的部分是不夠的，我們還需要處理登出、綁定、解綁等等的功能！
 
 ### Allauth 與 JWT
 
@@ -155,6 +155,9 @@ date: 2024-08-11 00:00:00
 ```python
 INSTALLED_APPS = [
     # ...
+    # ====================
+    # Allauth Apps
+    # ===================
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -337,8 +340,9 @@ SOCIALACCOUNT_ADAPTER = 'authentication.adapters.MySocialAccountAdapter'
 - Email的 domain 是否屬於白名單
 - Callback視窗是否會自己關閉
 - 主視窗要怎麼知道登入成功
+- 等等...
 
-等等，這些需要考慮的問題有在我GitHub上專案中的程式碼有提供解決方案：
+這些需要考慮的問題有在我GitHub上專案中的程式碼有提供解決方案：
 
 - [django-allauth-JWT-template/authentication/adapter.py#L45](https://github.com/NatLee/django-allauth-JWT-template/blob/main/backend/authentication/adapter.py#L45)
 
