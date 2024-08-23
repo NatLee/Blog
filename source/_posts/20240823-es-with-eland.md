@@ -11,6 +11,8 @@ abbrlink: 25207cf0
 date: 2024-08-23 00:00:00
 ---
 
+![](https://i.imgur.com/waAQC7n.png)
+
 ## 前言
 
 本指南提供了在 Docker 環境中使用 Elasticsearch 和 Eland 的實用方法，為資料分析和處理大型資料集提供了強大的支援。
