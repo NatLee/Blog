@@ -43,6 +43,8 @@ date: 2024-09-16 00:00:00
 
 **URL Query String是明文的！**
 
+![](https://i.imgur.com/c7YPxjs.png)
+
 ### 第二次踩坑
 
 有了第一次的經驗，我又思考了一下
@@ -152,6 +154,14 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
     ```
 
     如此一來，就解決了URL Query String的問題，也增加了連接的安全性
+
+    前端會將這些資訊放到Subprotocol中的`sec-websocket-protocol`，然後在連接時傳遞給後端
+
+    連接完成後，後端會選擇`協議`跟前端使用Websocket溝通！
+    
+    在開發者工具中，可以看到Subprotocol連接的資訊：
+
+    ![](https://i.imgur.com/kZDCVqL.png)
 
 ---
 
