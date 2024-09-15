@@ -153,6 +153,7 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
 
     如此一來，就解決了URL Query String的問題，也增加了連接的安全性
 
+---
 
 ## 結語
 
@@ -166,11 +167,14 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
 
 不能直接把整個JWT塞進去，這樣會導致Subprotocol的長度過長😂
 
+---
 
 ## 參考資料
 
 - [Django Channels](https://channels.readthedocs.io/en/latest/)
 - [WebSocket Subprotocol](https://datatracker.ietf.org/doc/html/rfc6455#section-1.9)
+
+---
 
 這篇文章同步發表於 Medium ，歡迎留言討論！
 
