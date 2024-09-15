@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"natlee.github.com","root":"/Blog/","images":"/Blog/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="前言在現代網頁中，WebSocket連接扮演著越來越重要的角色，尤其是在需要即時通訊的場景中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="優化WebSocket連接：使用Subprotocol增加安全性">
+<meta property="og:url" content="https://natlee.github.com/Blog/posts/8f2e9a31/index.html">
+<meta property="og:site_name" content="Nat&#39;s Blog">
+<meta property="og:description" content="前言在現代網頁中，WebSocket連接扮演著越來越重要的角色，尤其是在需要即時通訊的場景中">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/3xURd7c.png">
+<meta property="og:image" content="https://i.imgur.com/ParzCAg.jpeg">
+<meta property="og:image" content="https://i.imgur.com/8OHIot0.png">
+<meta property="article:published_time" content="2024-09-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-15T18:00:46.067Z">
+<meta property="article:author" content="Nat Lee">
+<meta property="article:tag" content="WebSocket">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="Authentication">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/3xURd7c.png">
+
+
+<link rel="canonical" href="https://natlee.github.com/Blog/posts/8f2e9a31/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"https://natlee.github.com/Blog/posts/8f2e9a31/","path":"posts/8f2e9a31/","title":"優化WebSocket連接：使用Subprotocol增加安全性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>優化WebSocket連接：使用Subprotocol增加安全性 | Nat's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nat's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inspire with nothing.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/Blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+    <!-- head AdSense -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({google_ad_client: 'ca-pub-6070159426076964', enable_page_level_ads: true});
+    </script>
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">內容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B8%A9%E5%9D%91"><span class="nav-number">2.1.</span> <span class="nav-text">第一次踩坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E8%B8%A9%E5%9D%91"><span class="nav-number">2.2.</span> <span class="nav-text">第二次踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFSubprotocol%EF%BC%9F"><span class="nav-number">2.2.1.</span> <span class="nav-text">什麼是Subprotocol？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E5%8A%9B%E6%9B%B4%E6%96%B0%E4%B8%80%E6%B3%A2"><span class="nav-number">2.3.</span> <span class="nav-text">用力更新一波</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nat Lee"
+      src="https://avatars.githubusercontent.com/u/10178964">
+  <p class="site-author-name" itemprop="name">Nat Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">79</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NatLee"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVf" title="Medium → https:&#x2F;&#x2F;medium.com&#x2F;@natlee_"><i class="fab fa-medium fa-fw"></i>Medium</span>
+      </span>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://natlee.github.com/Blog/posts/8f2e9a31/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/10178964">
+      <meta itemprop="name" content="Nat Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="優化WebSocket連接：使用Subprotocol增加安全性 | Nat's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          優化WebSocket連接：使用Subprotocol增加安全性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-09-16 00:00:00 / Modified: 02:00:46" itemprop="dateCreated datePublished" datetime="2024-09-16T00:00:00+08:00">2024-09-16</time>
+    </span>
+
+  
+
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>3k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>5 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://i.imgur.com/3xURd7c.png"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在現代網頁中，WebSocket連接扮演著越來越重要的角色，尤其是在需要即時通訊的場景中</p>
+<hr>
+<span id="more"></span>
+
+<h2 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h2><p>這邊不贅述WebSocket的基本原理，而是著重於如何在Django中實現WebSocket連接的安全性</p>
+<p>最近，我有一個 side project <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZS90ZWxlcHk=">Telepy<i class="fa fa-external-link-alt"></i></span> 使用到了web terminal，而這個terminal是基於WebSocket連接的</p>
+<p>在這個過程中，我發現了一個問題：WebSocket連接的安全性</p>
+<h3 id="第一次踩坑"><a href="#第一次踩坑" class="headerlink" title="第一次踩坑"></a>第一次踩坑</h3><p>一開始，我只是簡單地使用了Django Channels來實現WebSocket連接</p>
+<p>但是這樣做有一個安全隱憂：連接的建立過程中，沒有任何認證機制！</p>
+<p>這意味著任何人都可以通過WebSocket連接到我的server，這是非常危險的😮</p>
+<p>於是我開始思考該如何在WebSocket連接中實現認證</p>
+<p>然後我把目光轉向了URL Query String</p>
+<p>我就快樂的把這個功能實現出來，但這個方法有一個致命的缺點！</p>
+<p><strong>URL Query String是明文的！</strong></p>
+<h3 id="第二次踩坑"><a href="#第二次踩坑" class="headerlink" title="第二次踩坑"></a>第二次踩坑</h3><p>有了第一次的經驗，我又思考了一下</p>
+<p>如果URL不行的話，是不是有方法能夠像HTTP一樣傳遞Header？</p>
+<p>於是我找到了WebSocket Subprotocol</p>
+<h4 id="什麼是Subprotocol？"><a href="#什麼是Subprotocol？" class="headerlink" title="什麼是Subprotocol？"></a>什麼是Subprotocol？</h4><p>Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立連接時傳遞一些參數</p>
+<p>這些參數通常是拿來告訴伺服器接下來的傳輸要使用什麼協議</p>
+<p>例如，我可以跟伺服器說：我要使用<code>JSON</code>協議來傳輸資料，這樣伺服器就會知道要用<code>JSON</code>來解析資料</p>
+<p>這個功能在WebSocket連接中非常有用，而且也很安全！</p>
+<p>因為Subprotocol在建立連接時就會被傳遞，這個傳遞過程會被WSS保護，所以不用擔心中間人攻擊</p>
+<p>但違背這個功能的初衷，我們可以利用Subprotocol來傳遞一些認證資訊😎😎😎</p>
+<h3 id="用力更新一波"><a href="#用力更新一波" class="headerlink" title="用力更新一波"></a>用力更新一波</h3><p>這次在專案中的更新主要集中在<code>TerminalConsumer</code>中</p>
+<p>裡面引入了WebSocket Subprotocol的使用，這個改變主要影響了連接的建立過程，特別是在認證和參數傳遞方面</p>
+<ol>
+<li><p><strong>引入Subprotocol</strong></p>
+<p> 更新後的程式碼碼現在會檢查WebSocket連接請求中的Subprotocol：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.scope[<span class="string">&#x27;subprotocols&#x27;</span>]:</span><br><span class="line">     <span class="keyword">for</span> protocol <span class="keyword">in</span> self.scope[<span class="string">&#x27;subprotocols&#x27;</span>]:</span><br><span class="line">          <span class="keyword">if</span> protocol.startswith(<span class="string">&#x27;token.&#x27;</span>):</span><br><span class="line">                base64_encoded_token = protocol.split(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">                token = base64.b64decode(base64_encoded_token).decode()</span><br><span class="line">          <span class="keyword">elif</span> protocol.startswith(<span class="string">&#x27;server.&#x27;</span>):</span><br><span class="line">                server_id = protocol.split(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">          <span class="keyword">elif</span> protocol.startswith(<span class="string">&#x27;username.&#x27;</span>):</span><br><span class="line">                username = protocol.split(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">          <span class="keyword">elif</span> protocol.startswith(<span class="string">&#x27;auth.&#x27;</span>):</span><br><span class="line">                subprotocol_auth = protocol</span><br></pre></td></tr></table></figure>
+
+<p>  這邊可以注意到，使用Django Channels的<code>self.scope[&#39;subprotocols&#39;]</code>可以獲取到Subprotocol的資訊</p>
+</li>
+<li><p><strong>參數檢查</strong></p>
+<p> 在更新後的程式碼中，我們會檢查Subprotocol中的參數是否合法：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> token <span class="keyword">or</span> <span class="keyword">not</span> server_id <span class="keyword">or</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> subprotocol_auth:</span><br><span class="line">     logger.error(<span class="string">&quot;Missing required subprotocols&quot;</span>)</span><br><span class="line">     <span class="keyword">await</span> self.close(code=<span class="number">4000</span>)</span><br><span class="line">     <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<p> 如果參數不合法，連接會被強制關閉</p>
+<p> <img data-src="https://i.imgur.com/ParzCAg.jpeg"></p>
+</li>
+<li><p><strong>接受連接</strong></p>
+<p> 在檢查完參數後，我們就可以在後端接受連接了：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> self.accept(subprotocol=subprotocol_auth)</span><br></pre></td></tr></table></figure>
+
+<p> 這邊的<code>subprotocol_auth</code>就是我們在Subprotocol中傳遞的認證資訊</p>
+<p> 如果我們沒有在<code>self.accept()</code>中傳入<code>subprotocol</code>的話，連接會被拒絕</p>
+<p> <img data-src="https://i.imgur.com/8OHIot0.png"></p>
+<p> 因為對於<code>subprotocol</code>來說，這本來就是跟後端溝通用的<code>協議</code>！</p>
+</li>
+<li><p><strong>前端的更新</strong></p>
+<p> 在前端，將原先的WebSocket連接的建立過程：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ws = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(<span class="string">`<span class="subst">$&#123;ws_scheme&#125;</span>://<span class="subst">$&#123;<span class="variable language_">window</span>.location.host&#125;</span>/ws/terminal/?token=<span class="subst">$&#123;token&#125;</span>&amp;server_id=<span class="subst">$&#123;server_id&#125;</span>&amp;username=<span class="subst">$&#123;username&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p> 問題是這樣的連接方式是不安全的，其中<code>token</code>會被暴露在URL中！</p>
+<p> 因此，我們需要將這些資訊放到Subprotocol中：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 連接不再使用URL Query String</span></span><br><span class="line"><span class="keyword">const</span> ws_path = <span class="string">`<span class="subst">$&#123;ws_scheme&#125;</span>://<span class="subst">$&#123;<span class="variable language_">window</span>.location.host&#125;</span>/ws/terminal/`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將需要的資訊放到Subprotocol中</span></span><br><span class="line"><span class="keyword">const</span> tokenInfo = <span class="string">`token.<span class="subst">$&#123;btoa(accessToken)&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> serverInfo = <span class="string">`server.<span class="subst">$&#123;serverID&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> usernameInfo = <span class="string">`username.<span class="subst">$&#123;username&#125;</span>`</span>;</span><br><span class="line"><span class="comment">// 這邊的ticket是一個自定義的token，用來做subprotocol的協議名稱</span></span><br><span class="line"><span class="keyword">const</span> ticket = <span class="string">`auth.<span class="subst">$&#123;btoa(<span class="string">`<span class="subst">$&#123;serverID&#125;</span>.<span class="subst">$&#123;username&#125;</span>`</span>)&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> socket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(ws_path, [tokenInfo, serverInfo, usernameInfo, ticket]);</span><br></pre></td></tr></table></figure>
+
+<p> 如此一來，就解決了URL Query String的問題，也增加了連接的安全性</p>
+</li>
+</ol>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這次在side project的更新學習了如何使用Subprotocol來增加WebSocket連接的安全性</p>
+<p>這個方法非常適合在需要認證的場景中使用，並且也很容易實現</p>
+<p>要注意的地方是，Subprotocol的使用需要前後端的配合，因此在更新時要注意前後端的一致性</p>
+<p>而且欄位的長度也有限制，因此在使用時要注意欄位的長度！</p>
+<p>不能直接把整個JWT塞進去，這樣會導致Subprotocol的長度過長😂</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jaGFubmVscy5yZWFkdGhlZG9jcy5pby9lbi9sYXRlc3Qv">Django Channels<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kYXRhdHJhY2tlci5pZXRmLm9yZy9kb2MvaHRtbC9yZmM2NDU1I3NlY3Rpb24tMS45">WebSocket Subprotocol<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>這篇文章同步發表於 Medium ，歡迎留言討論！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BuYXRsZWVfLyVFNSU4NCVBQSVFNSU4QyU5NndlYnNvY2tldCVFOSU4MCVBMyVFNiU4RSVBNS0lRTQlQkQlQkYlRTclOTQlQThzdWJwcm90b2NvbCVFNSVBMiU5RSVFNSU4QSVBMCVFNSVBRSU4OSVFNSU4NSVBOCVFNiU4MCVBNy1iNmIxZGZiNjM1OTI=">Medium 文章連結<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+    <!-- related posts -->
+
+    
+        <!-- like coin -->
+        <div>
+            <iframe width="100%" height="230px" scrolling="no" frameborder="0" id="player" src="https://button.like.co/in/embed/natlee_/button/?referrer=<%- post.permalink %>" allowfullscreen="true"></iframe>
+        </div>
+        <!-- binance QR code -->
+        <div>
+            <hr>
+                <img src="https://i.imgur.com/VD6XVlC.png" alt="Binance QR code"></img>
+                <div class="post-meta">
+                    <i class="fa fa-heart"></i>TUtgWsPsEFNuuHYA7hNVjvQWbp3W6xRUbz<i class="fa fa-heart"></i>
+                </div>
+
+                <hr></div>
+            
+
+            
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Nat Lee
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://natlee.github.com/Blog/posts/8f2e9a31/" title="優化WebSocket連接：使用Subprotocol增加安全性">https://natlee.github.com/Blog/posts/8f2e9a31/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/WebSocket/" rel="tag"># WebSocket</a>
+              <a href="/Blog/tags/Django/" rel="tag"># Django</a>
+              <a href="/Blog/tags/Authentication/" rel="tag"># Authentication</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/posts/25207cf0/" rel="prev" title="在 Docker 中使用 Elasticsearch 和 Eland：實用指南">
+                  <i class="fa fa-angle-left"></i> 在 Docker 中使用 Elasticsearch 和 Eland：實用指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nat Lee</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">161k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:53</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL05hdExlZQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/motion.js"></script><script src="/Blog/js/sidebar.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/pjax.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://natlee.github.com/Blog/posts/8f2e9a31/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"natlee","repo":"Blog","client_id":"afee937b22f0617227f6","client_secret":"8e699a19a6f56f46c11c4c38619b75667267cdba","admin_user":"natlee","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":["zh-TW","en"],"js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"f8983f683443ef92d3b85608a1d9e8d4"}</script>
+<script src="/Blog/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
