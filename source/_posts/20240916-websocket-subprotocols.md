@@ -121,7 +121,7 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
 
     這邊的`subprotocol_auth`就是我們在Subprotocol中傳遞的認證資訊
 
-    如果我們沒有在`self.accept()`中傳入`subprotocol`的話，連接會被拒絕
+    如果我們沒有在`self.accept()`中傳入`subprotocol`的話，所有的WS連接會被後端拒絕
 
     ![](https://i.imgur.com/8OHIot0.png)
 
@@ -130,13 +130,15 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
 
 4. **前端的更新**
 
-    在前端，將原先的WebSocket連接的建立過程：
+    在前端，這是原先的WebSocket連接的建立過程：
 
     ```javascript
     const ws = new WebSocket(`${ws_scheme}://${window.location.host}/ws/terminal/?token=${token}&server_id=${server_id}&username=${username}`);
     ```
 
-    問題是這樣的連接方式是不安全的，其中`token`會被暴露在URL中！
+    可以看到這樣的連接方式是不安全的
+    
+    因為`token`會被暴露在URL中！
 
     因此，我們需要將這些資訊放到Subprotocol中：
 
