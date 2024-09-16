@@ -151,7 +151,10 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
     const serverInfo = `server.${serverID}`;
     const usernameInfo = `username.${username}`;
     // 這邊的ticket是一個自定義的token，用來做subprotocol的協議名稱
-    const ticket = `auth.${btoa(`${serverID}.${username}`)}`;
+    let ticket = btoa(`${serverID}.${username}`);
+    // 去除特殊字元是因為subprotocol的協議名稱不能有部分特殊字元，例如`=`
+    ticket = ticket.replace(/[^a-zA-Z0-9]/g, '');
+    ticket = `auth.${ticket}`;
     const socket = new WebSocket(ws_path, [tokenInfo, serverInfo, usernameInfo, ticket]);
     ```
 
@@ -160,7 +163,9 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
     前端會將這些資訊放到Subprotocol中的`sec-websocket-protocol`，然後在連接時傳遞給後端
 
     連接完成後，後端會選擇`協議`跟前端使用Websocket溝通！
-    
+
+    > 這邊再次提醒！Subprotocol中不能有特殊字元（例如轉base64常常結尾出現的`=`），否則會導致連接失敗！
+
     在開發者工具中，可以看到Subprotocol連接的資訊：
 
     ![](https://i.imgur.com/kZDCVqL.png)
