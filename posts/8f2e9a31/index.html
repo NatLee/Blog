@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://i.imgur.com/8OHIot0.png">
 <meta property="og:image" content="https://i.imgur.com/kZDCVqL.png">
 <meta property="article:published_time" content="2024-09-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-16T16:45:38.343Z">
+<meta property="article:modified_time" content="2024-09-16T17:03:11.224Z">
 <meta property="article:author" content="Nat Lee">
 <meta property="article:tag" content="WebSocket">
 <meta property="article:tag" content="Django">
@@ -229,7 +229,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-09-17 00:45:38" itemprop="dateModified" datetime="2024-09-17T00:45:38+08:00">2024-09-17</time>
+      <time title="Modified: 2024-09-17 01:03:11" itemprop="dateModified" datetime="2024-09-17T01:03:11+08:00">2024-09-17</time>
     </span>
 
   
@@ -240,7 +240,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>3.3k</span>
+      <span>3.2k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -314,7 +314,7 @@
 <p> 可以看到這樣的連接方式是不安全的</p>
 <p> 因為<code>token</code>會被暴露在URL中！</p>
 <p> 因此，我們需要將這些資訊放到Subprotocol中：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 連接不再使用URL Query String</span></span><br><span class="line"><span class="keyword">const</span> ws_path = <span class="string">`<span class="subst">$&#123;ws_scheme&#125;</span>://<span class="subst">$&#123;<span class="variable language_">window</span>.location.host&#125;</span>/ws/terminal/`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將需要的資訊放到Subprotocol中</span></span><br><span class="line"><span class="keyword">const</span> tokenInfo = <span class="string">`token.<span class="subst">$&#123;btoa(accessToken)&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> serverInfo = <span class="string">`server.<span class="subst">$&#123;serverID&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> usernameInfo = <span class="string">`username.<span class="subst">$&#123;username&#125;</span>`</span>;</span><br><span class="line"><span class="comment">// 這邊的ticket是一個自定義的token，用來做subprotocol的協議名稱</span></span><br><span class="line"><span class="keyword">let</span> ticket = <span class="title function_">btoa</span>(<span class="string">`<span class="subst">$&#123;serverID&#125;</span>.<span class="subst">$&#123;username&#125;</span>`</span>);</span><br><span class="line"><span class="comment">// 去除特殊字元是因為subprotocol的協議名稱不能有部分特殊字元，例如`=`</span></span><br><span class="line">ticket = ticket.<span class="title function_">replace</span>(<span class="regexp">/[^a-zA-Z0-9]/g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">ticket = <span class="string">`auth.<span class="subst">$&#123;ticket&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> socket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(ws_path, [tokenInfo, serverInfo, usernameInfo, ticket]);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 連接不再使用URL Query String</span></span><br><span class="line"><span class="keyword">const</span> ws_path = <span class="string">`<span class="subst">$&#123;ws_scheme&#125;</span>://<span class="subst">$&#123;<span class="variable language_">window</span>.location.host&#125;</span>/ws/terminal/`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將需要的資訊放到Subprotocol中</span></span><br><span class="line"><span class="keyword">const</span> tokenInfo = <span class="string">`token.<span class="subst">$&#123;btoa(accessToken)&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> serverInfo = <span class="string">`server.<span class="subst">$&#123;serverID&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> usernameInfo = <span class="string">`username.<span class="subst">$&#123;username&#125;</span>`</span>;</span><br><span class="line"><span class="comment">// 這邊的ticket是一個自定義的token，用來做subprotocol的協議名稱</span></span><br><span class="line"><span class="comment">// 使用encodeURIComponent去避免特殊符號，例如`=`</span></span><br><span class="line"><span class="keyword">let</span> ticket = <span class="built_in">encodeURIComponent</span>(<span class="title function_">btoa</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="string">`<span class="subst">$&#123;serverID&#125;</span>.<span class="subst">$&#123;username&#125;</span>`</span>)));</span><br><span class="line">ticket = <span class="string">`auth.<span class="subst">$&#123;ticket&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> socket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(ws_path, [tokenInfo, serverInfo, usernameInfo, ticket]);</span><br></pre></td></tr></table></figure>
 
 <p> 如此一來，就解決了URL Query String的問題，也增加了連接的安全性</p>
 <p> 前端會將這些資訊放到Subprotocol中的<code>sec-websocket-protocol</code>，然後在連接時傳遞給後端</p>
