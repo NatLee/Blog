@@ -151,8 +151,8 @@ Subprotocol是WebSocket的一個欄位，它允許使用者和伺服器在建立
     const serverInfo = `server.${serverID}`;
     const usernameInfo = `username.${username}`;
     // 這邊的ticket是一個自定義的token，用來做subprotocol的協議名稱
-    // 使用encodeURIComponent去避免特殊符號，例如`=`
-    let ticket = encodeURIComponent(btoa(JSON.stringify(`${serverID}.${username}`)));
+    // 使用SHA256去避免特殊符號，例如`=`
+    let ticket = sha256(`${serverID}.${username}`);
     ticket = `auth.${ticket}`;
     const socket = new WebSocket(ws_path, [tokenInfo, serverInfo, usernameInfo, ticket]);
     ```
