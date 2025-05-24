@@ -35,9 +35,9 @@ custom_file_path:
 # ---------------------------------------------------------------
 # Google AdSense
 google_adsense:
-  enable: true
+  enable: false
   google_ad_client_id: ca-pub-6070159426076964 # <client id>
-  enable_page_level_ads: true
+  enable_page_level_ads: false
   ## sidebar_enable
   sidebar_enable: false
   sidebar_data_ad_slot: # <slot id>
