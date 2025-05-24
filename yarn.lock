@@ -1569,11 +1569,6 @@ hexo-generator-tag@^2.0.0:
   dependencies:
     hexo-pagination "3.0.0"
 
-hexo-google-adsense@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/hexo-google-adsense/-/hexo-google-adsense-0.0.8.tgz#dc9eaa15d432cd50ff4f142bd75ebfe363d11e8d"
-  integrity sha512-bkEDiqFsOVoyJ21+c8u3VBpgSQ77q2T4wlS15Vnm/bk1oAkFQ9znvF3i7kChuq4dePhPOxHxzhe+FxoauCJxEQ==
-
 hexo-i18n@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/hexo-i18n/-/hexo-i18n-2.0.0.tgz#ec7abc160ffef202524f3ff8076b85d5701c447b"
@@ -1654,15 +1649,10 @@ hexo-symbols-count-time@^0.7.1:
   dependencies:
     hexo-util "1.9.0"
 
-hexo-theme-landscape@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/hexo-theme-landscape/-/hexo-theme-landscape-1.0.0.tgz#43a549ebb2bea73196200ee4397feb764131a481"
-  integrity sha512-bWQJWMqQI78wWiJPQZq5pJBH20TM442ShCaHGRetuEgMraxH0OKxB3NTupJzNEkzEk8DV2yrdizkXdKN6i501A==
-
-hexo-theme-next@^8.21.0:
-  version "8.21.0"
-  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.21.0.tgz#098a906a4a3f7fb74c068b1e84c5c5f62427bfb9"
-  integrity sha512-O0xKsX73QJSOfPs8R+Kd1sFbJQhy0Od3NsoN5uR717IXjK4xn2w9x+GlSijEfh96JkhCIQOOPS5xBtzsfpjE6A==
+hexo-theme-next@^8.23.0:
+  version "8.23.0"
+  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.23.0.tgz#6480a0a57683de0db3d2711e763c1a2e20207309"
+  integrity sha512-hHRuGRCTF1HyIjvucK3Ylxr2qYB2/bFXdD/IWyPtxcVvkLgn3jcwBq4Zw/ksd0qtKNnLnjrlwWSH9Dyy9Li5mA==
 
 hexo-util@1.9.0:
   version "1.9.0"
